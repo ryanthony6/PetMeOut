@@ -1,0 +1,47 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.hero {
+  min-height: 100vh;
+  background-color: beige;
+  padding: 6em 10%;
+}
+
+/* top right bottom left */
+.hero-image-container {
+  
+  background-size: cover;
+  /* background-color: aqua; */
+}
+
+.hero-image {
+  max-width: 40%;
+}
+
+.hero-section-heading {
+  font-size: 4em;
+}
+
+.social-container {
+  margin: 20px 0;
+}
+
+.social {
+  border: 2px solid #eeeeee;
+  border-radius: 50%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 5px;
+  height: 40px;
+  width: 40px;
+  text-decoration: none;
+}
+
+.hero-content {
+  position: absolute;
+
+}
