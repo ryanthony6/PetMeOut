@@ -1,18 +1,62 @@
 * {
-  margin: 0;
   padding: 0;
+  margin: 0;
   box-sizing: border-box;
+  font-family: sans-serif;
 }
 
+/* Navbar start*/
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 100px;
+  background-color: transparent;
+  display: flex;
+  justify-content: space-between;
+}
+
+.Logo {
+  font-size: 32px;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.navbar a {
+  position: relative;
+  font-size: 20px;
+  font-weight: 500;
+  text-decoration: none;
+  margin-left: 40px;
+}
+
+.navbar a::before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: white;
+  transition: 0.3s;
+}
+
+.navbar a:hover::before {
+  width: 100%;
+}
+/* Navbar end */
+
+
+/* Hero section */
 .hero {
   min-height: 100vh;
-  background-color: beige;
+  /* background-color: beige; */
   padding: 6em 10%;
 }
 
 /* top right bottom left */
 .hero-image-container {
-  
   background-size: cover;
   /* background-color: aqua; */
 }
@@ -43,5 +87,4 @@
 
 .hero-content {
   position: absolute;
-
 }
