@@ -6,6 +6,39 @@
   text-decoration: none;
 }
 
+#carouselExampleControls {
+  max-width: 1100px; 
+  margin: 0 auto; 
+}
+
+.carousel-inner {
+  padding: 20px; 
+}
+
+.card-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.carousel-item {
+  display: flex;
+}
+
+.card {
+  width: calc(100% / 3 - 1em); 
+  margin: 0 .5em;
+}
+
+.card-title, .card-text, .btn{
+  text-align: center;
+}
+
+.card-body{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 /* Navbar start*/
 .navbar {
   padding: 0.8rem 10%;
@@ -89,6 +122,19 @@
   font-size: 1.2rem;
 }
 
+.hero-image {
+  width: 530px;
+  position: absolute;
+  bottom: 9rem;
+  right: 10%;
+}
+
+.cardList {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+}
+
 .social-container {
   margin: 20px 0;
 }
@@ -110,12 +156,3 @@
   background: #fe0000;
 }
 
-/* top right bottom left */
-.hero-image {
-  width: 530px;
-  position: absolute;
-  bottom: 9rem;
-  right: 10%;
-}
-
-/* Hero section end */
