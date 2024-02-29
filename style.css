@@ -3,70 +3,90 @@
   margin: 0;
   box-sizing: border-box;
   font-family: sans-serif;
+  text-decoration: none;
 }
 
 /* Navbar start*/
-.header {
+.navbar {
+  padding: 0.8rem 10%;
+  color: #fff;
+  background-color: #000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #513c28;
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  padding: 20px 100px;
-  background-color: transparent;
-  display: flex;
-  justify-content: space-between;
+  right: 0;
+  z-index: 9999;
+  
 }
 
-.Logo {
-  font-size: 32px;
-  text-decoration: none;
+.contact {
+  color: rgb(187, 187, 187);
+}
+
+.navbar-logo {
+  font-size: 1.4rem;
   font-weight: 700;
+  color: #fff;
+  font-style: italic;
 }
 
-.navbar a {
-  position: relative;
-  font-size: 20px;
-  font-weight: 500;
-  text-decoration: none;
-  margin-left: 40px;
+.navbar-logo span {
+  color: #fe0000;
 }
 
-.navbar a::before {
+.navbar-menu a {
+  color: #fff;
+  display: inline-block;
+  font-size: 0.9rem;
+  margin: 0 2rem;
+}
+
+.navbar-menu a:hover {
+  color: #fe0000;
+}
+
+.navbar-menu a::after {
   content: "";
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background-color: white;
-  transition: 0.3s;
+  display: block;
+  padding-bottom: 0.1rem;
+  border-bottom: 0.1rem solid;
+  transform: scaleX(0);
+  transition: 0.2s linear;
 }
 
-.navbar a:hover::before {
-  width: 100%;
+.navbar-menu a:hover::after {
+  transform: scaleX(0.5);
+}
+
+.navbar-menu a.active {
+  color: #fe0000;
+  border-color: #fe0000;
 }
 /* Navbar end */
 
-
-/* Hero section */
+/* Hero section start */
 .hero {
+  position: relative;
   min-height: 100vh;
-  /* background-color: beige; */
-  padding: 6em 10%;
+  width: 100%;
 }
 
-/* top right bottom left */
-.hero-image-container {
-  background-size: cover;
-  /* background-color: aqua; */
-}
-
-.hero-image {
-  max-width: 40%;
+.hero-content {
+  padding: 13rem 10%;
+  max-width: 900px;
 }
 
 .hero-section-heading {
-  font-size: 4em;
+  font-size: 3.5rem;
+}
+
+.hero-p {
+  padding: 1rem 0;
+  font-size: 1.2rem;
 }
 
 .social-container {
@@ -74,7 +94,7 @@
 }
 
 .social {
-  border: 2px solid #eeeeee;
+  border: 2px solid #000;
   border-radius: 50%;
   display: inline-flex;
   justify-content: center;
@@ -83,8 +103,19 @@
   height: 40px;
   width: 40px;
   text-decoration: none;
+  color: #000;
 }
 
-.hero-content {
-  position: absolute;
+.social:hover {
+  background: #fe0000;
 }
+
+/* top right bottom left */
+.hero-image {
+  width: 530px;
+  position: absolute;
+  bottom: 9rem;
+  right: 10%;
+}
+
+/* Hero section end */
