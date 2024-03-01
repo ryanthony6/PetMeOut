@@ -7,9 +7,9 @@
 
 /* Navbar start*/
 .navBar {
-  padding: 1.5rem 10%;
+  padding: 1rem 10%;
   color: #fff;
-  background-color: #000;
+  background-color: #19a7ce;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -36,13 +36,16 @@
 .navbarMenu a {
   color: #fff;
   display: inline-block;
-  font-size: 0.9rem;
+  font-size: 18px;
   margin: 0 2rem;
   text-decoration: none;
+  font-family: "Roboto", sans-serif;
+  font-weight: 600;
+  font-style: normal;
 }
 
 .navbarMenu a:hover {
-  color: #fe0000;
+  color: #fff;
 }
 
 .navbarMenu a::after {
@@ -59,8 +62,8 @@
 }
 
 .navbarMenu a.active {
-  color: #fe0000;
-  border-color: #fe0000;
+  color: #fff;
+  border-color: #fff;
 }
 /* Navbar end */
 
@@ -69,10 +72,11 @@
   position: relative;
   min-height: 100vh;
   width: 100%;
+  background-color: #f4f3ef;
 }
 
 .hero-content {
-  padding: 13rem 10%;
+  padding: 15rem 10%;
   max-width: 900px;
 }
 
@@ -87,10 +91,10 @@
 }
 
 .hero-image {
-  width: 530px;
+  width: 650px;
   position: absolute;
-  bottom: 9rem;
-  right: 10%;
+  bottom: 12rem;
+  right: 5%;
 }
 
 .cardList {
