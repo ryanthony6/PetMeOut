@@ -3,86 +3,49 @@
   margin: 0;
   box-sizing: border-box;
   font-family: sans-serif;
-  text-decoration: none;
-}
-
-#carouselExampleControls {
-  max-width: 1100px; 
-  margin: 0 auto; 
-}
-
-.carousel-inner {
-  padding: 20px; 
-}
-
-.card-wrapper {
-  display: flex;
-  justify-content: space-between;
-}
-
-.carousel-item {
-  display: flex;
-}
-
-.card {
-  width: calc(100% / 3 - 1em); 
-  margin: 0 .5em;
-}
-
-.card-title, .card-text, .btn{
-  text-align: center;
-}
-
-.card-body{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 /* Navbar start*/
-.navbar {
-  padding: 0.8rem 10%;
+.navBar {
+  padding: 1.5rem 10%;
   color: #fff;
   background-color: #000;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #513c28;
+  /* border-bottom: 1px solid #513c28; */
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 9999;
-  
 }
 
-.contact {
-  color: rgb(187, 187, 187);
-}
-
-.navbar-logo {
+.navbarLogo {
   font-size: 1.4rem;
   font-weight: 700;
   color: #fff;
   font-style: italic;
+  text-decoration: none;
 }
 
-.navbar-logo span {
+.navbarLogo span {
   color: #fe0000;
 }
 
-.navbar-menu a {
+.navbarMenu a {
   color: #fff;
   display: inline-block;
   font-size: 0.9rem;
   margin: 0 2rem;
+  text-decoration: none;
 }
 
-.navbar-menu a:hover {
+.navbarMenu a:hover {
   color: #fe0000;
 }
 
-.navbar-menu a::after {
+.navbarMenu a::after {
   content: "";
   display: block;
   padding-bottom: 0.1rem;
@@ -91,11 +54,11 @@
   transition: 0.2s linear;
 }
 
-.navbar-menu a:hover::after {
+.navbarMenu a:hover::after {
   transform: scaleX(0.5);
 }
 
-.navbar-menu a.active {
+.navbarMenu a.active {
   color: #fe0000;
   border-color: #fe0000;
 }
@@ -115,6 +78,7 @@
 
 .hero-section-heading {
   font-size: 3.5rem;
+  font-weight: bold;
 }
 
 .hero-p {
@@ -155,4 +119,3 @@
 .social:hover {
   background: #fe0000;
 }
-
