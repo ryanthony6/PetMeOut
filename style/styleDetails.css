@@ -5,7 +5,6 @@
 }
 
 body {
-  font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
   display: flex;
@@ -66,22 +65,139 @@ p {
 }
 
 .description {
-  line-height: 1.5; /* Tetapkan line height yang diinginkan untuk deskripsi */
+  line-height: 1.5; 
 }
 
 .btn-contact {
-  display: block; /* Mengubah menjadi blok agar bisa diatur lebar */
-  width: fit-content; /* Mengatur lebar sesuai dengan teks di dalamnya */
-  margin: auto; /* Menengahkan tombol */
+  display: block; 
+  width: fit-content; 
+  margin: auto; 
   padding: 10px 20px;
   background-color: rgba(120, 0, 0, 0.8);
   color: #fff;
   text-decoration: none;
   border-radius: 5px;
   transition: background-color 0.3s ease;
-  margin-top: 20px; /* Menambahkan jarak atas dari tombol */
+  margin-top: 20px; 
 }
 
 .btn-contact:hover {
   background-color: rgba(199, 0, 0, 0.8);
+}
+
+.popup-form-container {
+  background-color: rgba(0, 0, 0, 0.5); /* Set a semi-transparent black background for the container */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-form {
+  background-color: #ffffff;
+  padding: 40px;
+  width: 80%;
+  max-width: 400px;
+  max-height: 80%; 
+  overflow-y: auto; 
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 10px;
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(8px);
+}
+
+.popup-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333333;
+}
+
+.popup-form form {
+  text-align: left;
+}
+
+.popup-form label {
+  display: block;
+  margin-bottom: 10px;
+  color: #555555;
+}
+
+.required-label::after {
+  content: " *REQUIRED*";
+  color: red;
+  margin-left: 10px;
+  font-size: 10;
+}
+
+.popup-form input[type="text"],
+.popup-form input[type="email"],
+.popup-form input[type="tel"],
+.popup-form input[type="date"],
+.popup-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 40px;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  transition: border-color 0.3s ease;
+  background-color: rgba(245, 245, 245, 245);
+}
+
+.popup-form input[type="text"]:focus,
+.popup-form input[type="email"]:focus,
+.popup-form input[type="tel"]:focus,
+.popup-form input[type="date"]:focus,
+.popup-form textarea:focus {
+  border-color: #4CAF50;
+}
+
+.popup-form input[type="checkbox"] {
+  margin-bottom: 20px;
+}
+
+.popup-form input[type="button"],
+.popup-form input[type="submit"] {
+  background-color: rgba(120, 0, 0, 0.8);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  font-size: 16;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  flex: 1; 
+}
+
+.popup-form input[type="button"] {
+  margin-right: 10px; 
+}
+
+.popup-form input[type="submit"] {
+  margin-left: 10px; 
+}
+
+.popup-form input[type="button"]:hover,
+.popup-form input[type="submit"]:hover {
+  background-color: rgba(199, 0, 0, 0.8);
+}
+
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  color: #999999;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  color: #555555;
 }
