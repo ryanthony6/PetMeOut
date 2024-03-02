@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Quicksand:wght@300..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
 * {
   padding: 0;
   margin: 0;
@@ -72,7 +74,7 @@
   position: relative;
   min-height: 100vh;
   width: 100%;
-  background-color: #f4f3ef;
+  background-color: #fafcff;
 }
 
 .hero-content {
@@ -82,12 +84,40 @@
 
 .hero-section-heading {
   font-size: 3.5rem;
-  font-weight: bold;
+  font-family: "Quicksand", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+
+  color: #19a7ce;
 }
 
 .hero-p {
   padding: 1rem 0;
   font-size: 1.2rem;
+  font-family: "Quicksand", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  color: #4e4e4e;
+}
+
+.hero-btn {
+  font-family: "Quicksand", sans-serif;
+  font-weight: 800;
+  font-style: normal;
+  font-size: 1.3rem;
+  padding: 10px 20px;
+  background-color: #19a7ce;
+  color: #fff;
+  border-radius: 15px;
+  border: 2px solid #19a7ce;
+  text-decoration: none;
+  transition: background-color 0.3s ease-in-out;
+  margin-top: 0.5rem;
+}
+
+.hero-btn:hover {
+  background-color: #fff;
+  color: #19a7ce;
 }
 
 .hero-image {
@@ -96,30 +126,112 @@
   bottom: 12rem;
   right: 5%;
 }
+/* Hero section end */
 
+/* list section start */
 .cardList {
-  position: relative;
+  min-height: 160vh;
+  background-color: #f4f3ef;
+}
+
+.list-heading {
+  padding-top: 3rem;
+  text-align: center;
+  font-size: 3.1rem;
+  color: #4e4e4e;
+  font-family: "Quicksand", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.list-subheading {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #4e4e4e;
+  font-family: "Quicksand", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+/* list section end */
+
+/* Search section start */
+.searchSection {
   min-height: 100vh;
-  width: 100%;
+  background-color: #fafcff;
 }
 
-.social-container {
-  margin: 20px 0;
+.searchSection h1 {
+  padding-top: 3rem;
+  text-align: center;
+  font-size: 2rem;
+  color: #4e4e4e;
+  font-family: "Quicksand", sans-serif;
+  font-weight: 600;
+  font-style: normal;
 }
 
-.social {
-  border: 2px solid #000;
-  border-radius: 50%;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 5px;
-  height: 40px;
-  width: 40px;
-  text-decoration: none;
-  color: #000;
+.search-wrapper {
+  display: flex;
+  flex-direction: row;
+  margin: 2rem 13%;
+  padding: 0 1rem;
+  border-radius: 20px;
+  box-shadow: rgba(26, 25, 25, 0.089) 0px 10px 30px;
+  background-color: #fff;
 }
 
-.social:hover {
-  background: #fe0000;
+.select-wrapper {
+  margin: 1.7rem 0.2rem;
 }
+
+.select-wrapper label {
+  padding: 0 0.2rem;
+  font-family: "Quicksand", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 0.9rem;
+  color: #19a7ce;
+}
+
+.dropdownMenu {
+  width: 270px;
+  height: 50px;
+  border-radius: 20px;
+  background-color: #f3f5f9;
+  border: none;
+}
+
+.option {
+}
+
+.reset-btn {
+  font-family: "Quicksand", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 0.8rem;
+  background-color: #fff;
+  color: #19a7ce;
+  border-radius: 20px;
+  border: 1px solid #19a7ce;
+  width: 200px;
+  height: 60px;
+  margin: 40px 0.5rem;
+}
+
+.search-btn {
+  font-family: "Quicksand", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 0.8rem;
+  background-color: #19a7ce;
+  color: #fff;
+  border-radius: 20px;
+  border: 2px solid #19a7ce;
+  width: 400px;
+  height: 60px;
+  margin: 40px 0.5rem;
+}
+
+.search-btn:hover {
+}
+/* Search section end */

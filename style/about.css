@@ -14,8 +14,8 @@ body {
 }
 
 /* Navbar start*/
-.navbar {
-  padding: 1.3rem 10%;
+.navBar {
+  padding: 1rem 10%;
   color: #fff;
   background-color: #19a7ce;
   display: flex;
@@ -29,33 +29,34 @@ body {
   z-index: 9999;
 }
 
-.contact {
-  color: rgb(187, 187, 187);
-}
-
-.navbar-logo {
+.navbarLogo {
   font-size: 1.4rem;
   font-weight: 700;
   color: #fff;
   font-style: italic;
+  text-decoration: none;
 }
 
-.navbar-logo span {
+.navbarLogo span {
   color: #fe0000;
 }
 
-.navbar-menu a {
+.navbarMenu a {
   color: #fff;
   display: inline-block;
-  font-size: 0.9rem;
+  font-size: 18px;
   margin: 0 2rem;
+  text-decoration: none;
+  font-family: "Roboto", sans-serif;
+  font-weight: 600;
+  font-style: normal;
 }
 
-.navbar-menu a:hover {
-  color: #fe0000;
+.navbarMenu a:hover {
+  color: #fff;
 }
 
-.navbar-menu a::after {
+.navbarMenu a::after {
   content: "";
   display: block;
   padding-bottom: 0.1rem;
@@ -64,13 +65,13 @@ body {
   transition: 0.2s linear;
 }
 
-.navbar-menu a:hover::after {
+.navbarMenu a:hover::after {
   transform: scaleX(0.5);
 }
 
-.navbar-menu a.active {
-  color: #fe0000;
-  border-color: #fe0000;
+.navbarMenu a.active {
+  color: #fff;
+  border-color: #fff;
 }
 /* Navbar end */
 
@@ -88,7 +89,6 @@ body {
   position: absolute;
   top: 50%;
   width: 100%;
-  left: 30%;
   text-align: center;
   font-size: 2rem;
   color: #000;
@@ -132,6 +132,27 @@ body {
   font-style: normal;
 }
 
+.social-container {
+  margin: 20px 0;
+}
+
+.social {
+  border: 2px solid #000;
+  border-radius: 50%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 5px;
+  height: 40px;
+  width: 40px;
+  text-decoration: none;
+  color: #000;
+}
+
+.social:hover {
+  background: #fe0000;
+}
+
 /* Know us section end */
 
 /* Why adopt section start */
@@ -170,6 +191,10 @@ body {
   align-items: center;
   justify-content: center;
   padding: 2rem 15%;
+}
+
+.whyAdopt-card:hover {
+  background-color: #dfe7e9;
 }
 
 .whyAdopt-card {
