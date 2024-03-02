@@ -36,6 +36,7 @@
 }
 
 .navbarMenu a {
+  letter-spacing: 2px;
   color: #fff;
   display: inline-block;
   font-size: 18px;
@@ -229,6 +230,11 @@
   margin: 40px 0.5rem;
 }
 
+.reset-btn:hover {
+  color: #fff;
+  background-color: #19a7ce;
+}
+
 .search-btn:hover {
   background-color: #39b3d5;
   transition: 0.3s ease-in-out;
@@ -239,15 +245,16 @@
   align-items: center;
   flex-wrap: wrap;
   justify-content: space-around;
-  margin: 2rem 8rem;
-  background-color: aqua;
+  margin: 2rem 15rem;
+  /* background-color: aqua; */
 }
 
 .cards {
   width: 280px;
-  height: 360px;
-  border-radius: 15px;
+  height: 300px;
+  border-radius: 30px;
   padding: 2rem;
+  margin: 1rem;
   background: white;
   position: relative;
   display: flex;
