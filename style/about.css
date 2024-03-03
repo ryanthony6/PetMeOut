@@ -42,6 +42,7 @@ body {
 }
 
 .navbarMenu a {
+  letter-spacing: 2px;
   color: #fff;
   display: inline-block;
   font-size: 18px;
@@ -82,12 +83,12 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  background-image: url(/img/aboutt.jpg);
+  background-image: url(image.jpg);
 }
 
 .about-content {
   position: absolute;
-  top: 50%;
+  top: 20%;
   width: 100%;
   text-align: center;
   font-size: 2rem;
@@ -100,12 +101,20 @@ body {
   font-style: normal;
 }
 
+.about-content p {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 1.2rem;
+  padding: 1.3rem 10rem;
+}
+
 /* About section end */
 
 /* Know us section start */
 .knowUs {
   min-height: 90vh;
-  background-color: #146c94;
+  background-color: #19a7ce;
 }
 
 .knowUs h2 {
@@ -212,4 +221,69 @@ body {
 .whyAdopt-card h3 {
   font-size: 1.5rem;
 }
+
+/* Reset some default browser styles */
+
 /* Why adopt section end */
+
+.footer-dark {
+  padding: 50px 0;
+  color: #f0f9ff;
+  background-color: #19a7ce;
+}
+
+.footer-dark h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.footer-dark ul {
+  padding: 0;
+  list-style: none;
+  line-height: 1.6;
+  font-size: 14px;
+  margin-bottom: 0;
+}
+
+.footer-dark ul a {
+  color: inherit;
+  text-decoration: none;
+  opacity: 0.6;
+}
+
+.footer-dark ul a:hover {
+  opacity: 0.8;
+}
+
+@media (max-width: 767px) {
+  .footer-dark .item:not(.social) {
+    text-align: center;
+    padding-bottom: 20px;
+  }
+}
+
+.footer-dark .item.text {
+  margin-bottom: 36px;
+}
+
+@media (max-width: 767px) {
+  .footer-dark .item.text {
+    margin-bottom: 0;
+  }
+}
+
+.footer-dark .item.text p {
+  opacity: 0.6;
+  margin-bottom: 0;
+  text-align: justify;
+}
+
+.footer-dark .copyright {
+  text-align: center;
+  padding-top: 24px;
+  opacity: 0.3;
+  font-size: 13px;
+  margin-bottom: 0;
+}
