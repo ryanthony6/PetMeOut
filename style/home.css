@@ -68,6 +68,18 @@
   color: #fff;
   border-color: #fff;
 }
+
+.regisLog {
+  font-size: 1rem;
+  padding: 5px 10px;
+  border-radius: 20px;
+  background-color: #fff;
+  color: #19a7ce;
+  border: 2px solid #19a7ce;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
 /* Navbar end */
 
 /* Hero section start */
@@ -88,7 +100,6 @@
   font-family: "Quicksand", sans-serif;
   font-weight: 700;
   font-style: normal;
-
   color: #19a7ce;
 }
 
@@ -320,7 +331,8 @@
   margin-top: 8px;
 }
 
-.cards .info button {
+.readmore-btn{
+  text-decoration: none;
   padding: 0.6rem;
   outline: none;
   border: none;
@@ -332,8 +344,8 @@
   transition: 0.4s ease;
 }
 
-.cards .info button:hover {
-  background: dodgerblue;
+.readmore-btn:hover {
+  background: #19a7ce;
   color: white;
 }
 

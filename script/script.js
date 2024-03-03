@@ -36,6 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+
 const accordionContent = document.querySelectorAll(".accordion-content");
 
 accordionContent.forEach((item, index) => {
@@ -54,7 +55,6 @@ accordionContent.forEach((item, index) => {
     removeOpen(index); //calling the funtion and also passing the index number of the clicked header
   });
 });
-
 
 function removeOpen(index1) {
   accordionContent.forEach((item2, index2) => {

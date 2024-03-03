@@ -68,6 +68,18 @@
   color: #fff;
   border-color: #fff;
 }
+
+.regisLog {
+  font-size: 1rem;
+  padding: 5px 10px;
+  border-radius: 20px;
+  background-color: #fff;
+  color: #19a7ce;
+  border: 2px solid #19a7ce;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
 /* Navbar end */
 
 /* FAQ section start */
@@ -153,13 +165,13 @@
   font-style: italic;
 }
 
-.accordion {
+.accordion-container {
   width: 100%;
   margin: 0.8rem 0;
   padding: 15px;
 }
 
-.accordion .accordion-content {
+.accordion-container .accordion-content {
   margin: 2rem 0;
   border-radius: 4px;
   background: #fff;
@@ -208,10 +220,12 @@
   transition: all 0.2s;
 }
 
+.description p{
+  margin-bottom: 0;
+}
+
 .nav_link.active {
   color: #fff;
   background-color: #19a7ce;
 }
 /* FAQ section end */
-
-
