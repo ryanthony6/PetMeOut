@@ -73,7 +73,7 @@
 /* FAQ section start */
 .FAQ {
   background-color: #ffffff;
-  min-height: 200vh;
+  min-height: 150vh;
 }
 
 .heading {
@@ -187,9 +187,10 @@
 }
 
 .accordion-content header .title {
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 1.2rem;
   color: #333;
+  font-family: "Quicksand", sans-serif;
+  font-weight: bold;
 }
 
 .accordion-content header i {
@@ -198,12 +199,17 @@
 }
 
 .accordion-content .description {
-  height: 0;
-  font-size: 12px;
+  font-size: 1.2rem;
   color: #333;
-  font-weight: 400;
+  font-family: "Quicksand", sans-serif;
+  font-weight: 500;
+  height: 0;
   padding: 0 15px;
   transition: all 0.2s;
 }
 
+.nav_link.active {
+  color: #fff;
+  background-color: #19a7ce;
+}
 /* FAQ section end */

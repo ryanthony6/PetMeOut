@@ -55,6 +55,7 @@ accordionContent.forEach((item, index) => {
   });
 });
 
+
 function removeOpen(index1) {
   accordionContent.forEach((item2, index2) => {
     if (index1 != index2) {
@@ -66,3 +67,11 @@ function removeOpen(index1) {
     }
   });
 }
+
+const navLinkFAQs = document.querySelectorAll(".nav_link");
+navLinkFAQs.forEach((navLinkFAQ) => {
+  navLinkFAQ.addEventListener("click", () => {
+    document.querySelector('.active')?.classList.remove('active')
+    navLinkFAQ.classList.add("active");
+  });
+});
