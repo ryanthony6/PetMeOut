@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Quicksand:wght@300..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
 * {
   padding: 0;
   margin: 0;
@@ -74,16 +76,24 @@
   min-height: 200vh;
 }
 
-.FAQ h1 {
+.heading {
   text-align: center;
   font-size: 3rem;
-  margin-top: 10rem;
+  margin-top: 7rem;
+  color: #4e4e4e;
+  font-family: "Quicksand", sans-serif;
+  font-weight: 800;
+  font-style: normal;
 }
 
-.FAQ h5 {
-  margin-top: 7rem;
-  font-size: 1.5rem;
+.subheading {
+  margin-top: 5rem;
+  font-size: 1.4rem;
   text-align: center;
+  color: #19a7ce;
+  font-family: "Quicksand", sans-serif;
+  font-weight: 600;
+  font-style: italic;
 }
 
 .button-list {
@@ -94,31 +104,106 @@
 }
 
 .button-item {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #3498db;
-  color: #ffffff;
-  border: 1px solid #2980b9;
-  border-radius: 5px;
   margin-right: 10px;
-  cursor: pointer;
 }
 
 .button-item a {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #fff;
+  border: 1px solid #19a7ce;
+  cursor: pointer;
   text-decoration: none;
   font-size: 1.1rem;
+  color: #19a7ce;
+  font-family: "Quicksand", sans-serif;
+  font-weight: 800;
+  transition: 0.3s ease-in-out;
 }
 
-.button-item:hover {
-  background-color: #2980b9;
-}
-
-.button-item:active {
-  background-color: #1f618d;
+.button-item a:hover {
+  color: #fff;
+  background-color: #19a7ce;
 }
 
 .FAQ-container {
-  background-color: #3498db;
+  margin: 4rem 8rem;
+}
+
+.FAQ-title {
+  margin: 0 5rem;
+}
+
+.FAQ-container-heading {
+  font-size: 2rem;
+  text-align: center;
+  color: #19a7ce;
+  font-family: "Quicksand", sans-serif;
+  font-weight: 800;
+}
+
+.FAQ-container-subheading {
+  text-align: center;
+  padding: 0 10rem;
+  padding-top: 0.8rem;
+  font-size: 1.2rem;
+  color: #4e4e4e;
+  font-family: "Quicksand", sans-serif;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.accordion {
+  width: 100%;
+  margin: 0.8rem 0;
+  padding: 15px;
+}
+
+.accordion .accordion-content {
+  margin: 2rem 0;
+  border-radius: 4px;
+  background: #fff;
+  border-radius: 15px;
+  border: 1px solid #d8d8d8;
+  overflow: hidden;
+}
+
+.accordion-content.open {
+  padding-bottom: 10px;
+}
+
+.accordion-content header {
+  display: flex;
+  min-height: 50px;
+  padding: 0 15px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.2s;
+}
+
+.accordion-content.open header {
+  min-height: 35px;
+}
+
+.accordion-content header .title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+.accordion-content header i {
+  font-size: 15px;
+  color: #333;
+}
+
+.accordion-content .description {
+  height: 0;
+  font-size: 12px;
+  color: #333;
+  font-weight: 400;
+  padding: 0 15px;
+  transition: all 0.2s;
 }
 
 /* FAQ section end */
