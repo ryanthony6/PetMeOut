@@ -1,0 +1,33 @@
+[
+    {
+      "name": "Sample 1",
+      "petRace": "British short hair",
+      "image": "/img/cat.jpg"
+    },
+    {
+      "name": "Sample 2",
+      "petRace": "British short hair",
+      "image": "/img/sample.jpg"
+    },
+    {
+      "name": "Sample 3",
+      "petRace": "British short hair",
+      "image": "/img/cat.jpg"
+    },
+    {
+      "name": "Sample 4",
+      "petRace": "British short hair",
+      "image": "/img/sample.jpg"
+    },
+    {
+      "name": "Sample 5",
+      "petRace": "British short hair",
+      "image": "/img/cat.jpg"
+    },
+    {
+      "name": "Sample 6",
+      "petRace": "British short hair",
+      "image": "/img/sample.jpg"
+    }
+  ]
+  
