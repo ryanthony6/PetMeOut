@@ -38,7 +38,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 const accordionContent = document.querySelectorAll(".accordion-content");
-
 accordionContent.forEach((item, index) => {
   let header = item.querySelector("header");
   header.addEventListener("click", () => {
@@ -46,15 +45,16 @@ accordionContent.forEach((item, index) => {
 
     let description = item.querySelector(".description");
     if (item.classList.contains("open")) {
-      description.style.height = `${description.scrollHeight}px`; //scrollHeight property returns the height of an element including padding , but excluding borders, scrollbar or margin
+      description.style.height = `${description.scrollHeight}px`;
       item.querySelector("i").classList.replace("fa-plus", "fa-minus");
     } else {
       description.style.height = "0px";
       item.querySelector("i").classList.replace("fa-minus", "fa-plus");
     }
-    removeOpen(index); //calling the funtion and also passing the index number of the clicked header
+    removeOpen(index); 
   });
 });
+
 
 function removeOpen(index1) {
   accordionContent.forEach((item2, index2) => {
@@ -67,6 +67,7 @@ function removeOpen(index1) {
     }
   });
 }
+
 
 const navLinkFAQs = document.querySelectorAll(".nav_link");
 navLinkFAQs.forEach((navLinkFAQ) => {
@@ -87,7 +88,6 @@ const HowToHelpContainer = document.querySelector('.FAQ-container:nth-of-type(3)
 basicInfoContainer.style.display = 'block';
 adoptionContainer.style.display = 'none';
 HowToHelpContainer.style.display = 'none';
-
 
 basicInfoButton.addEventListener('click', function() {
   adoptionContainer.style.display = 'none';
