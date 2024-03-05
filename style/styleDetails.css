@@ -87,12 +87,7 @@ p {
 }
 
 .popup-form-container {
-  background-color: rgba(
-    0,
-    0,
-    0,
-    0.5
-  ); /* Set a semi-transparent black background for the container */
+  background-color: rgba(0,0,0,0.5);
   position: fixed;
   top: 0;
   left: 0;
@@ -115,8 +110,6 @@ p {
   left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 10px;
-  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(8px);
 }
 
 .popup-form h2 {
