@@ -1,0 +1,154 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+}
+
+body{
+    height: 100vh;
+    background-image: url(/img/cat.jpg);
+    background-size: cover;
+    background-position: center;
+}
+
+li{
+    list-style: none;
+}
+
+li a{
+    text-decoration: none;
+    color: #fff;
+    font-size: 18px;
+    font-family: "Roboto", sans-serif;
+    font-style: normal;
+    display: inline-block;
+    margin: 0 1rem;
+    font-weight: 600;
+}
+
+li a:hover{
+    color: #fff;
+}
+
+li a::after{
+    content: "";
+    display: block;
+    padding-bottom: 0.1rem;
+    border-bottom: 0.1rem solid;
+    transform: scaleX(0);
+    transition: 0.2s linear;
+}
+
+li a:hover::after{
+    transform: scaleX(0.5);
+}
+
+li a.active {
+    color: #fff;
+    border-color: #fff;
+}
+
+.action-button:hover{
+    color: darkblue
+}
+
+header{
+    position: relative;
+    padding : 0 2rem;
+}
+
+.navbar{
+    width: 100%;
+    height: 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar .logo a{
+    text-decoration: none;
+    color: white;
+    font-style: italic;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+.navbar .links{
+    display: flex;
+    gap: 2rem;
+}
+
+.navbar .toggle-button{
+    color: #fff;
+    font-size: 26px;
+    cursor: pointer;
+    display: none;
+}
+
+.action-button{
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 10px;
+    border-radius: 20px;
+    background-color: #fff;
+    color: #19a7ce;
+    border: 2px solid #19a7ce;
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+}
+
+.dropdown-menu{
+    display: none;
+    position: absolute;
+    right: 2rem;
+    top: 60px;
+    height: 0;
+    width: 250px;
+    background: rgba(255,255,254,0.1);
+    backdrop-filter: blur(15px);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: height .2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.dropdown-menu.open{
+    height: 180px;
+}
+
+.dropdown-menu li{
+    padding: 0.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dropdown-menu .action-button{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+@media (max-width: 750px){
+    .navbar .links,
+    .navbar .action-button{
+        display: none;
+    }
+
+    .navbar .toggle-button{
+        display: block;
+    }
+    .dropdown-menu{
+        display: block;
+    }
+}
+
+@media (max-width: 476px){
+    .dropdown-menu{
+        left: 2rem;
+        width: unset;
+    }
+}
