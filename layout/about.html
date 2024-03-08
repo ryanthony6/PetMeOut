@@ -6,7 +6,7 @@
     <title>Animal Adopt</title>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="/style/navbar.css" />
+    <link rel="stylesheet" href="/style/ResponsiveNavbarTes.css" />
     <link rel="stylesheet" href="/style/about.css" />
     <link rel="stylesheet" href="/style/footer.css" />
     <!-- CSS -->
@@ -23,19 +23,30 @@
 
   </head>
   <body>
-     <!-- Navbar start -->
-     <nav class="navBar">
-      <a href="#" class="navbarLogo">PetMeOut</a>
 
-      <div class="navbarMenu">
-        <a href="/layout/home.html">Home</a>
-        <a href="/layout/about.html">About</a>
-        <a href="/layout/FAQ.html">FAQ</a>
+    <header class="nav-header">
+      <div class="navbar">
+        <div class="logo">
+          <a href="#">PetMeOut</a>
+        </div>
+        <ul class="links">
+          <li><a href="/layout/home.html">Home</a></li>
+          <li><a href="/layout/about.html">About</a></li>
+          <li><a href="/layout/FAQ.html">FAQ</a></li>
+        </ul>
+        <a href="#" class="action-button">Login/Register</a>
+        <div class="toggle-button">
+          <i class="fa-solid fa-bars"></i>
+        </div>
       </div>
-
-      <a href="/layout/signinup.html" class="regisLog">Login/Register</a>
-
-    </nav>
+  
+      <div class="dropdown-menu">
+        <li><a href="/layout/home.html">Home</a></li>
+          <li><a href="/layout/about.html">About</a></li>
+          <li><a href="/layout/FAQ.html">FAQ</a></li>
+          <a href="/layout/signinup.html" class="action-button">Login/Register</a>
+      </div>
+    </header>
     <!-- Navbar end -->
 
     <!-- Know us section start -->
@@ -80,6 +91,7 @@
           </a>
         </div>
       </div>
+
     </section>
     <!-- Know us section end -->
 
@@ -152,5 +164,7 @@
     </footer>
 
     </div>
+    
+  <script src="/script/ResponsiveNavbarTes.js"></script>
   </body>
 </html>
