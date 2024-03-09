@@ -238,4 +238,62 @@ body {
   font-style: normal;
 }
 
+.projects {
+  min-height: 100vh;
+  background-color: #ffffff;
+}
+
+.projects h2 {
+  padding-top: 6rem;
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #666;
+  font-size: 2.4rem;
+}
+
+.projects-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.project-img {
+  width: 65%;
+  height: 60%;
+}
+
+.project-container {
+  text-align: center;
+  width: 21.875rem;
+  padding: 1rem;
+}
+
+.project-container p {
+  padding: 0.4rem;
+}
+
+.project-title {
+  margin-bottom: 0.5rem;
+  color: #fff;
+}
+
+.project-details {
+  margin-bottom: 0.5rem;
+  color: #fff;
+}
+
+.project-card {
+  border-radius: 11px;
+  box-shadow: 0 3px 10px #9a9a9a;
+  padding: 20px;
+  margin: 10px;
+}
+
+.project-link {
+  color: #5c00dc;
+  box-shadow: inset 0 0 0 0 #5c00dc;
+
+  transition: color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
 /* Why adopt section end */
