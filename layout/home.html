@@ -22,7 +22,6 @@
     />
 
     <!-- Script -->
-    <script src="/angular.js"></script>
   </head>
   <body ng-controller="myCtrl">
     <!-- Navbar start -->
@@ -69,7 +68,7 @@
 
     <!-- List section start -->
     <section class="cardList">
-      <h1 class="list-heading">Adoptable Animals</h1>
+      <h1 class="list-heading">Adoptable Animals Highlight</h1>
       <p class="list-subheading">These animals are waiting for a new home</p>
 
       <div class="container swiper">
@@ -174,57 +173,31 @@
 
     <!-- Search section start -->
     <section class="searchSection">
-      //
       <h1>Find your pet now!</h1>
 
       <div class="search-wrapper">
-        <!-- Species -->
-        <div class="select-wrapper">
-          <label>Species</label>
-          <select id="dropdown-species" class="dropdownMenu">
-            <option hidden></option>
-            <option>Dog</option>
-            <option>Cat</option>
-            <option>Other</option>
-          </select>
+        <div class="search">
+          <input
+            id="searchInput"
+            placeholder="Search..."
+            type="text"
+            oninput="filterPets()"
+          />
+          <button type="submit">Go</button>
         </div>
-
-        <!-- Size -->
-        <div class="select-wrapper">
-          <label>Size</label>
-          <select id="dropdown-size" class="dropdownMenu">
-            <option hidden></option>
-            <option>Small</option>
-            <option>Medium</option>
-            <option>Large</option>
-          </select>
-        </div>
-
-        <!-- Sex -->
-        <div class="select-wrapper">
-          <label>Sex</label>
-          <select id="dropdow-location" class="dropdownMenu">
-            <option hidden></option>
-            <option>Male</option>
-            <option>Female</option>
-            <option>Unknown</option>
-          </select>
-        </div>
-
-        <button class="reset-btn">Reset</button>
-
-        <button class="search-btn">Search</button>
       </div>
 
-      <div class="card-container">
-        <div class="cards" ng-repeat="item in pets">
-          <img ng-src="{{item.image}}" />
-          <div class="info">
-            <p>{{item.name}}</p>
-            <p>{{item.petRace}}</p>
-            <a href="/layout/details.html" class="readmore-btn">Read More</a>
-          </div>
-        </div>
+      <div class="category-select">
+        <select id="categorySelect" onchange="filterPets()">
+          <option value="">All</option>
+          <option value="cat">Cats</option>
+          <option value="dog">Dogs</option>
+          <option value="other">Others</option>
+        </select>
+      </div>
+
+      <div class="card-container" id="cardContainer">
+        <!-- dynamic card using js -->
       </div>
     </section>
     <!-- Search section end -->
@@ -259,7 +232,7 @@
 
     <script src="/script/swiper-bundle.min.js"></script>
     <script src="/script/ResponsiveNavbarTes.js"></script>
-    <script src="/script/app.js"></script>
+    <script src="/script/home.js"></script>
     <script src="/script/swiper.js"></script>
   </body>
 </html>

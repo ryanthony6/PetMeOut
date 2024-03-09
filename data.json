@@ -1,32 +1,38 @@
 [
   {
-    "name": "Sample 1",
+    "name": "Henry",
     "petRace": "British short hair",
-    "image": "/img/cats/cat.jpg"
+    "image": "/img/cats/cat.jpg",
+    "category": "cat"
   },
   {
-    "name": "Sample 2",
-    "petRace": "British short hair",
-    "image": "/img/dogs/dog4.jpg"
+    "name": "Kuro",
+    "petRace": "German Shepperd",
+    "image": "/img/dogs/dog2.jpg",
+    "category": "dog"
   },
   {
-    "name": "Sample 3",
-    "petRace": "British short hair",
-    "image": "/img/cats/cat4.jpg"
+    "name": "Zen",
+    "petRace": "Munchkin",
+    "image": "/img/cats/cat4.jpg",
+    "category": "cat"
   },
   {
-    "name": "Sample 4",
-    "petRace": "British short hair",
-    "image": "/img/dogs/dog5.jpg"
+    "name": "Bubi",
+    "petRace": "Bengal",
+    "image": "/img/cats/cat5.jpg",
+    "category": "cat"
   },
   {
-    "name": "Sample 5",
-    "petRace": "British short hair",
-    "image": "/img/cats/cat6.jpg"
+    "name": "Clod",
+    "petRace": "Siberian Husky",
+    "image": "/img/dogs/dog6.jpg",
+    "category": "dog"
   },
   {
-    "name": "Sample 6",
-    "petRace": "British short hair",
-    "image": "/img/dogs/dog2.jpg"
+    "name": "Anita",
+    "petRace": "Persian",
+    "image": "/img/cats/cat7.jpg",
+    "category": "cat"
   }
 ]
