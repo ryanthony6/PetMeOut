@@ -9,26 +9,26 @@
 
 /* Hero section start */
 .hero {
-  position: relative;
   min-height: 100vh;
-  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 9%;
+
   background-color: #fafcff;
 }
-
 .hero-content {
-  padding: 15rem 10%;
-  max-width: 900px;
+  max-width: 50%;
+  padding: 20px;
 }
-
-.hero-section-heading {
+.hero-content h1 {
   font-size: 3.5rem;
   font-family: "Quicksand", sans-serif;
   font-weight: 700;
   font-style: normal;
   color: #19a7ce;
 }
-
-.hero-p {
+.hero-content p {
   padding: 1rem 0;
   font-size: 1.2rem;
   font-family: "Quicksand", sans-serif;
@@ -36,7 +36,25 @@
   font-style: normal;
   color: #4e4e4e;
 }
-
+.hero-image {
+  max-width: 50%;
+}
+.hero-image img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  padding-bottom: 8rem;
+}
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column;
+    text-align: center;
+  }
+  .hero-content,
+  .hero-image {
+    max-width: 100%;
+  }
+}
 .hero-btn {
   font-family: "Quicksand", sans-serif;
   font-weight: 800;
@@ -50,6 +68,7 @@
   text-decoration: none;
   transition: 0.3s ease-in-out;
   margin-top: 0.5rem;
+  cursor: pointer;
 }
 
 .hero-btn:hover {
@@ -57,12 +76,6 @@
   color: #19a7ce;
 }
 
-.hero-image {
-  width: 650px;
-  position: absolute;
-  bottom: 12rem;
-  right: 5%;
-}
 /* Hero section end */
 
 /* list section start */
@@ -256,7 +269,7 @@
   margin-top: 8px;
 }
 
-.readmore-btn{
+.readmore-btn {
   text-decoration: none;
   padding: 0.6rem;
   outline: none;
