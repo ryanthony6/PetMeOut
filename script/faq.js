@@ -1,41 +1,3 @@
-document.addEventListener("DOMContentLoaded", function () {
-  function openForm() {
-    document.getElementById("popup-form-container").style.display = "block";
-  }
-
-  function closeForm() {
-    document.getElementById("popup-form-container").style.display = "none";
-  }
-
-  document
-    .querySelector(".btn-contact")
-    .addEventListener("click", function (event) {
-      event.preventDefault();
-      openForm();
-    });
-
-  document
-    .querySelector(".close-btn")
-    .addEventListener("click", function (event) {
-      event.preventDefault();
-      closeForm();
-    });
-
-  document
-    .querySelector(".cancel-btn")
-    .addEventListener("click", function (event) {
-      event.preventDefault();
-      closeForm();
-    });
-
-  window.addEventListener("click", function (event) {
-    var popup = document.getElementById("popup-form-container");
-    if (event.target === popup) {
-      closeForm();
-    }
-  });
-});
-
 const accordionContent = document.querySelectorAll(".accordion-content");
 accordionContent.forEach((item, index) => {
   let header = item.querySelector("header");
@@ -53,7 +15,6 @@ accordionContent.forEach((item, index) => {
     removeOpen(index);
   });
 });
-
 
 function removeOpen(index1) {
   accordionContent.forEach((item2, index2) => {
@@ -94,6 +55,7 @@ adoptionContainer.style.display = "none";
 HowToHelpContainer.style.display = "none";
 
 basicInfoButton.addEventListener("click", function () {
+
   adoptionContainer.style.display = "none";
   basicInfoContainer.style.display = "block";
   HowToHelpContainer.style.display = "none";

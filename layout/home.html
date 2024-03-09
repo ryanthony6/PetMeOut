@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="/style/home.css" />
     <link rel="stylesheet" href="/style/footer.css" />
 
- 
     <!-- Icons -->
     <link
       rel="stylesheet"
@@ -30,9 +29,8 @@
     ></script>
   </head>
   <body ng-controller="myCtrl">
-
     <!-- Navbar start -->
-   <header class="nav-header">
+    <header class="nav-header">
       <div class="navbar">
         <div class="logo">
           <a href="#">PetMeOut</a>
@@ -47,12 +45,12 @@
           <i class="fa-solid fa-bars"></i>
         </div>
       </div>
-  
+
       <div class="dropdown-menu">
         <li><a href="/layout/home.html">Home</a></li>
-          <li><a href="/layout/about.html">About</a></li>
-          <li><a href="/layout/FAQ.html">FAQ</a></li>
-          <a href="/layout/signinup.html" class="action-button">Login/Register</a>
+        <li><a href="/layout/about.html">About</a></li>
+        <li><a href="/layout/FAQ.html">FAQ</a></li>
+        <a href="/layout/signinup.html" class="action-button">Login/Register</a>
       </div>
     </header>
     <!-- Navbar end -->
@@ -76,8 +74,6 @@
     <section class="cardList">
       <h1 class="list-heading">Adoptable Animals</h1>
       <p class="list-subheading">These animals are waiting for a new home</p>
-
-    
     </section>
     <!-- List section end -->
 
@@ -124,19 +120,14 @@
         <button class="search-btn">Search</button>
       </div>
 
-      <div class="card-container" >
+      <div class="card-container">
         <div class="cards" ng-repeat="item in pets">
-          <img ng-src="{{item.image}}"/>
+          <img ng-src="{{item.image}}" />
           <div class="info">
-            <p>
-              {{item.name}}
-            </p>
-            <p>
-              {{item.petRace}}
-            </p>
+            <p>{{item.name}}</p>
+            <p>{{item.petRace}}</p>
             <a href="/layout/details.html" class="readmore-btn">Read More</a>
           </div>
-        </div>
         </div>
       </div>
     </section>
@@ -169,9 +160,8 @@
     </footer>
 
     <!-- Script -->
-    <script src="/script/script.js"></script>
-    
-  <script src="/script/ResponsiveNavbarTes.js"></script>
+
+    <script src="/script/ResponsiveNavbarTes.js"></script>
     <script src="/script/app.js"></script>
   </body>
 </html>
