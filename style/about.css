@@ -238,6 +238,114 @@ body {
   font-style: normal;
 }
 
+@media screen and (max-width: 768px) {
+  .knowUs p {
+    padding: 1.3rem 2rem;
+    font-size: 20px;
+  }
+
+  .card {
+    height: 40px;
+    width: 150px;
+  }
+
+  .card span {
+    font-size: 18px;
+  }
+
+  .social-link {
+    font-size: 20px;
+  }
+
+  .whyAdopt h2 {
+    padding: 1rem;
+    font-size: 2rem;
+  }
+
+  .adopt-heading {
+    padding: 1rem 2rem;
+    font-size: 20px;
+  }
+
+  .whyAdopt-container {
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 5%;
+  }
+
+  .whyAdopt-card {
+    padding: 15px;
+    margin: 15px;
+  }
+
+  .whyAdopt-card h3 {
+    padding: 1rem 2rem;
+    text-align: center;
+  }
+
+  .whyAdopt-card p {
+    font-size: 1rem;
+  }
+
+  .project-container{
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .knowUs p {
+    padding: 1.3rem 2rem;
+    font-size: 20px;
+  }
+
+  .card {
+    height: 40px;
+    width: 150px;
+  }
+
+  .card span {
+    font-size: 18px;
+  }
+
+  .social-link {
+    font-size: 20px;
+  }
+
+  .whyAdopt h2 {
+    padding: 1rem;
+    font-size: 2rem;
+  }
+
+  .adopt-heading {
+    padding: 1rem 2rem;
+    font-size: 20px;
+  }
+
+  .whyAdopt-container {
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 5%;
+  }
+
+  .whyAdopt-card {
+    padding: 15px;
+    margin: 15px;
+  }
+
+  .whyAdopt-card h3 {
+    padding: 1rem 2rem;
+    text-align: center;
+  }
+
+  .whyAdopt-card p {
+    font-size: 1rem;
+  }
+
+  .project-container{
+    flex-direction: column;
+  }
+}
+
 .blog {
   min-height: 100vh;
   background-color: #ffffff;
