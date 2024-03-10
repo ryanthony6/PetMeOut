@@ -3,7 +3,7 @@
 * {
   padding: 0;
   margin: 0;
-  box-sizing: giitborder-box;
+  box-sizing: border-box;
   font-family: sans-serif;
 }
 
@@ -160,47 +160,47 @@
 /* responsive */
 @media screen and (max-width: 768px) {
   .heading {
-    font-size: 2.5rem; /* Sesuaikan ukuran font untuk heading di layar kecil */
-    padding-top: 3rem; /* Sesuaikan padding atas untuk heading di layar kecil */
+    font-size: 2.5rem; 
+    padding-top: 3rem; 
   }
 
   .subheading {
-    margin-top: 3rem; /* Sesuaikan margin atas untuk subheading di layar kecil */
-    font-size: 1.2rem; /* Sesuaikan ukuran font untuk subheading di layar kecil */
+    margin-top: 3rem; 
+    font-size: 1.2rem; 
   }
 
   .button-list {
-    margin: 1rem 5%; /* Sesuaikan margin untuk daftar tombol di layar kecil */
-    flex-wrap: wrap; /* Bungkus tombol jika lebar layar terlalu kecil */
-    justify-content: center; /* Pusatkan tombol di layar kecil */
+    margin: 1rem 5%; 
+    flex-wrap: wrap; 
+    justify-content: center; 
   }
 
   .button-item {
-    margin-right: 10px; /* Sesuaikan margin kanan untuk item tombol di layar kecil */
-    margin-bottom: 10px; /* Sesuaikan margin bawah untuk item tombol di layar kecil */
+    margin-right: 10px; 
+    margin-bottom: 10px; 
   }
 
   .button-item a {
-    padding: 8px 16px; /* Sesuaikan padding untuk tombol di layar kecil */
-    font-size: 1rem; /* Sesuaikan ukuran font untuk tombol di layar kecil */
+    padding: 8px 16px; 
+    font-size: 1rem;
   }
 
   .FAQ-container {
-    margin: 2rem 5%; /* Sesuaikan margin untuk layar kecil */
+    margin: 2rem 5%; 
   }
 
   .accordion-container .accordion-content {
-    margin: 1rem 0;
-    width: 90%; /* Sesuaikan margin untuk konten accordion di layar kecil */
+    margin: 1rem 1rem;
+    width: 90%; 
   }
 
   .FAQ-container-heading {
-    font-size: 1.8rem; /* Sesuaikan ukuran font untuk judul di layar kecil */
+    font-size: 1.8rem; 
   }
 
   .FAQ-container-subheading {
-    font-size: 1rem; /* Sesuaikan ukuran font untuk subjudul di layar kecil */
-    padding: 0rem 0rem; /* Sesuaikan padding untuk subjudul di layar kecil */
+    font-size: 1rem; 
+    padding: 0rem 0rem; 
   }
   
   .accordion-content header {
