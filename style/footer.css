@@ -1,3 +1,4 @@
+
 .footer {
   position: relative;
   width: 100%;
@@ -76,4 +77,18 @@
   margin: 15px 0 10px 0;
   font-size: 1rem;
   font-weight: 300;
+}
+
+@media screen and (max-width: 768px) {
+  .footer {
+    padding: 10px 0px;
+  }
+
+  .social-icons li, .footer-links li {
+    margin: 0 9px;
+  }
+
+  .footer p {
+    font-size: 0.9rem;
+  }
 }

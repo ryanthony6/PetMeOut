@@ -237,10 +237,58 @@ body {
   font-weight: 400;
   font-style: normal;
 }
-/* Why adopt section end */
 
-/* Blog section start */
-.blog {
+@media screen and (max-width: 768px) {
+  .knowUs p {
+    padding: 1.3rem 2rem;
+    font-size: 20px;
+  }
+
+  .card {
+    height: 40px;
+    width: 150px;
+  }
+
+  .card span {
+    font-size: 18px;
+  }
+
+  .social-link {
+    font-size: 20px;
+  }
+
+  .whyAdopt h2 {
+    padding: 1rem;
+    font-size: 2rem;
+  }
+
+  .adopt-heading {
+    padding: 1rem 2rem;
+    font-size: 20px;
+  }
+
+  .whyAdopt-container {
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 5%;
+  }
+
+  .whyAdopt-card {
+    padding: 15px;
+    margin: 15px;
+  }
+
+  .whyAdopt-card h3 {
+    padding: 1rem 2rem;
+    text-align: center;
+  }
+
+  .whyAdopt-card p {
+    font-size: 1rem;
+  }
+}
+
+.projects {
   min-height: 100vh;
 
   background-color: #f4f3ef;
@@ -270,29 +318,31 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 20px 0px;
-  flex-wrap: wrap;
 }
 
-.blog-card {
-  width: 350px;
-  background-color: #ffffff;
-  border: 1px solid #ececec;
-  border-radius: 0.75rem;
-  box-shadow: 0 10px 15px -3px #0000001a, 0 4px 6px -4px #0000001a;
-  margin: 20px;
+.project-img {
+  width: 65%;
+  height: 60%;
 }
 
-.blog-img {
-  width: 100%;
-  height: auto;
+.project-container {
+  text-align: center;
+  width: 21.875rem;
+  padding: 1rem;
 }
 
-.blog-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
+.project-container p {
+  padding: 0.4rem;
+}
+
+.project-title {
+  margin-bottom: 0.5rem;
+  color: #fff;
+}
+
+.project-details {
+  margin-bottom: 0.5rem;
+  color: #fff;
 }
 
 .blog-content {
