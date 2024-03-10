@@ -3,8 +3,9 @@
 * {
   padding: 0;
   margin: 0;
-  box-sizing: border-box;
+  box-sizing: giitborder-box;
   font-family: sans-serif;
+  overflow-x: hidden;
 }
 
 /* FAQ section start */
@@ -128,11 +129,13 @@
   color: #333;
   font-family: "Quicksand", sans-serif;
   font-weight: bold;
+  margin: 0;
 }
 
 .accordion-content header i {
   font-size: 15px;
   color: #333;
+  margin-left: 10px;
 }
 
 .accordion-content .description {
@@ -154,3 +157,63 @@
   background-color: #19a7ce;
 }
 /* FAQ section end */
+
+/* responsive */
+@media screen and (max-width: 768px) {
+  .heading {
+    font-size: 2.5rem; /* Sesuaikan ukuran font untuk heading di layar kecil */
+    padding-top: 3rem; /* Sesuaikan padding atas untuk heading di layar kecil */
+  }
+
+  .subheading {
+    margin-top: 3rem; /* Sesuaikan margin atas untuk subheading di layar kecil */
+    font-size: 1.2rem; /* Sesuaikan ukuran font untuk subheading di layar kecil */
+  }
+
+  .button-list {
+    margin: 1rem 5%; /* Sesuaikan margin untuk daftar tombol di layar kecil */
+    flex-wrap: wrap; /* Bungkus tombol jika lebar layar terlalu kecil */
+    justify-content: center; /* Pusatkan tombol di layar kecil */
+  }
+
+  .button-item {
+    margin-right: 10px; /* Sesuaikan margin kanan untuk item tombol di layar kecil */
+    margin-bottom: 10px; /* Sesuaikan margin bawah untuk item tombol di layar kecil */
+  }
+
+  .button-item a {
+    padding: 8px 16px; /* Sesuaikan padding untuk tombol di layar kecil */
+    font-size: 1rem; /* Sesuaikan ukuran font untuk tombol di layar kecil */
+  }
+
+  .FAQ-container {
+    margin: 2rem 5%; /* Sesuaikan margin untuk layar kecil */
+  }
+
+  .accordion-container .accordion-content {
+    margin: 1rem 0;
+    width: 90%; /* Sesuaikan margin untuk konten accordion di layar kecil */
+  }
+
+  .FAQ-container-heading {
+    font-size: 1.8rem; /* Sesuaikan ukuran font untuk judul di layar kecil */
+  }
+
+  .FAQ-container-subheading {
+    font-size: 1rem; /* Sesuaikan ukuran font untuk subjudul di layar kecil */
+    padding: 0rem 0rem; /* Sesuaikan padding untuk subjudul di layar kecil */
+  }
+  
+  .accordion-content header {
+    align-items: flex-start;
+    padding: 0.7rem;
+  }
+
+  .accordion-content header i {
+    font-size: 0.8rem;
+  }
+
+  .accordion-content .description {
+    font-size: 1rem;
+  }
+}
