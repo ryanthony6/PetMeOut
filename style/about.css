@@ -238,62 +238,80 @@ body {
   font-style: normal;
 }
 
-.projects {
+.blog {
   min-height: 100vh;
   background-color: #ffffff;
 }
 
-.projects h2 {
+.blog h2 {
   padding-top: 6rem;
   text-align: center;
-  margin-bottom: 1rem;
   color: #666;
-  font-size: 2.4rem;
+  font-size: 3rem;
 }
 
-.projects-container {
+.blog p{
+  padding-top: 0.5rem;
+  text-align: center;
+  color: #666;
+  font-size: 1.3rem;
+}
+
+.blog-container {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 20px 0px;
+  flex-wrap: wrap;
 }
 
-.project-img {
-  width: 65%;
-  height: 60%;
+.blog-card {
+  width: 350px;
+  background-color: #ffffff;
+  border: 1px solid #ececec;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px #0000001a, 0 4px 6px -4px #0000001a;
+  margin: 20px;
 }
 
-.project-container {
-  text-align: center;
-  width: 21.875rem;
-  padding: 1rem;
+.blog-img {
+  width: 100%;
+  height: auto;
 }
 
-.project-container p {
-  padding: 0.4rem;
+.blog-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
-.project-title {
-  margin-bottom: 0.5rem;
-  color: #fff;
+.blog-content {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 25px;
 }
 
-.project-details {
-  margin-bottom: 0.5rem;
-  color: #fff;
+.blog-content p{
+  text-align: left;
 }
 
-.project-card {
-  border-radius: 11px;
-  box-shadow: 0 3px 10px #9a9a9a;
-  padding: 20px;
-  margin: 10px;
+.blog-content .blog-title{
+  font-size: 1.3rem;
+  color: #272727;
 }
 
-.project-link {
-  color: #5c00dc;
-  box-shadow: inset 0 0 0 0 #5c00dc;
-
-  transition: color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+.blog-link {
+  padding-top: 0.5rem;
+  color: #272727;
 }
 
+.blog-link:hover{
+  color:#19a7ce ;
+  transition: 0.3s ease-in-out;
+}
+
+.blog-title:hover{
+  color: #1ebeea;
+}
 /* Why adopt section end */

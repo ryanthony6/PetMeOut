@@ -6,6 +6,7 @@
 
 .links li a {
   text-decoration: none;
+  letter-spacing: 3px;
   color: #fff;
   font-size: 18px;
   font-family: "Roboto", sans-serif;

@@ -167,7 +167,7 @@
 .searchSection h1 {
   padding-top: 3rem;
   text-align: center;
-  font-size: 2rem;
+  font-size: 3rem;
   color: #4e4e4e;
   font-family: "Quicksand", sans-serif;
   font-weight: 600;
@@ -339,7 +339,12 @@
   }
 
   .list-heading {
-    font-size: 2.5rem;
+    font-size: 2.1rem;
+  }
+
+  .list-subheading {
+    padding: 0.5rem 0.5rem;
+    font-size: 1.2rem;
   }
 
   .hero-content,
@@ -352,12 +357,16 @@
     display: none;
   }
 
+  .searchSection h1 {
+    font-size: 2rem;
+  }
+
   .search input[type="text"] {
     width: 350px;
   }
 
   .card-container {
-    margin: 2rem 2rem; /* Reduce margin on smaller screens */
+    margin: 2rem 2rem;
   }
 }
 
