@@ -252,13 +252,18 @@
 }
 
 .blog p {
-  padding-top: 0.5rem;
   text-align: center;
   color: #4e4e4e;
   font-size: 1.3rem;
   font-family: "Inter", sans-serif;
   font-weight: 500;
   font-style: normal;
+  display: -webkit-box; 
+  -webkit-box-orient: vertical; 
+  -webkit-line-clamp: 3; 
+  text-overflow: ellipsis;
+  overflow: hidden;
+  margin: 20px 0px;
 }
 
 .blog-container {
