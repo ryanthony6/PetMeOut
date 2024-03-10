@@ -9,20 +9,22 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   
   function displayPets(pets) {
-    const cardContainer = document.getElementById('cardContainer');
-    cardContainer.innerHTML = ''; // Clear previous content
+    const cardContainer = document.getElementById("cardContainer");
+    cardContainer.innerHTML = ""; // Clear previous content
   
-    pets.forEach(pet => {
-      const card = document.createElement('div');
-      card.className = 'cards';
+    pets.forEach((pet, index) => {
+      const card = document.createElement("div");
+      card.className = "cards";
       card.innerHTML = `
-        <img src="${pet.image}" />
-        <div class="info">
-          <p>${pet.name}</p>
-          <p>${pet.petRace}</p>
-          <a href="/layout/details.html" class="readmore-btn">Read More</a>
-        </div>
-      `;
+            <img src="${pet.image}" />
+            <div class="info">
+                <p>${pet.name}</p>
+                <p>${pet.petRace}</p>
+                <a href="/layout/details.html?id=${
+                  index + 1
+                }" class="readmore-btn" data-index="${index}">Read More</a>
+            </div>
+        `;
       cardContainer.appendChild(card);
     });
   }

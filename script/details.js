@@ -1,37 +1,31 @@
-document.addEventListener("DOMContentLoaded", function () {
-  function openForm() {
-    document.getElementById("popup-form-container").style.display = "block";
-  }
+const urlParams = new URLSearchParams(window.location.search);
+const petId = urlParams.get('id');
 
-  function closeForm() {
-    document.getElementById("popup-form-container").style.display = "none";
-  }
+fetch("/data.json")
+    .then(response => response.json())
+    .then(data => {
+        const pet = data.find(pet => pet.id === petId);
+        displayPetDetails(pet);
+    })
+    .catch(error => console.error('Error fetching pet details:', error));
 
-  document
-    .querySelector(".btn-contact")
-    .addEventListener("click", function (event) {
-      event.preventDefault();
-      openForm();
-    });
-
-  document
-    .querySelector(".close-btn")
-    .addEventListener("click", function (event) {
-      event.preventDefault();
-      closeForm();
-    });
-
-  document
-    .querySelector(".cancel-btn")
-    .addEventListener("click", function (event) {
-      event.preventDefault();
-      closeForm();
-    });
-
-  window.addEventListener("click", function (event) {
-    var popup = document.getElementById("popup-form-container");
-    if (event.target === popup) {
-      closeForm();
+function displayPetDetails(pet) {
+    const detailContent = document.getElementById('detailContent');
+    if (pet) {
+        detailContent.innerHTML = `
+            <div class="card">
+                <div class="details">
+                    <h2>Detail Hewan</h2>
+                    <p><b>Nama:</b> ${pet.name}</p>
+                    <p><b>Jenis:</b> ${pet.petRace}</p>
+                    <!-- Tambahkan detail lain sesuai kebutuhan -->
+                </div>
+                <div class="image">
+                    <img src="${pet.image}" alt="Gambar Hewan" />
+                </div>
+            </div>
+        `;
+    } else {
+        detailContent.innerHTML = "<p>Hewan tidak ditemukan.</p>";
     }
-  });
-});
+}

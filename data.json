@@ -1,35 +1,45 @@
 [
   {
+    "id":"1",
     "name": "Henry",
     "petRace": "British short hair",
     "image": "/img/cats/cat.jpg",
     "category": "cat"
   },
   {
+    "id":"2",
     "name": "Kuro",
     "petRace": "German Shepperd",
     "image": "/img/dogs/dog2.jpg",
     "category": "dog"
   },
   {
+    
+    "id":"3",
     "name": "Zen",
     "petRace": "Munchkin",
     "image": "/img/cats/cat4.jpg",
     "category": "cat"
   },
   {
+    
+    "id":"4",
     "name": "Bubi",
     "petRace": "Bengal",
     "image": "/img/cats/cat5.jpg",
     "category": "cat"
   },
   {
+    
+    "id":"5",
     "name": "Clod",
     "petRace": "Siberian Husky",
     "image": "/img/dogs/dog6.jpg",
     "category": "dog"
   },
   {
+    
+    "id":"6",
     "name": "Anita",
     "petRace": "Persian",
     "image": "/img/cats/cat7.jpg",
