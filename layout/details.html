@@ -2,11 +2,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Informasi hewan</title>
+    <title>PetMeOut</title>
 
+    <!-- CSS -->
     <link rel="stylesheet" href="/style/ResponsiveNavbarTes.css" />
     <link rel="stylesheet" href="/style/styleDetails.css" />
 
+    <!-- Icons -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -16,6 +18,7 @@
     />
   </head>
   <body>
+
     <!-- Navbar start -->
     <header class="nav-header">
       <div class="navbar">
@@ -42,12 +45,15 @@
     </header>
     <!-- Navbar end -->
 
+    <!-- Card detail hewan start -->
     <section class="detail-hewan">
       <div id="detailContent" class="detailContent">
         <!-- Detail hewan akan dimuat di sini melalui JavaScript -->
     </div>
     </section>
+    <!-- Card detail hewan end-->
 
+    <!-- Form pop up ketika ingin adopsi -->
     <div class="popup-form-container" id="popup-form-container">
       <div class="popup-form">
         <span class="close-btn" onclick="closeForm()">&times;</span>
@@ -99,7 +105,7 @@
       </div>
     </div>
 
-    <!-- <script src="/script/formdetails.js"></script> -->
+    <!-- Script -->
     <script src="/script/details.js"></script>
     <script src="/script/ResponsiveNavbarTes.js"></script>
   </body>

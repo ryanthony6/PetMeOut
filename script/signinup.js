@@ -1,3 +1,4 @@
+// Membuat panel bergeser pada bagian login / register
 const signUpButton = document.getElementById("signUp");
 const signInButton = document.getElementById("signIn");
 const container = document.getElementById("container");

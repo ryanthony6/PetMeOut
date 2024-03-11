@@ -1,3 +1,4 @@
+// Responsive navbar script
 const toggleBtn = document.querySelector('.toggle-button')
 const toggleBtnIcon = document.querySelector('.toggle-button i')
 const dropDownMenu = document.querySelector('.dropdown-menu')

@@ -1,3 +1,4 @@
+// Settings untuk bagian carousel yg dibuat menggunakan swiperjs
 var swiper = new Swiper(".slide-container", {
     slidesPerView: 4,
     spaceBetween: 20,

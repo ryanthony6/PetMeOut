@@ -1,3 +1,4 @@
+// Untuk membuat accordion
 const accordionContent = document.querySelectorAll(".accordion-content");
 accordionContent.forEach((item, index) => {
   let header = item.querySelector("header");
@@ -16,6 +17,7 @@ accordionContent.forEach((item, index) => {
   });
 });
 
+// Agar hanya ada 1 accordion saja yang bisa dibuka dalam 1 waktu tertentu
 function removeOpen(index1) {
   accordionContent.forEach((item2, index2) => {
     if (index1 != index2) {
@@ -28,6 +30,7 @@ function removeOpen(index1) {
   });
 }
 
+// Membuat navlink pada button yang dipilih
 const navLinkFAQs = document.querySelectorAll(".nav_link");
 navLinkFAQs.forEach((navLinkFAQ) => {
   navLinkFAQ.addEventListener("click", () => {
@@ -36,6 +39,7 @@ navLinkFAQs.forEach((navLinkFAQ) => {
   });
 });
 
+// Menampilkan konten sesuai dengan button yang ditekan
 const adoptionButton = document.getElementById("adoption-button");
 const basicInfoButton = document.getElementById("basic-button");
 const HowToHelpButton = document.getElementById("help-button");

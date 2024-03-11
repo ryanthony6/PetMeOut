@@ -66,8 +66,8 @@
   background-color: #fff;
   color: #19a7ce;
 }
-
 /* Hero section end */
+
 
 /* list section start */
 .cardList {
@@ -155,7 +155,6 @@
 .swiper-pagination-bullet {
   background-color: #333;
 }
-
 /* list section end */
 
 /* Search section start */
@@ -327,7 +326,9 @@
   background: #19a7ce;
   color: white;
 }
+/* Search section end */
 
+/* Responsiv */
 @media (max-width: 768px) {
   .hero {
     flex-direction: column;

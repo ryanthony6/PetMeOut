@@ -326,6 +326,7 @@
 }
 /* Blog section end */
 
+/* Responsiv */
 @media (max-width: 768px) {
   .knowUs p {
     padding: 1.3rem 2rem;

@@ -1,4 +1,4 @@
-// JavaScript
+// Mengambil data pada json
 document.addEventListener("DOMContentLoaded", function () {
     fetch("/data.json")
       .then(response => response.json())
@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
       .catch(error => console.error('Error fetching pets:', error));
   });
   
+  // Menampilkan hewan-hewan sesuai json
   function displayPets(pets) {
     const cardContainer = document.getElementById("cardContainer");
     cardContainer.innerHTML = ""; // Clear previous content
@@ -29,6 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
   
+  // Menyaring jenis hewan yang dicari
   function filterPets() {
     const searchInput = document.getElementById('searchInput').value.toLowerCase();
     const categorySelect = document.getElementById('categorySelect').value.toLowerCase();

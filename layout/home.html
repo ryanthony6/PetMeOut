@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="myApp">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Animal Adopt</title>
+    <title>PetMeOut</title>
+
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="/style/swiper-bundle.min.css" />
 
     <!-- CSS -->
-
-    <link rel="stylesheet" href="/style/swiper-bundle.min.css" />
     <link rel="stylesheet" href="/style/ResponsiveNavbarTes.css" />
     <link rel="stylesheet" href="/style/home.css" />
     <link rel="stylesheet" href="/style/footer.css" />
@@ -21,9 +22,9 @@
       referrerpolicy="no-referrer"
     />
 
-    <!-- Script -->
   </head>
-  <body ng-controller="myCtrl">
+  <body>
+
     <!-- Navbar start -->
     <header class="nav-header">
       <div class="navbar">
@@ -41,6 +42,7 @@
         </div>
       </div>
 
+      <!-- Dropdown menu pada navbar (untuk mobile) -->
       <div class="dropdown-menu">
         <li><a href="/layout/home.html">Home</a></li>
         <li><a href="/layout/about.html">About</a></li>
@@ -71,6 +73,7 @@
       <h1 class="list-heading">Adoptable Animals Highlight</h1>
       <p class="list-subheading">These animals are waiting for a new home</p>
 
+      <!-- Menggunakan swiperjs untuk menampilkan carousel -->
       <div class="container swiper">
         <div class="slide-container">
           <div class="card-wrapper swiper-wrapper">
@@ -171,6 +174,7 @@
     </section>
     <!-- List section end -->
 
+
     <!-- Search section start -->
     <section class="searchSection">
       <h1>Find your pet now!</h1>
@@ -197,11 +201,12 @@
       </div>
 
       <div class="card-container" id="cardContainer">
-        <!-- dynamic card using js -->
+        <!-- Menampilkan kartu secara dinamis dengan javascript -->
       </div>
     </section>
     <!-- Search section end -->
 
+    <!-- Footer section start -->
     <footer class="footer">
       <div class="contents">
         <div class="footer-social">
@@ -227,9 +232,9 @@
       </div>
       <p>&copy;2024 petMEout | All Rights Reserved</p>
     </footer>
+    <!-- Footer section end -->
 
     <!-- Script -->
-
     <script src="/script/swiper-bundle.min.js"></script>
     <script src="/script/ResponsiveNavbarTes.js"></script>
     <script src="/script/home.js"></script>
