@@ -13,7 +13,7 @@ app.use(expressLayouts);
 app.use(express.static("public"));
 
 app.listen(port, () => {
-    console.log(`Webserver app listening on port ${port}`);
+    console.log(`Webserver app listening on http://localhost:${port}/`);
 })
 
 app.get("/", (req, res) => {
