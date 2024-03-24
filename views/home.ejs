@@ -1,0 +1,167 @@
+
+    <!-- Navbar start -->
+    <!-- Navbar end -->
+
+    <!-- Hero section start -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Save Lives, Get Love</h1>
+        <p>
+          Countless of stray and unwanted animals are suffering everyday, and
+          they are waiting for people like YOU.
+        </p>
+        <button class="hero-btn">Find ur Pet now!</button>
+      </div>
+      <div class="hero-image">
+        <img src="/img/haiya.png" alt="Hero Image" />
+      </div>
+    </section>
+    <!-- Hero section end -->
+
+    <!-- List section start -->
+    <section class="cardList">
+      <h1 class="list-heading">Adoptable Animals Highlight</h1>
+      <p class="list-subheading">These animals are waiting for a new home</p>
+
+      <!-- Menggunakan swiperjs untuk menampilkan carousel -->
+      <div class="container swiper">
+        <div class="slide-container">
+          <div class="card-wrapper swiper-wrapper">
+            <div class="card swiper-slide">
+              <div class="image-box">
+                <img src="/img/cats/cat.jpg" alt="" />
+              </div>
+              <div class="profile-details">
+                <div class="name-job">
+                  <h3 class="name">Bonbon</h3>
+                  <h4 class="job">British Short Hair</h4>
+                </div>
+              </div>
+            </div>
+            <div class="card swiper-slide">
+              <div class="image-box">
+                <img src="/img/cats/cat2.jpg" alt="" />
+              </div>
+              <div class="profile-details">
+                <div class="name-job">
+                  <h3 class="name">Phud</h3>
+                  <h4 class="job">Anggora</h4>
+                </div>
+              </div>
+            </div>
+            <div class="card swiper-slide">
+              <div class="image-box">
+                <img src="/img/cats/cat3.jpg" alt="" />
+              </div>
+              <div class="profile-details">
+                <div class="name-job">
+                  <h3 class="name">Caid</h3>
+                  <h4 class="job">Siamese</h4>
+                </div>
+              </div>
+            </div>
+            <div class="card swiper-slide">
+              <div class="image-box">
+                <img src="/img/cats/cat4.jpg" alt="" />
+              </div>
+              <div class="profile-details">
+                <div class="name-job">
+                  <h3 class="name">Fish</h3>
+                  <h4 class="job">Persian</h4>
+                </div>
+              </div>
+            </div>
+            <div class="card swiper-slide">
+              <div class="image-box">
+                <img src="/img/dogs/dog.jpg" alt="" />
+              </div>
+              <div class="profile-details">
+                <div class="name-job">
+                  <h3 class="name">Heather</h3>
+                  <h4 class="job">Bengal</h4>
+                </div>
+              </div>
+            </div>
+            <div class="card swiper-slide">
+              <div class="image-box">
+                <img src="/img/dogs/dog6.jpg" alt="" />
+              </div>
+              <div class="profile-details">
+                <div class="name-job">
+                  <h3 class="name">Lily</h3>
+                  <h4 class="job">Siberian Husky</h4>
+                </div>
+              </div>
+            </div>
+            <div class="card swiper-slide">
+              <div class="image-box">
+                <img src="/img/dogs/dog3.jpg" alt="" />
+              </div>
+              <div class="profile-details">
+                <div class="name-job">
+                  <h3 class="name">Chedar</h3>
+                  <h4 class="job">Golden Retriever</h4>
+                </div>
+              </div>
+            </div>
+            <div class="card swiper-slide">
+              <div class="image-box">
+                <img src="/img/dogs/dog8.jpg" alt="" />
+              </div>
+              <div class="profile-details">
+                <div class="name-job">
+                  <h3 class="name">Jason</h3>
+                  <h4 class="job">German Shepperd</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-button-next swiper-navBtn"></div>
+        <div class="swiper-button-prev swiper-navBtn"></div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </section>
+    <!-- List section end -->
+
+
+    <!-- Search section start -->
+    <section class="searchSection">
+      <h1>Find your pet now!</h1>
+
+      <div class="search-wrapper">
+        <div class="search">
+          <input
+            id="searchInput"
+            placeholder="Search..."
+            type="text"
+            oninput="filterPets()"
+          />
+          <button type="submit">Go</button>
+        </div>
+      </div>
+
+      <div class="category-select">
+        <select id="categorySelect" onchange="filterPets()">
+          <option value="">All</option>
+          <option value="cat">Cats</option>
+          <option value="dog">Dogs</option>
+          <option value="other">Others</option>
+        </select>
+      </div>
+
+      <div class="card-container" id="cardContainer">
+        <!-- Menampilkan kartu secara dinamis dengan javascript -->
+      </div>
+    </section>
+    <!-- Search section end -->
+
+    <!-- Footer section start -->
+    
+    <!-- Footer section end -->
+    <link rel="stylesheet" href="style/home.css" />
+    <!-- Script -->
+    <script src="/script/swiper-bundle.min.js"></script>
+    <script src="/script/ResponsiveNavbarTes.js"></script>
+    <script src="/script/home.js"></script>
+    <script src="/script/swiper.js"></script>
