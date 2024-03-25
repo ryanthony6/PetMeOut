@@ -20,7 +20,6 @@ app.listen(port, () => {
   console.log(`Webserver app listening on http://localhost:${port}/`);
 });
 
-
 app.get("/", (req, res) => {
   res.render("home.ejs", { title: "homepage", layout: "mainlayout.ejs" });
 });
@@ -40,3 +39,8 @@ app.get("/details", (req, res) => {
 app.get("/signinup", (req, res) => {
   res.render("signinup.ejs", { title: "details", layout: "SignupLayout.ejs" });
 });
+
+app.get("/add", (req, res) => {
+  res.render("addPet.ejs", { title: "add_pet",layout: "detailslayout.ejs"});
+})
+
