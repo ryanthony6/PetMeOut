@@ -1,0 +1,162 @@
+
+    <div class="container">
+      <div class="form_area">
+        <p class="title">Pet Data</p>
+        <form action="/add" method="post">
+          <div class="form_group">
+            <label class="sub_title" for="name">Name</label>
+            <input
+              placeholder="Enter pet Name"
+              class="form_style"
+              type="text"
+              required
+            />
+          </div>
+
+          <div class="form_group">
+            <label class="sub_title" for="email">Age</label>
+            <input
+              placeholder="e.g. 2 Months, 2 Days, 2 Years"
+              id="age"
+              class="form_style"
+              type="text"
+              required
+            />
+          </div>
+
+          <div class="form_group">
+            <label class="sub_title">Gender</label>
+
+            <div class="container_radio">
+              <input
+                id="male"
+                type="radio"
+                name="gender"
+                value="male"
+                required
+              />
+              <label class="radio_label" for="male">Male</label>
+              <input
+                id="female"
+                type="radio"
+                name="gender"
+                value="female"
+                required
+              />
+              <label class="radio_label" for="female">Female</label>
+            </div>
+          </div>
+
+          <div class="form_group">
+            <label class="sub_title">Size</label>
+            <div class="container_radio">
+              <div class="gender_radio">
+                <input
+                  id="small"
+                  class="radio_input"
+                  type="radio"
+                  name="size"
+                  value="small"
+                  required
+                />
+                <label class="radio_label" for="male">Small</label>
+                <input
+                  id="medium"
+                  class="radio_input"
+                  type="radio"
+                  name="size"
+                  value="medium"
+                  required
+                />
+                <label class="radio_label" for="female">Medium</label>
+                <input
+                  id="large"
+                  class="radio_input"
+                  type="radio"
+                  name="size"
+                  value="large"
+                  required
+                />
+                <label class="radio_label" for="female">Large</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form_group">
+            <label class="sub_title" for="name">Breed</label>
+            <input
+              placeholder="Enter pet breed"
+              class="form_style"
+              type="text"
+              required
+            />
+          </div>
+
+          <div class="form_group">
+            <label class="sub_title" for="name">Location</label>
+            <input
+              placeholder="e.g. Bogor, Jawa Barat"
+              class="form_style"
+              type="text"
+              required
+            />
+          </div>
+
+          <div class="form_group">
+            <label class="sub_title">Category</label>
+            <div class="container_radio">
+              <div class="gender_radio">
+                <input
+                  id="dog"
+                  class="radio_input"
+                  type="radio"
+                  name="category"
+                  value="dog"
+                  required
+                />
+                <label class="radio_label" for="male">Dog</label>
+                <input
+                  id="cat"
+                  class="radio_input"
+                  type="radio"
+                  name="category"
+                  value="cat"
+                  required
+                />
+                <label class="radio_label" for="female">Cat</label>
+                <input
+                  id="other"
+                  class="radio_input"
+                  type="radio"
+                  name="category"
+                  value="other"
+                  required
+                />
+                <label class="radio_label" for="female">Other</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form_group">
+            <label class="sub_title" for="image">Image</label>
+            <div class="container_radio">
+              <input
+                id="image"
+                class="formimg_style"
+                type="file"
+                name="image"
+                accept="image/*"
+                required
+              />
+            </div>
+          </div>
+
+          <button type="submit" class="btn">ADD DATA</button>
+        </form>
+      </div>
+    </div>
+
+    <link rel="stylesheet" href="/style/AdmnFormStyle.css" />
+
+    <script src="/script/ResponsiveNavbarTes.js"></script>
+

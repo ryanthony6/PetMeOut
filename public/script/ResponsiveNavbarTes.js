@@ -9,4 +9,10 @@ toggleBtn.onclick = function(){
     toggleBtnIcon.classList = isOpen
     ? 'fa-solid fa-xmark'
     : 'fa-solid fa-bars'
+
+    if (isOpen) {
+        console.log("Dropdown menu dibuka");
+    } else {
+        console.log("Dropdown menu ditutup");
+    }
 }

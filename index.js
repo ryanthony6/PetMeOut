@@ -41,6 +41,6 @@ app.get("/signinup", (req, res) => {
 });
 
 app.get("/add", (req, res) => {
-  res.render("addPet.ejs", { title: "add_pet",layout: "detailslayout.ejs"});
+  res.render("AdmnForm.ejs", { title: "Admin_form", layout: "AdmnFormLayout.ejs" });
 })
 
