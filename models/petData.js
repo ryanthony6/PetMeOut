@@ -9,7 +9,7 @@ const petDataSchema = new Schema({
     type: String,
     required: true,
   },
-  sex: {
+  gender: {
     type: String,
     required: true,
   },
