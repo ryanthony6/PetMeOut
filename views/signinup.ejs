@@ -9,8 +9,6 @@
             <p class="error-message"><%= messages.error && messages.error.includes('Email already registered') ? 'Email already registered' : '' %></p>
           <input type="password" name="password" placeholder="Password" />
           <button type="submit" name="register">SignUp</button>
-            <p class="success-message"><%= messages.success && messages.success.includes('User registered successfully! Please login.') ? 'User registered successfully! Please login.' : '' %></p>
-            <p class="error-message"><%= messages.error && messages.error.includes('Error registering user') ? 'Error registering user' : '' %></p>
         </form>
       </div>
 
@@ -20,8 +18,9 @@
           <span>or use your account</span>
           <input type="email" name="email" placeholder="Email" />
           <input type="password" name="password" placeholder="Password" />
-            <p class="error-message"><%= messages.error && messages.error.includes('Email not found') ? 'Email not found' : '' %></p>
-            <p class="error-message"><%= messages.error && messages.error.includes('Incorrect password') ? 'Incorrect password' : '' %></p>
+            <p class="error-message"><%= messages.error && messages.error.includes('Email not found or incorrect password') ? 'Email not found or incorrect password' : '' %></p>
+            <p class="success-message"><%= messages.success && messages.success.includes('User registered successfully! Please login.') ? 'User registered successfully! Please login.' : '' %></p>
+            <p class="error-message"><%= messages.error && messages.error.includes('Error registering user') ? 'Error registering user' : '' %></p>
           <a href="#">Forgot your Password</a>
 
           <button type="submit" name="login">Sign In</button>

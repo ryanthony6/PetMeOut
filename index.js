@@ -146,14 +146,14 @@ app.post("/login", async (req, res) => {
     // Cari pengguna berdasarkan email
     const user = await UserData.findOne({ email });
     if (!user) {
-      req.flash('error', 'Email not found');
+      req.flash('error', 'Email not found or incorrect password');
       return res.redirect("/signinup");
     }
 
     // Bandingkan password yang dimasukkan dengan password yang di-hash yang tersimpan dalam database
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
-      req.flash('error', 'Incorrect password');
+      req.flash('error', 'Email not found or incorrect password');
       return res.redirect("/signinup");
     }
     // Jika email dan password cocok, alihkan pengguna ke halaman home
