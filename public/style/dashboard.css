@@ -1,0 +1,45 @@
+
+*{
+    padding: 0;
+    margin: 0;
+    font-family: sans-serif;
+    }
+
+.container{
+    margin: 1rem 1rem;
+    padding-top: 4rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+.pet-image {
+  width: 80px;
+  height: auto;
+}
+
+.actions button {
+  margin: 5px;
+  padding: 5px 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.actions button:hover {
+  background-color: #45a049;
+}
