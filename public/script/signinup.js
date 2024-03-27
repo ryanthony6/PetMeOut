@@ -11,3 +11,16 @@ signInButton.addEventListener("click", () => {
   container.classList.remove("right-panel-active");
 });
 
+// Tampilkan pesan error atau pesan sukses saat ada
+const errorMessages = document.querySelectorAll(".error-message");
+const successMessage = document.querySelector(".success-message");
+
+errorMessages.forEach(message => {
+  if (message.innerText !== "") {
+    message.style.display = "block";
+  }
+});
+
+if (successMessage.innerText !== "") {
+  successMessage.style.display = "block";
+}

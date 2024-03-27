@@ -4,9 +4,7 @@
           <h1>Create Account</h1>
           <span>or use your email for registration</span>
           <input type="text" name="username" placeholder="Name" />
-            <p class="error-message"><%= messages.error && messages.error.includes('Username already exists') ? 'Username already exists' : '' %></p>
           <input type="email" name="email" placeholder="Email" />
-            <p class="error-message"><%= messages.error && messages.error.includes('Email already registered') ? 'Email already registered' : '' %></p>
           <input type="password" name="password" placeholder="Password" />
           <button type="submit" name="register">SignUp</button>
         </form>
@@ -21,6 +19,8 @@
             <p class="error-message"><%= messages.error && messages.error.includes('Email not found or incorrect password') ? 'Email not found or incorrect password' : '' %></p>
             <p class="success-message"><%= messages.success && messages.success.includes('User registered successfully! Please login.') ? 'User registered successfully! Please login.' : '' %></p>
             <p class="error-message"><%= messages.error && messages.error.includes('Error registering user') ? 'Error registering user' : '' %></p>
+            <p class="error-message"><%= messages.error && messages.error.includes('Username already exists') ? 'Username already exists' : '' %></p>
+            <p class="error-message"><%= messages.error && messages.error.includes('Email already registered') ? 'Email already registered' : '' %></p>
           <a href="#">Forgot your Password</a>
 
           <button type="submit" name="login">Sign In</button>
