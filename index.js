@@ -5,6 +5,7 @@ const session = require("express-session");
 require("dotenv").config();
 require("./utils/db");
 
+const passport = require('./models/passport');
 const Pet = require("./models/petData");
 const UserData = require("./models/userData");
 const multer = require("multer");
@@ -21,13 +22,20 @@ app.set("view engine", "ejs");
 app.use(expressLayouts);
 app.use(express.static("public"));
 
+
 app.use(session({
-  secret: 'secret', // Ganti dengan secret key yang lebih aman
+  secret: 'secret', 
   resave: true,
   saveUninitialized: true
 }));
 
-
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
+app.use((req, res, next) => {
+  res.locals.currentUser = req.user;
+  next();
+});
 
 // Image upload
 var storage = multer.diskStorage({
@@ -59,7 +67,11 @@ app.get("/details", (req, res) => {
 
 // Render halaman sign-up
 app.get("/signinup", (req, res) => {
-  res.render("signinup.ejs", { title: "details", layout: "SignupLayout.ejs", messages: req.flash() });
+  res.render("signinup.ejs", { title: "Sign up/Sign in", layout: "SignupLayout.ejs", messages: req.flash() });
+});
+
+app.get("/login", (req, res) => {
+  res.render("login", { title: "Login", layout: false, messages: req.flash() });
 });
 
 
@@ -69,11 +81,9 @@ app.get("/add", (req, res) => {
 
 // Insert pet data into database
 app.post("/add", upload,async (req, res) => {
-
   // if (!req.file) {
   //   return res.status(400).json({ message: 'No file uploaded', type: 'error' });
   // }
-
   const pet = new Pet({
     name: req.body.name,
     age: req.body.age,
@@ -139,30 +149,27 @@ app.post("/signup", async (req, res) => {
 });
 
 // Route untuk login
-app.post("/login", async (req, res) => {
-  try {
-    const { email, password } = req.body;
+app.post('/login', passport.authenticate('local', {
+  successRedirect: '/', 
+  failureRedirect: '/signinup', 
+  failureFlash: true
+}));
 
-    // Cari pengguna berdasarkan email
-    const user = await UserData.findOne({ email });
-    if (!user) {
-      req.flash('error', 'Email not found');
-      return res.redirect("/signinup");
+// Route untuk logout
+app.get('/logout', (req, res) => {
+  req.logout((err) => {
+    if (err) {
+      console.error('Error logging out:', err);
+      return res.status(500).send('Error logging out');
     }
+    res.redirect('/');
+  });
+});
 
-    // Bandingkan password yang dimasukkan dengan password yang di-hash yang tersimpan dalam database
-    const passwordMatch = await bcrypt.compare(password, user.password);
-    if (!passwordMatch) {
-      req.flash('error', 'Incorrect password');
-      return res.redirect("/signinup");
-    }
-    // Jika email dan password cocok, alihkan pengguna ke halaman home
-    res.redirect("/");
-  } catch (error) {
-    console.error("Error logging in:", error.message);
-    req.flash('error', 'Error logging in');
-    res.redirect("/signinup");
-  }
+
+app.use((req, res, next) => {
+  res.locals.currentUser = req.user;
+  next();
 });
 
 app.listen(port, () => {

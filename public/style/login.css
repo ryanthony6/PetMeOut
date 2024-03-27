@@ -247,8 +247,9 @@ input {
 
 .error-message,
 .success-message {
-  margin-top: 10px; /* Sesuaikan jarak sesuai kebutuhan */
-  margin-bottom: 5px; /* Sesuaikan jarak sesuai kebutuhan */
+  margin-top: 10px; 
+  margin-bottom: 5px; 
+  display: none;
 }
 
 
