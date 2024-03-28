@@ -1,8 +1,12 @@
 <div class="container">
   <div class="form_area">
-    <p class="title">Pet Data</p>
+    <p class="title">Edit Data</p>
 
-    <form action="/add" method="post" enctype="multipart/form-data">
+    <form
+      action="/update/<%= pets._id %>"
+      method="post"
+      enctype="multipart/form-data"
+    >
       <div class="form_group">
         <label class="sub_title" for="name">Name</label>
         <input
@@ -10,6 +14,7 @@
           class="form_style"
           type="text"
           id="name"
+          value="<%= pets.name %>"
           name="name"
           required
         />
@@ -22,6 +27,7 @@
           id="age"
           name="age"
           class="form_style"
+          value="<%= pets.age %>"
           type="text"
           required
         />
@@ -31,16 +37,12 @@
         <label class="sub_title">Gender</label>
 
         <div class="container_radio">
-          <input id="male" type="radio" name="gender" value="male" required />
+          <input id="male" type="radio" name="gender" value="male" <% if (pets.gender ===
+          'male') { %> checked <% } %> required />
           <label class="radio_label" for="male">Male</label>
 
-          <input
-            id="female"
-            type="radio"
-            name="gender"
-            value="female"
-            required
-          />
+          <input id="female" type="radio" name="gender" value="female"<% if (pets.gender ===
+          'female') { %> checked <% } %> required />
           <label class="radio_label" for="female">Female</label>
         </div>
       </div>
@@ -49,32 +51,14 @@
         <label class="sub_title">Size</label>
         <div class="container_radio">
           <div class="gender_radio">
-            <input
-              id="small"
-              class="radio_input"
-              type="radio"
-              name="size"
-              value="small"
-              required
-            />
+            <input id="small" class="radio_input" type="radio" value="small" name="size" <% if
+            (pets.size === 'small') { %> checked <% } %> required />
             <label class="radio_label" for="male">Small</label>
-            <input
-              id="medium"
-              class="radio_input"
-              type="radio"
-              name="size"
-              value="medium"
-              required
-            />
+            <input id="medium" class="radio_input" type="radio" value="medium" name="size" <%
+            if (pets.size === 'medium') { %> checked <% } %> required />
             <label class="radio_label" for="female">Medium</label>
-            <input
-              id="large"
-              class="radio_input"
-              type="radio"
-              name="size"
-              value="large"
-              required
-            />
+            <input id="large" class="radio_input" type="radio" value="large" name="size" <% if
+            (pets.size === 'large') { %> checked <% } %> required />
             <label class="radio_label" for="female">Large</label>
           </div>
         </div>
@@ -87,6 +71,7 @@
           class="form_style"
           id="breed"
           name="breed"
+          value="<%= pets.breed %>"
           type="text"
           required
         />
@@ -99,6 +84,7 @@
           class="form_style"
           name="location"
           type="text"
+          value="<%= pets.location %>"
           required
         />
       </div>
@@ -107,56 +93,28 @@
         <label class="sub_title">Category</label>
         <div class="container_radio">
           <div class="gender_radio">
-            <input
-              id="dog"
-              class="radio_input"
-              type="radio"
-              name="category"
-              value="dog"
-              required
-            />
+            <input id="dog" class="radio_input" type="radio" name="category"
+            value="dog" <% if (pets.category === 'dog') { %> checked <% } %>
+            required />
             <label class="radio_label" for="male">Dog</label>
-            <input
-              id="cat"
-              class="radio_input"
-              type="radio"
-              name="category"
-              value="cat"
-              required
-            />
+            <input id="cat" class="radio_input" type="radio" name="category"
+            value="cat" <% if (pets.category === 'cat') { %> checked <% } %>
+            required />
             <label class="radio_label" for="female">Cat</label>
-            <input
-              id="other"
-              class="radio_input"
-              type="radio"
-              name="category"
-              value="other"
-              required
-            />
+            <input id="other" class="radio_input" type="radio" name="category"
+            value="other" <% if (pets.category === 'other') { %> checked <% } %>
+            required />
             <label class="radio_label" for="female">Other</label>
           </div>
         </div>
       </div>
 
-      <!-- <div class="form_group">
-        <label class="sub_title" for="image">Image</label>
-        <div class="container_radio">
-          <input
-            id="image"
-            class="formimg_style"
-            type="file"
-            name="image"
-            accept="image/*"
-            required
-          />
-        </div>
-      </div> -->
-
-      <button type="submit" class="btn">ADD DATA</button>
+      <button type="submit" class="btn">UPDATE DATA</button>
     </form>
   </div>
 </div>
 
 
-<link rel="stylesheet" href="style/addPet.css" />
+
+<link rel="stylesheet" href="/style/plisbisa.css" />
 <script src="/script/ResponsiveNavbarTes.js"></script>
