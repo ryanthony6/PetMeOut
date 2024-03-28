@@ -1,0 +1,120 @@
+<div class="container">
+  <div class="form_area">
+    <p class="title">Edit Data</p>
+
+    <form
+      action="/update/<%= pets._id %>"
+      method="post"
+      enctype="multipart/form-data"
+    >
+      <div class="form_group">
+        <label class="sub_title" for="name">Name</label>
+        <input
+          placeholder="Enter pet Name"
+          class="form_style"
+          type="text"
+          id="name"
+          value="<%= pets.name %>"
+          name="name"
+          required
+        />
+      </div>
+
+      <div class="form_group">
+        <label class="sub_title" for="age">Age</label>
+        <input
+          placeholder="e.g. 2 Months, 2 Days, 2 Years"
+          id="age"
+          name="age"
+          class="form_style"
+          value="<%= pets.age %>"
+          type="text"
+          required
+        />
+      </div>
+
+      <div class="form_group">
+        <label class="sub_title">Gender</label>
+
+        <div class="container_radio">
+          <input id="male" type="radio" name="gender" value="male" <% if (pets.gender ===
+          'male') { %> checked <% } %> required />
+          <label class="radio_label" for="male">Male</label>
+
+          <input id="female" type="radio" name="gender" value="female"<% if (pets.gender ===
+          'female') { %> checked <% } %> required />
+          <label class="radio_label" for="female">Female</label>
+        </div>
+      </div>
+
+      <div class="form_group">
+        <label class="sub_title">Size</label>
+        <div class="container_radio">
+          <div class="gender_radio">
+            <input id="small" class="radio_input" type="radio" value="small" name="size" <% if
+            (pets.size === 'small') { %> checked <% } %> required />
+            <label class="radio_label" for="male">Small</label>
+            <input id="medium" class="radio_input" type="radio" value="medium" name="size" <%
+            if (pets.size === 'medium') { %> checked <% } %> required />
+            <label class="radio_label" for="female">Medium</label>
+            <input id="large" class="radio_input" type="radio" value="large" name="size" <% if
+            (pets.size === 'large') { %> checked <% } %> required />
+            <label class="radio_label" for="female">Large</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form_group">
+        <label class="sub_title" for="">Breed</label>
+        <input
+          placeholder="Enter pet breed"
+          class="form_style"
+          id="breed"
+          name="breed"
+          value="<%= pets.breed %>"
+          type="text"
+          required
+        />
+      </div>
+
+      <div class="form_group">
+        <label class="sub_title" for="name">Location</label>
+        <input
+          placeholder="e.g. Bogor, Jawa Barat"
+          class="form_style"
+          name="location"
+          type="text"
+          value="<%= pets.location %>"
+          required
+        />
+      </div>
+
+      <div class="form_group">
+        <label class="sub_title">Category</label>
+        <div class="container_radio">
+          <div class="gender_radio">
+            <input id="dog" class="radio_input" type="radio" name="category"
+            value="dog" <% if (pets.category === 'dog') { %> checked <% } %>
+            required />
+            <label class="radio_label" for="male">Dog</label>
+            <input id="cat" class="radio_input" type="radio" name="category"
+            value="cat" <% if (pets.category === 'cat') { %> checked <% } %>
+            required />
+            <label class="radio_label" for="female">Cat</label>
+            <input id="other" class="radio_input" type="radio" name="category"
+            value="other" <% if (pets.category === 'other') { %> checked <% } %>
+            required />
+            <label class="radio_label" for="female">Other</label>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn">UPDATE DATA</button>
+    </form>
+  </div>
+</div>
+
+
+
+<link rel="stylesheet" href="/style/plisbisa.css" />
+<script src="/script/ResponsiveNavbarTes.js"></script>
