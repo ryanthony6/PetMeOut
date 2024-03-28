@@ -1,37 +1,41 @@
 <header class="nav-header">
 
-    <div class="navbar">
-      <div class="logo">
-        <a href="#">PetMeOut</a>
-      </div>
-      <ul class="links">
-        <li><a href="/">Home</a></li>
-        <li><a href="/about">About</a></li>
-        <li><a href="/FAQ">FAQ</a></li>
+  <div class="navbar">
+    <div class="logo">
+      <a href="#">PetMeOut</a>
+    </div>
+    <ul class="links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/FAQ">FAQ</a></li>
+      <% if (currentUser && currentUser.isAdmin) { %> <!-- Tampilkan opsi untuk admin -->
         <li><a href="/add">Add Data</a></li>
         <li><a href="/dashboard">Dashboard</a></li>
-      </ul>
-      <% if (!currentUser) { %>
-        <a href="/signinup" class="action-button">Login/Register</a>
-      <% } else { %>
-        <a href="/logout" class="action-button">Logout</a>
       <% } %>
-      <div class="toggle-button">
-        <i class="fa-solid fa-bars"></i>
-      </div>
-
-    </div>
-  <!-- Dropdown menu pada navbar (untuk mobile) -->
-  <div class="dropdown-menu">
-    <li><a href="/">Home</a></li>
-    <li><a href="/about">About</a></li>
-    <li><a href="/FAQ">FAQ</a></li>
-    <li><a href="/add">Add Data</a></li>
-    <li><a href="/dashboard">Dashboard</a></li>
+    </ul>
     <% if (!currentUser) { %>
       <a href="/signinup" class="action-button">Login/Register</a>
     <% } else { %>
       <a href="/logout" class="action-button">Logout</a>
     <% } %>
+    <div class="toggle-button">
+      <i class="fa-solid fa-bars"></i>
+    </div>
   </div>
+
+<!-- Dropdown menu pada navbar (untuk mobile) -->
+<div class="dropdown-menu">
+  <li><a href="/">Home</a></li>
+  <li><a href="/about">About</a></li>
+  <li><a href="/FAQ">FAQ</a></li>
+  <% if (currentUser && currentUser.isAdmin) { %> <!-- Tampilkan opsi untuk admin -->
+    <li><a href="/add">Add Data</a></li>
+    <li><a href="/dashboard">Dashboard</a></li>
+  <% } %>
+  <% if (!currentUser) { %>
+    <a href="/signinup" class="action-button">Login/Register</a>
+  <% } else { %>
+    <a href="/logout" class="action-button">Logout</a>
+  <% } %>
+</div>
 </header>

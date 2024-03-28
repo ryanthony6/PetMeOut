@@ -303,6 +303,32 @@ app.post('/login', passport.authenticate('local', {
   failureFlash: true
 }));
 
+
+async function createAdmin() {
+  try {
+    const existingAdmin = await UserData.findOne({ isAdmin: true });
+    if (!existingAdmin) {
+      const hashedPassword = await bcrypt.hash("admin", 10);
+      const adminData = {
+        username: "admin",
+        email: "admin@example.com",
+        password: hashedPassword,
+        isAdmin: true,
+      };
+
+      const newAdmin = new UserData(adminData);
+      await newAdmin.save();
+      console.log("Admin account created successfully.");
+    } else {
+      console.log("Admin account already exists.");
+    }
+  } catch (error) {
+    console.error("Error creating admin account:", error.message);
+  }
+}
+
+createAdmin();
+
 // Route untuk logout
 app.get('/logout', (req, res) => {
   req.logout((err) => {
