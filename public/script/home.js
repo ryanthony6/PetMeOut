@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
     .catch(error => console.error('Error fetching pets:', error));
 });
 
+
 // Menampilkan hewan-hewan sesuai json
 function displayPets(pets) {
   const cardContainer = document.getElementById("cardContainer");

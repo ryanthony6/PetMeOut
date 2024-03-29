@@ -64,7 +64,21 @@ app.use(
 
 // route navbar
 app.get("/", (req, res) => {
-  res.render("home.ejs", { title: "homepage", layout: "mainlayout.ejs" });
+  res.render("home.ejs", { title: "homepage", layout: "mainlayout.ejs"});
+});
+
+app.get("/tes", async (req, res) => {
+  try {
+    const pets = await Pet.find().exec();
+  
+    res.render("tes.ejs", {
+      pets: pets,
+      layout: "mainlayout.ejs",
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 app.get("/FAQ", (req, res) => {
@@ -326,7 +340,6 @@ async function createAdmin() {
     console.error("Error creating admin account:", error.message);
   }
 }
-
 createAdmin();
 
 // Route untuk logout
@@ -340,11 +353,12 @@ app.get('/logout', (req, res) => {
   });
 });
 
-
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
   next();
 });
+
+
 
 app.listen(port, () => {
   console.log(`Webserver app listening on http://localhost:${port}/`);
