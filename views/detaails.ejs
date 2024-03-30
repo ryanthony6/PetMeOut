@@ -1,0 +1,81 @@
+<!-- Card detail hewan start -->
+<section class="detail-hewan">
+  <div id="detailContent" class="detailContent">
+    <% if(pets){ %>
+    <div class="card">
+      <div class="details">
+        <h2>Detail Hewan</h2>
+        <p><b>Nama:</b> <%= pets.name %></p>
+        <p><b>Umur:</b> <%= pets.age %></p>
+        <p><b>Gender:</b> <%= pets.gender %></p>
+        <p><b>Ukuran:</b> <%= pets.size %></p>
+        <p><b>Jenis:</b> <%= pets.breed %></p>
+        <p><b>Lokasi:</b> <%= pets.location %></p>
+        <button class="btn-contact" id="btn-contact"><b>Adopt pet</b></button>
+      </div>
+      <div class="image">
+        <img src="<%= pets.image %>" alt="Pet" class="pet-image" />
+      </div>
+      <% } else{ %>
+      <p>Pet not found.</p>
+      <% } %>
+    </div>
+  </div>
+</section>
+<!-- Card detail hewan end-->
+
+<!-- Form pop up ketika ingin adopsi -->
+<div class="popup-form-container" id="popup-form-container">
+  <div class="popup-form">
+    <span class="close-btn" onclick="closeForm()">&times;</span>
+    <h2>Adoption Form</h2>
+    <form action="" method="post">
+      <div class="form-group">
+        <label for="fname" class="required-label">First Name</label>
+        <input type="text" id="fname" name="fname" required />
+      </div>
+
+      <div class="form-group">
+        <label for="lname" class="required-label">Last Name</label>
+        <input type="text" id="lname" name="lname" required />
+      </div>
+      <div class="form-group">
+        <label for="email" class="required-label">Email</label>
+        <input type="email" id="email" name="email" required />
+      </div>
+      <div class="form-group">
+        <label for="dob" class="required-label">Date of Birth</label>
+        <input type="date" id="dob" name="dob" required />
+      </div>
+      <div class="form-group">
+        <label for="address" class="required-label">Address</label>
+        <input type="text" id="address" />
+      </div>
+      <div class="form-group">
+        <label for="phone" class="required-label">Telephone</label>
+        <input type="tel" id="phone" name="phone" required />
+      </div>
+      <div class="form-group">
+        <label for="have-pets">Do you have pets?</label>
+        <input type="text" id="have-pets" name="have-pets" />
+      </div>
+      <div class="form-group">
+        <label for="have-children">Do you have children in your house?</label>
+        <input type="text" id="have-children" name="have-children" />
+      </div>
+
+      <input
+        type="button"
+        class="cancel-btn"
+        value="Cancel"
+        onclick="closeForm()"
+      />
+      <input type="submit" value="Submit" />
+    </form>
+  </div>
+</div>
+
+<link rel="stylesheet" href="/style/styleDetails.css" />
+
+<!-- <script src="/script/ResponsiveNavbarTes.js"></script> -->
+<script src="/script/details.js"></script>

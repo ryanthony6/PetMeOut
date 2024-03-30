@@ -28,8 +28,8 @@
         <td><%= row.location %></td>
         <td><%= row.category %></td>
         <td class="actions">
-          <a href="/edit/<%= row._id %>">Edit</a>
-          <a href="/delete/<%= row._id %>">Delete</a>
+          <a href="/edit/<%= row.name %>" class="edit">Edit</a>
+          <a href="/delete/<%= row._id %>" class="delete">Delete</a>
         </td>
       </tr>
       <% }); %>

@@ -153,23 +153,18 @@
       <div class="info">
         <p><%= pet.name %></p>
         <p><%= pet.breed %></p>
-        <a
-          href="/details?id=${
-                  index + 1
-                }"
-          class="readmore-btn"
-          data-index="${index}"
-          >Read More</a
-        >
+        <a href="/detaails/<%= pet._id %>" class="readmore-btn">Read More</a>
       </div>
     </div>
 
     <% }); %> <% } else{ %>
-    <tbody>
-      <tr>
-        <td colspan="10">No pets found.</td>
-      </tr>
-    </tbody>
+    <table>
+      <tbody>
+        <tr>
+          <td colspan="10">No pets found.</td>
+        </tr>
+      </tbody>
+    </table>
     <% } %>
 
     <!-- Menampilkan kartu secara dinamis dengan javascript -->

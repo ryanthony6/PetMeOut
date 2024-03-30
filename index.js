@@ -25,14 +25,17 @@ app.set("view engine", "ejs");
 app.use(expressLayouts);
 app.use(express.static("public"));
 app.use(express.static("uploads"));
+app.use('/uploads', express.static('public/uploads'));
 
 
-app.use(session({
-  secret: 'secret', 
-  resave: true,
-  saveUninitialized: true,
-  cookie: { secure: false , maxAge: 24 * 60 * 60 * 1000 }
-}));
+app.use(
+  session({
+    secret: "secret",
+    resave: true,
+    saveUninitialized: true,
+    cookie: { secure: false, maxAge: 24 * 60 * 60 * 1000 },
+  })
+);
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -51,28 +54,46 @@ var storage = multer.diskStorage({
     cb(null, file.fieldname + "-" + Date.now() + "-" + file.originalname);
   },
 });
-
 var upload = multer({ storage: storage }).single("image");
 
 // Halaman Home
 app.get("/", async (req, res) => {
-  if(req.isAuthenticated()){
-    res.render("home.ejs", { title: "Home", layout: "mainlayout.ejs" , isAuthenticated: true, isAdmin: req.user.isAdmin});
-  
-  }else{
-    res.render("home.ejs", { title: "Home", layout: "mainlayout.ejs" , isAuthenticated: false});
+  if (req.isAuthenticated()) {
+    res.render("home.ejs", {
+      title: "Home",
+      layout: "mainlayout.ejs",
+      isAuthenticated: true,
+      isAdmin: req.user.isAdmin,
+    });
+  } else {
+    res.render("home.ejs", {
+      title: "Home",
+      layout: "mainlayout.ejs",
+      isAuthenticated: false,
+    });
   }
 });
 
-
-app.get("/tes",  async (req, res) => {
+app.get("/tes", async (req, res) => {
   try {
-    const pets = await Pet.find().exec();
+    let id = req.params.id;
+    const pets = await Pet.find(id).exec();
 
-    if(req.isAuthenticated()){
-      res.render("tes.ejs", { pets: pets, title: "Tes", layout: "mainlayout.ejs" , isAuthenticated: true, isAdmin: req.user.isAdmin});
-    }else{
-      res.render("tes.ejs", { pets: pets, title: "Tes", layout: "mainlayout.ejs" , isAuthenticated: false});
+    if (req.isAuthenticated()) {
+      res.render("tes.ejs", {
+        pets: pets,
+        title: "Tes",
+        layout: "mainlayout.ejs",
+        isAuthenticated: true,
+        isAdmin: req.user.isAdmin,
+      });
+    } else {
+      res.render("tes.ejs", {
+        pets: pets,
+        title: "Tes",
+        layout: "mainlayout.ejs",
+        isAuthenticated: false,
+      });
     }
   } catch (err) {
     console.log(err);
@@ -81,21 +102,59 @@ app.get("/tes",  async (req, res) => {
 });
 
 app.get("/FAQ", (req, res) => {
-  res.render("FAQ.ejs", { title: "FAQ", layout: "mainlayout.ejs" , isAuthenticated: true, isAdmin: req.user.isAdmin});
+
+  if (req.isAuthenticated()) {
+    res.render("FAQ.ejs", {
+      title: "Tes",
+      layout: "mainlayout.ejs",
+      isAuthenticated: true,
+      isAdmin: req.user.isAdmin,
+    });
+  } else {
+    res.render("FAQ.ejs", {
+      title: "Tes",
+      layout: "mainlayout.ejs",
+      isAuthenticated: false,
+    });
+  }
+  
 });
 
 app.get("/about", (req, res) => {
-  res.render("about.ejs", { title: "about", layout: "mainlayout.ejs", isAuthenticated: true, isAdmin: req.user.isAdmin});
+  if (req.isAuthenticated()) {
+    res.render("about.ejs", {
+      title: "Tes",
+      layout: "mainlayout.ejs",
+      isAuthenticated: true,
+      isAdmin: req.user.isAdmin,
+    });
+  } else {
+    res.render("about.ejs", {
+
+      title: "Tes",
+      layout: "mainlayout.ejs",
+      isAuthenticated: false,
+    });
+  }
 });
 
-app.get("/details", isLoggedIn,(req, res) => {
-  res.render("details.ejs", { title: "details", layout: "detailslayout.ejs", isAuthenticated: true, isAdmin: req.user.isAdmin});
-});
+// app.get("/details", isLoggedIn, (req, res) => {
+//   res.render("details.ejs", {
+//     title: "details",
+//     layout: "detailslayout.ejs",
+//     isAuthenticated: true,
+//     isAdmin: req.user.isAdmin,
+//   });
+// });
 
 app.get("/error", (req, res) => {
-  res.render("errorPage.ejs", { title: "error", layout: false, isAuthenticated: true, isAdmin: req.user.isAdmin});
+  res.render("errorPage.ejs", {
+    title: "error",
+    layout: false,
+    isAuthenticated: true,
+    isAdmin: req.user.isAdmin,
+  });
 });
-
 
 // Render halaman sign-up
 app.get("/signinup", (req, res) => {
@@ -111,13 +170,16 @@ app.get("/login", (req, res) => {
 });
 
 app.get("/add", (req, res) => {
-  res.render("addPet.ejs", { title: "add_pet", layout: "detailslayout.ejs" , isAuthenticated: true, isAdmin: req.user.isAdmin});
+  res.render("addPet.ejs", {
+    title: "add_pet",
+    layout: "detailslayout.ejs",
+    isAuthenticated: true,
+    isAdmin: req.user.isAdmin,
+  });
 });
 
 // Insert pet data into database
-
 app.post("/add", upload, async (req, res) => {
-
   if (!req.file) {
     return res.status(400).json({ message: "No file uploaded", type: "error" });
   }
@@ -161,10 +223,27 @@ app.get("/dashboard", async (req, res) => {
   }
 });
 
-app.get("/edit/:id", async (req, res) => {
+// app.get("/edit/:name", async (req, res) => {
+//   try {
+//     let pet = await Pet.findById(req.params.id);
+
+//     if (!pet) {
+//       return res.redirect("/");
+//     } else {
+//       res.render("editPetData.ejs", {
+//         layout: false,
+//         pets: pet,
+//       });
+//     }
+//   } catch (err) {
+//     console.error(err);
+//     res.redirect("/tes");
+//   }
+// });
+
+app.get("/edit/:name", async (req, res) => {
   try {
-    let id = req.params.id;
-    let pet = await Pet.findById(id).exec();
+    let pet = await Pet.findOne({ name: req.params.name }); // Menggunakan findOne untuk mencari berdasarkan nama pet
 
     if (!pet) {
       return res.redirect("/");
@@ -179,6 +258,7 @@ app.get("/edit/:id", async (req, res) => {
     res.redirect("/tes");
   }
 });
+
 
 app.post("/update/:id", upload, async (req, res) => {
   let id = req.params.id;
@@ -213,9 +293,6 @@ app.post("/update/:id", upload, async (req, res) => {
   }
 });
 
-
-
-
 app.get("/delete/:id", async (req, res) => {
   try {
     let id = req.params.id;
@@ -234,6 +311,39 @@ app.get("/delete/:id", async (req, res) => {
     res.redirect("/tes");
   }
 });
+
+// app.get("/detaails/:id", async (req, res) => {
+//   let id = req.params.id;
+
+//   let pet = await Pet.findById(id).exec();
+//   res.render("detaails.ejs", {
+//     title: "details",
+//     pets: pet,
+//     layout: "detailslayout.ejs",
+//     isAuthenticated: true,
+//     isAdmin: req.user.isAdmin,
+//   });
+// });
+
+
+app.get("/detaails/:id", async (req, res) => {
+  try {
+    let id = req.params.id;
+    let pet = await Pet.findById(id);
+
+      res.render("detaails.ejs", {
+        layout: false,
+        pets: pet,
+        isAuthenticated: true,
+        isAdmin: req.user.isAdmin,
+      });
+    
+  } catch (err) {
+    console.error(err);
+    res.redirect("/tes");
+  }
+});
+
 
 // Route untuk sign up
 app.post("/signup", async (req, res) => {
@@ -281,7 +391,7 @@ function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {
     next();
   } else {
-    res.redirect('/signinup');
+    res.redirect("/signinup");
   }
 }
 
@@ -294,7 +404,6 @@ app.post(
     failureFlash: true,
   })
 );
-
 
 async function createAdmin() {
   try {
@@ -327,7 +436,7 @@ app.get("/logout", (req, res) => {
       console.error("Error logging out:", err);
       return res.status(500).send("Error logging out");
     }
-    res.redirect('/tes');
+    res.redirect("/tes");
   });
 });
 
