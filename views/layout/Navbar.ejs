@@ -5,15 +5,15 @@
       <a href="#">PetMeOut</a>
     </div>
     <ul class="links">
-      <li><a href="/">Home</a></li>
+      <li><a href="/tes">Home</a></li>
       <li><a href="/about">About</a></li>
       <li><a href="/FAQ">FAQ</a></li>
-      <% if (currentUser && currentUser.isAdmin) { %> <!-- Tampilkan opsi untuk admin -->
+      <% if (isAuthenticated && isAdmin) { %> <!-- Tampilkan opsi untuk admin -->
         <li><a href="/add">Add Data</a></li>
         <li><a href="/dashboard">Dashboard</a></li>
       <% } %>
     </ul>
-    <% if (!currentUser) { %>
+    <% if (!isAuthenticated) { %>
       <a href="/signinup" class="action-button">Login/Register</a>
     <% } else { %>
       <a href="/logout" class="action-button">Logout</a>
@@ -25,14 +25,14 @@
 
 <!-- Dropdown menu pada navbar (untuk mobile) -->
 <div class="dropdown-menu">
-  <li><a href="/">Home</a></li>
+  <li><a href="/tes">Home</a></li>
   <li><a href="/about">About</a></li>
   <li><a href="/FAQ">FAQ</a></li>
-  <% if (currentUser && currentUser.isAdmin) { %> <!-- Tampilkan opsi untuk admin -->
+  <% if (isAuthenticated && isAdmin) { %> <!-- Tampilkan opsi untuk admin -->
     <li><a href="/add">Add Data</a></li>
     <li><a href="/dashboard">Dashboard</a></li>
   <% } %>
-  <% if (!currentUser) { %>
+  <% if (!isAuthenticated) { %>
     <a href="/signinup" class="action-button">Login/Register</a>
   <% } else { %>
     <a href="/logout" class="action-button">Logout</a>
