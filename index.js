@@ -26,19 +26,19 @@ app.use(expressLayouts);
 app.use(express.static("public"));
 app.use(express.static("uploads"));
 
-app.use(
-  session({
-    secret: "secret",
-    resave: true,
-    saveUninitialized: true,
-  })
-);
+
+app.use(session({
+  secret: 'secret', 
+  resave: true,
+  saveUninitialized: true,
+  cookie: { secure: false , maxAge: 300000 }
+}));
 
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 app.use((req, res, next) => {
-  res.locals.currentUser = req.user;
+  res.locals.isAuthenticated = req.isAuthenticated();
   next();
 });
 
@@ -54,28 +54,25 @@ var storage = multer.diskStorage({
 
 var upload = multer({ storage: storage }).single("image");
 
-app.use(
-  session({
-    secret: "your_secret_key_here",
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false }, // Set to true if using HTTPS
-  })
-);
-
-// route navbar
-app.get("/", (req, res) => {
-  res.render("home.ejs", { title: "homepage", layout: "mainlayout.ejs" });
+// Halaman Home
+app.get("/", async (req, res) => {
+  if(req.isAuthenticated()){
+    res.render("home.ejs", { title: "Home", layout: "mainlayout.ejs" , isAuthenticated: true, isAdmin: req.user.isAdmin});
+  
+  }else{
+    res.render("home.ejs", { title: "Home", layout: "mainlayout.ejs" , isAuthenticated: false});
+  }
 });
 
-app.get("/tes", async (req, res) => {
+app.get("/tes",  async (req, res) => {
   try {
     const pets = await Pet.find().exec();
 
-    res.render("tes.ejs", {
-      pets: pets,
-      layout: "mainlayout.ejs",
-    });
+    if(req.isAuthenticated()){
+      res.render("tes.ejs", { pets: pets, title: "Tes", layout: "mainlayout.ejs" , isAuthenticated: true, isAdmin: req.user.isAdmin});
+    }else{
+      res.render("tes.ejs", { pets: pets, title: "Tes", layout: "mainlayout.ejs" , isAuthenticated: false});
+    }
   } catch (err) {
     console.log(err);
     res.status(500).send("Internal Server Error");
@@ -83,15 +80,15 @@ app.get("/tes", async (req, res) => {
 });
 
 app.get("/FAQ", (req, res) => {
-  res.render("FAQ.ejs", { title: "FAQ", layout: "mainlayout.ejs" });
+  res.render("FAQ.ejs", { title: "FAQ", layout: "mainlayout.ejs" , isAuthenticated: true, isAdmin: req.user.isAdmin});
 });
 
 app.get("/about", (req, res) => {
-  res.render("about.ejs", { title: "about", layout: "mainlayout.ejs" });
+  res.render("about.ejs", { title: "about", layout: "mainlayout.ejs", isAuthenticated: true, isAdmin: req.user.isAdmin});
 });
 
-app.get("/details", (req, res) => {
-  res.render("details.ejs", { title: "details", layout: "detailslayout.ejs" });
+app.get("/details", isLoggedIn,(req, res) => {
+  res.render("details.ejs", { title: "details", layout: "detailslayout.ejs", isAuthenticated: true, isAdmin: req.user.isAdmin});
 });
 
 // Render halaman sign-up
@@ -108,7 +105,7 @@ app.get("/login", (req, res) => {
 });
 
 app.get("/add", (req, res) => {
-  res.render("addPet.ejs", { title: "add_pet", layout: "detailslayout.ejs" });
+  res.render("addPet.ejs", { title: "add_pet", layout: "detailslayout.ejs" , isAuthenticated: true, isAdmin: req.user.isAdmin});
 });
 
 // Insert pet data into database
@@ -148,6 +145,8 @@ app.get("/dashboard", async (req, res) => {
     res.render("dashboard.ejs", {
       pets: pets,
       layout: "detailslayout.ejs",
+      isAuthenticated: true,
+      isAdmin: req.user.isAdmin,
     });
   } catch (err) {
     console.log(err);
@@ -170,7 +169,7 @@ app.get("/edit/:id", async (req, res) => {
     }
   } catch (err) {
     console.error(err);
-    res.redirect("/");
+    res.redirect("/tes");
   }
 });
 
@@ -229,7 +228,7 @@ app.put("/update/:id", upload, async (req, res) => {
     res.redirect("/dashboard");
   } catch (err) {
     console.log(err);
-    res.redirect("/");
+    res.redirect("/tes");
   }
 });
 
@@ -257,7 +256,7 @@ app.get("/delete/:id", async (req, res) => {
     let pet = await Pet.findById(id).exec();
 
     if (!pet) {
-      return res.redirect("/");
+      return res.redirect("/tes");
     } else {
       // fs.unlinkSync("./uploads/" + pet.image);
 
@@ -266,7 +265,7 @@ app.get("/delete/:id", async (req, res) => {
     }
   } catch (err) {
     console.error(err);
-    res.redirect("/");
+    res.redirect("/tes");
   }
 });
 
@@ -312,15 +311,24 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    next();
+  } else {
+    res.redirect('/signinup');
+  }
+}
+
 // Route untuk login
 app.post(
   "/login",
   passport.authenticate("local", {
-    successRedirect: "/",
+    successRedirect: "tes/",
     failureRedirect: "/signinup",
     failureFlash: true,
   })
 );
+
 
 async function createAdmin() {
   try {
@@ -353,7 +361,7 @@ app.get("/logout", (req, res) => {
       console.error("Error logging out:", err);
       return res.status(500).send("Error logging out");
     }
-    res.redirect("/");
+    res.redirect('/tes');
   });
 });
 
