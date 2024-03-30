@@ -4,7 +4,7 @@
     <thead>
       <tr>
         <th>ID</th>
-        <!-- <th>Image</th> -->
+        <th>Image</th>
         <th>Name</th>
         <th>Age</th>
         <th>Gender</th>
@@ -19,6 +19,7 @@
       <% pets.forEach((row,index) => { %>
       <tr>
         <td><%= index+1 %></td>
+        <td><img src="<%= row.image %>" alt="Pet" class="pet-image" /></td>
         <td><%= row.name %></td>
         <td><%= row.age %></td>
         <td><%= row.gender %></td>
@@ -29,13 +30,26 @@
         <td class="actions">
           <a href="/edit/<%= row._id %>">Edit</a>
           <a href="/delete/<%= row._id %>">Delete</a>
-        
         </td>
       </tr>
       <% }); %>
     </tbody>
 
     <% }else { %>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Image</th>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Gender</th>
+        <th>Size</th>
+        <th>Breed</th>
+        <th>Location</th>
+        <th>Category</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
     <tbody>
       <tr>
         <td colspan="10">No pets found.</td>

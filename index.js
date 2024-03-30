@@ -7,7 +7,7 @@ const session = require("express-session");
 require("dotenv").config();
 require("./utils/db");
 
-const passport = require('./models/passport');
+const passport = require("./models/passport");
 const Pet = require("./models/petData");
 const UserData = require("./models/userData");
 const multer = require("multer");
@@ -31,7 +31,7 @@ app.use(session({
   secret: 'secret', 
   resave: true,
   saveUninitialized: true,
-  cookie: { secure: false , maxAge: 300000 }
+  cookie: { secure: false , maxAge: 24 * 60 * 60 * 1000 }
 }));
 
 app.use(passport.initialize());
@@ -63,6 +63,7 @@ app.get("/", async (req, res) => {
     res.render("home.ejs", { title: "Home", layout: "mainlayout.ejs" , isAuthenticated: false});
   }
 });
+
 
 app.get("/tes",  async (req, res) => {
   try {
@@ -99,15 +100,23 @@ app.get("/details", isLoggedIn,(req, res) => {
   res.render("details.ejs", { title: "details", layout: "detailslayout.ejs", isAuthenticated: true, isAdmin: req.user.isAdmin});
 });
 
+app.get("/error", (req, res) => {
+  res.render("errorPage.ejs", { title: "error", layout: false, isAuthenticated: true, isAdmin: req.user.isAdmin});
+});
+
+
 // Render halaman sign-up
 app.get("/signinup", (req, res) => {
-  res.render("signinup.ejs", { title: "Sign up/Sign in", layout: "SignupLayout.ejs", messages: req.flash() });
+  res.render("signinup.ejs", {
+    title: "Sign up/Sign in",
+    layout: "SignupLayout.ejs",
+    messages: req.flash(),
+  });
 });
 
 app.get("/login", (req, res) => {
   res.render("login", { title: "Login", layout: false, messages: req.flash() });
 });
-
 
 app.get("/add", (req, res) => {
   res.render("addPet.ejs", { title: "add_pet", layout: "detailslayout.ejs" , isAuthenticated: true, isAdmin: req.user.isAdmin});
@@ -117,10 +126,9 @@ app.get("/add", (req, res) => {
 
 app.post("/add", upload, async (req, res) => {
 
-
-  // if (!req.file) {
-  //   return res.status(400).json({ message: "No file uploaded", type: "error" });
-  // }
+  if (!req.file) {
+    return res.status(400).json({ message: "No file uploaded", type: "error" });
+  }
   const pet = new Pet({
     name: req.body.name,
     age: req.body.age,
@@ -129,7 +137,7 @@ app.post("/add", upload, async (req, res) => {
     breed: req.body.breed,
     location: req.body.location,
     category: req.body.category,
-    // image: req.file.filename,
+    image: req.file.filename,
   });
 
   try {
@@ -147,8 +155,8 @@ app.post("/add", upload, async (req, res) => {
 
 app.get("/dashboard", async (req, res) => {
   try {
-    const pets = await Pet.find().exec();
-  
+    const pets = await Pet.find();
+
     res.render("dashboard.ejs", {
       pets: pets,
       layout: "detailslayout.ejs",
@@ -180,48 +188,22 @@ app.get("/edit/:id", async (req, res) => {
   }
 });
 
-// app.post("/update/:id", upload, async (req, res) => {
-//   let id = req.params.id;
-//   // let new_image = "";
-
-//   // if (req.file) {
-//   //   new_image = req.file.filename;
-//   //   try {
-//   //     fs.unlinkSync("./uploads/" + req.body.old_image);
-//   //   } catch (err) {
-//   //     console.log(err);
-//   //   }
-//   // } else {
-//   //   new_image = req.body.old_image;
-//   // }
-
-//   Pet.findByIdAndUpdate(
-//     id,
-//     {
-//       name: req.body.name,
-//       age: req.body.age,
-//       gender: req.body.gender,
-//       size: req.body.size,
-//       breed: req.body.breed,
-//       location: req.body.location,
-//       category: req.body.category,
-//       // image: new_image,
-//     },
-//     (err, result) => {
-//       if (err) {
-//         console.log(err);
-//         res.redirect("/");
-//       } else {
-//         res.redirect("/dashboard");
-//       }
-//     }
-//   );
-// });
-
 app.post("/update/:id", upload, async (req, res) => {
-  try {
-    let id = req.params.id;
+  let id = req.params.id;
+  let new_image = "";
 
+  if (req.file) {
+    new_image = req.file.filename;
+    try {
+      fs.unlinkSync("./uploads/" + req.body.old_image);
+    } catch (err) {
+      console.log(err);
+    }
+  } else {
+    new_image = req.body.old_image;
+  }
+
+  try {
     await Pet.findByIdAndUpdate(id, {
       name: req.body.name,
       age: req.body.age,
@@ -230,32 +212,17 @@ app.post("/update/:id", upload, async (req, res) => {
       breed: req.body.breed,
       location: req.body.location,
       category: req.body.category,
+      image: new_image,
     });
-
     res.redirect("/dashboard");
   } catch (err) {
     console.log(err);
-    res.redirect("/tes");
+    res.redirect("/");
   }
 });
 
-// app.get("/delete/:id", async (req, res) => {
-//   let id = req.params.id;
-//   let pet = await Pet.findById(id).exec();
-//   if (!pet) {
-//     return res.redirect("/");
-//   } else {
-//     // fs.unlinkSync("./uploads/" + pet.image);
-//     await Pet.findByIdAndDelete(id, (err, result) => {
-//       if (err) {
-//         console.log(err);
-//         res.redirect("/");
-//       } else {
-//         res.redirect("/dashboard");
-//       }
-//     });
-//   }
-// })
+
+
 
 app.get("/delete/:id", async (req, res) => {
   try {
@@ -265,7 +232,7 @@ app.get("/delete/:id", async (req, res) => {
     if (!pet) {
       return res.redirect("/tes");
     } else {
-      // fs.unlinkSync("./uploads/" + pet.image);
+      fs.unlinkSync("./uploads/" + pet.image);
 
       await Pet.findByIdAndDelete(id);
       res.redirect("/dashboard");
@@ -284,21 +251,21 @@ app.post("/signup", async (req, res) => {
     // Validasi email menggunakan regular expression
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      req.flash('error', 'Invalid email address');
+      req.flash("error", "Invalid email address");
       return res.redirect("/signinup");
     }
 
     // Cek apakah username sudah ada dalam database
     const existingUser = await UserData.findOne({ username });
     if (existingUser) {
-      req.flash('error', 'Username already exists');
+      req.flash("error", "Username already exists");
       return res.redirect("/signinup");
     }
 
     // Cek apakah email sudah terdaftar
     const existingEmail = await UserData.findOne({ email });
     if (existingEmail) {
-      req.flash('error', 'Email already registered');
+      req.flash("error", "Email already registered");
       return res.redirect("/signinup");
     }
 
@@ -309,11 +276,11 @@ app.post("/signup", async (req, res) => {
     const newUser = new UserData({ username, email, password: hashedPassword });
     await newUser.save();
 
-    req.flash('success', 'User registered successfully! Please login.');
+    req.flash("success", "User registered successfully! Please login.");
     res.redirect("/signinup");
   } catch (error) {
     console.error("Error registering user:", error.message);
-    req.flash('error', 'Error registering user');
+    req.flash("error", "Error registering user");
     res.redirect("/signinup");
   }
 });
@@ -327,12 +294,14 @@ function isLoggedIn(req, res, next) {
 }
 
 // Route untuk login
-app.post('/login', passport.authenticate('local', {
-  successRedirect: '/tes', 
-  failureRedirect: '/signinup', 
-  failureFlash: true
-}));
-
+app.post(
+  "/login",
+  passport.authenticate("local", {
+    successRedirect: "/tes",
+    failureRedirect: "/signinup",
+    failureFlash: true,
+  })
+);
 
 
 async function createAdmin() {
@@ -360,11 +329,11 @@ async function createAdmin() {
 createAdmin();
 
 // Route untuk logout
-app.get('/logout', (req, res) => {
+app.get("/logout", (req, res) => {
   req.logout((err) => {
     if (err) {
-      console.error('Error logging out:', err);
-      return res.status(500).send('Error logging out');
+      console.error("Error logging out:", err);
+      return res.status(500).send("Error logging out");
     }
     res.redirect('/tes');
   });
@@ -374,8 +343,6 @@ app.use((req, res, next) => {
   res.locals.currentUser = req.user;
   next();
 });
-
-
 
 app.listen(port, () => {
   console.log(`Webserver app listening on http://localhost:${port}/`);
