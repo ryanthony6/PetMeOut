@@ -7,7 +7,7 @@ const session = require("express-session");
 require("dotenv").config();
 require("./utils/db");
 
-const passport = require('./models/passport');
+const passport = require("./models/passport");
 const Pet = require("./models/petData");
 const UserData = require("./models/userData");
 const multer = require("multer");
@@ -26,12 +26,13 @@ app.use(expressLayouts);
 app.use(express.static("public"));
 app.use(express.static("uploads"));
 
-
-app.use(session({
-  secret: 'secret', 
-  resave: true,
-  saveUninitialized: true
-}));
+app.use(
+  session({
+    secret: "secret",
+    resave: true,
+    saveUninitialized: true,
+  })
+);
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -64,13 +65,13 @@ app.use(
 
 // route navbar
 app.get("/", (req, res) => {
-  res.render("home.ejs", { title: "homepage", layout: "mainlayout.ejs"});
+  res.render("home.ejs", { title: "homepage", layout: "mainlayout.ejs" });
 });
 
 app.get("/tes", async (req, res) => {
   try {
     const pets = await Pet.find().exec();
-  
+
     res.render("tes.ejs", {
       pets: pets,
       layout: "mainlayout.ejs",
@@ -95,13 +96,16 @@ app.get("/details", (req, res) => {
 
 // Render halaman sign-up
 app.get("/signinup", (req, res) => {
-  res.render("signinup.ejs", { title: "Sign up/Sign in", layout: "SignupLayout.ejs", messages: req.flash() });
+  res.render("signinup.ejs", {
+    title: "Sign up/Sign in",
+    layout: "SignupLayout.ejs",
+    messages: req.flash(),
+  });
 });
 
 app.get("/login", (req, res) => {
   res.render("login", { title: "Login", layout: false, messages: req.flash() });
 });
-
 
 app.get("/add", (req, res) => {
   res.render("addPet.ejs", { title: "add_pet", layout: "detailslayout.ejs" });
@@ -110,8 +114,6 @@ app.get("/add", (req, res) => {
 // Insert pet data into database
 
 app.post("/add", upload, async (req, res) => {
-
-
   // if (!req.file) {
   //   return res.status(400).json({ message: "No file uploaded", type: "error" });
   // }
@@ -141,8 +143,8 @@ app.post("/add", upload, async (req, res) => {
 
 app.get("/dashboard", async (req, res) => {
   try {
-    const pets = await Pet.find().exec();
-  
+    const pets = await Pet.find();
+
     res.render("dashboard.ejs", {
       pets: pets,
       layout: "detailslayout.ejs",
@@ -210,7 +212,7 @@ app.get("/edit/:id", async (req, res) => {
 //   );
 // });
 
-app.post("/update/:id", upload, async (req, res) => {
+app.put("/update/:id", upload, async (req, res) => {
   try {
     let id = req.params.id;
 
@@ -276,21 +278,21 @@ app.post("/signup", async (req, res) => {
     // Validasi email menggunakan regular expression
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      req.flash('error', 'Invalid email address');
+      req.flash("error", "Invalid email address");
       return res.redirect("/signinup");
     }
 
     // Cek apakah username sudah ada dalam database
     const existingUser = await UserData.findOne({ username });
     if (existingUser) {
-      req.flash('error', 'Username already exists');
+      req.flash("error", "Username already exists");
       return res.redirect("/signinup");
     }
 
     // Cek apakah email sudah terdaftar
     const existingEmail = await UserData.findOne({ email });
     if (existingEmail) {
-      req.flash('error', 'Email already registered');
+      req.flash("error", "Email already registered");
       return res.redirect("/signinup");
     }
 
@@ -301,22 +303,24 @@ app.post("/signup", async (req, res) => {
     const newUser = new UserData({ username, email, password: hashedPassword });
     await newUser.save();
 
-    req.flash('success', 'User registered successfully! Please login.');
+    req.flash("success", "User registered successfully! Please login.");
     res.redirect("/signinup");
   } catch (error) {
     console.error("Error registering user:", error.message);
-    req.flash('error', 'Error registering user');
+    req.flash("error", "Error registering user");
     res.redirect("/signinup");
   }
 });
 
 // Route untuk login
-app.post('/login', passport.authenticate('local', {
-  successRedirect: '/', 
-  failureRedirect: '/signinup', 
-  failureFlash: true
-}));
-
+app.post(
+  "/login",
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/signinup",
+    failureFlash: true,
+  })
+);
 
 async function createAdmin() {
   try {
@@ -343,13 +347,13 @@ async function createAdmin() {
 createAdmin();
 
 // Route untuk logout
-app.get('/logout', (req, res) => {
+app.get("/logout", (req, res) => {
   req.logout((err) => {
     if (err) {
-      console.error('Error logging out:', err);
-      return res.status(500).send('Error logging out');
+      console.error("Error logging out:", err);
+      return res.status(500).send("Error logging out");
     }
-    res.redirect('/');
+    res.redirect("/");
   });
 });
 
@@ -357,8 +361,6 @@ app.use((req, res, next) => {
   res.locals.currentUser = req.user;
   next();
 });
-
-
 
 app.listen(port, () => {
   console.log(`Webserver app listening on http://localhost:${port}/`);
