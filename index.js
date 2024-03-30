@@ -80,11 +80,19 @@ app.get("/tes",  async (req, res) => {
 });
 
 app.get("/FAQ", (req, res) => {
-  res.render("FAQ.ejs", { title: "FAQ", layout: "mainlayout.ejs" , isAuthenticated: true, isAdmin: req.user.isAdmin});
+  if(req.isAuthenticated()){
+    res.render("FAQ.ejs", { title: "FAQ", layout: "mainlayout.ejs" , isAuthenticated: true, isAdmin: req.user.isAdmin});
+  }else{
+    res.render("FAQ.ejs", { title: "FAQ", layout: "mainlayout.ejs" , isAuthenticated: false});
+  }
 });
 
 app.get("/about", (req, res) => {
-  res.render("about.ejs", { title: "about", layout: "mainlayout.ejs", isAuthenticated: true, isAdmin: req.user.isAdmin});
+  if(req.isAuthenticated()){
+    res.render("about.ejs", { title: "about", layout: "mainlayout.ejs", isAuthenticated: true, isAdmin: req.user.isAdmin});
+  }else{
+    res.render("about.ejs", { title: "about", layout: "mainlayout.ejs", isAuthenticated: false});
+  }
 });
 
 app.get("/details", isLoggedIn,(req, res) => {
