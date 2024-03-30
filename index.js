@@ -31,7 +31,7 @@ app.use(session({
   secret: 'secret', 
   resave: true,
   saveUninitialized: true,
-  cookie: { secure: false , maxAge: 300000 }
+  cookie: { secure: false , maxAge: 24 * 60 * 60 * 1000 }
 }));
 
 app.use(passport.initialize());
@@ -64,6 +64,7 @@ app.get("/", async (req, res) => {
   }
 });
 
+
 app.get("/tes",  async (req, res) => {
   try {
     const pets = await Pet.find().exec();
@@ -91,6 +92,11 @@ app.get("/details", isLoggedIn,(req, res) => {
   res.render("details.ejs", { title: "details", layout: "detailslayout.ejs", isAuthenticated: true, isAdmin: req.user.isAdmin});
 });
 
+app.get("/error", (req, res) => {
+  res.render("errorPage.ejs", { title: "error", layout: false, isAuthenticated: true, isAdmin: req.user.isAdmin});
+});
+
+
 // Render halaman sign-up
 app.get("/signinup", (req, res) => {
   res.render("signinup.ejs", {
@@ -111,9 +117,10 @@ app.get("/add", (req, res) => {
 // Insert pet data into database
 
 app.post("/add", upload, async (req, res) => {
-  // if (!req.file) {
-  //   return res.status(400).json({ message: "No file uploaded", type: "error" });
-  // }
+
+  if (!req.file) {
+    return res.status(400).json({ message: "No file uploaded", type: "error" });
+  }
   const pet = new Pet({
     name: req.body.name,
     age: req.body.age,
@@ -122,7 +129,7 @@ app.post("/add", upload, async (req, res) => {
     breed: req.body.breed,
     location: req.body.location,
     category: req.body.category,
-    // image: req.file.filename,
+    image: req.file.filename,
   });
 
   try {
@@ -173,48 +180,22 @@ app.get("/edit/:id", async (req, res) => {
   }
 });
 
-// app.post("/update/:id", upload, async (req, res) => {
-//   let id = req.params.id;
-//   // let new_image = "";
+app.post("/update/:id", upload, async (req, res) => {
+  let id = req.params.id;
+  let new_image = "";
 
-//   // if (req.file) {
-//   //   new_image = req.file.filename;
-//   //   try {
-//   //     fs.unlinkSync("./uploads/" + req.body.old_image);
-//   //   } catch (err) {
-//   //     console.log(err);
-//   //   }
-//   // } else {
-//   //   new_image = req.body.old_image;
-//   // }
+  if (req.file) {
+    new_image = req.file.filename;
+    try {
+      fs.unlinkSync("./uploads/" + req.body.old_image);
+    } catch (err) {
+      console.log(err);
+    }
+  } else {
+    new_image = req.body.old_image;
+  }
 
-//   Pet.findByIdAndUpdate(
-//     id,
-//     {
-//       name: req.body.name,
-//       age: req.body.age,
-//       gender: req.body.gender,
-//       size: req.body.size,
-//       breed: req.body.breed,
-//       location: req.body.location,
-//       category: req.body.category,
-//       // image: new_image,
-//     },
-//     (err, result) => {
-//       if (err) {
-//         console.log(err);
-//         res.redirect("/");
-//       } else {
-//         res.redirect("/dashboard");
-//       }
-//     }
-//   );
-// });
-
-app.put("/update/:id", upload, async (req, res) => {
   try {
-    let id = req.params.id;
-
     await Pet.findByIdAndUpdate(id, {
       name: req.body.name,
       age: req.body.age,
@@ -223,32 +204,17 @@ app.put("/update/:id", upload, async (req, res) => {
       breed: req.body.breed,
       location: req.body.location,
       category: req.body.category,
+      image: new_image,
     });
-
     res.redirect("/dashboard");
   } catch (err) {
     console.log(err);
-    res.redirect("/tes");
+    res.redirect("/");
   }
 });
 
-// app.get("/delete/:id", async (req, res) => {
-//   let id = req.params.id;
-//   let pet = await Pet.findById(id).exec();
-//   if (!pet) {
-//     return res.redirect("/");
-//   } else {
-//     // fs.unlinkSync("./uploads/" + pet.image);
-//     await Pet.findByIdAndDelete(id, (err, result) => {
-//       if (err) {
-//         console.log(err);
-//         res.redirect("/");
-//       } else {
-//         res.redirect("/dashboard");
-//       }
-//     });
-//   }
-// })
+
+
 
 app.get("/delete/:id", async (req, res) => {
   try {
@@ -258,7 +224,7 @@ app.get("/delete/:id", async (req, res) => {
     if (!pet) {
       return res.redirect("/tes");
     } else {
-      // fs.unlinkSync("./uploads/" + pet.image);
+      fs.unlinkSync("./uploads/" + pet.image);
 
       await Pet.findByIdAndDelete(id);
       res.redirect("/dashboard");
@@ -323,7 +289,7 @@ function isLoggedIn(req, res, next) {
 app.post(
   "/login",
   passport.authenticate("local", {
-    successRedirect: "tes/",
+    successRedirect: "/tes",
     failureRedirect: "/signinup",
     failureFlash: true,
   })

@@ -147,9 +147,9 @@
 
   <% if (pets != '') { %>
   <div class="card-container" id="cardContainer">
+    <% pets.forEach((pet,index) => { %>
     <div class="cards">
-      <% pets.forEach((pet,index) => { %>
-      <img src="" alt="tes" />
+      <img src="<%= pet.image %>" alt="tes" />
       <div class="info">
         <p><%= pet.name %></p>
         <p><%= pet.breed %></p>
@@ -162,10 +162,9 @@
           >Read More</a
         >
       </div>
-
-      <% }); %>
     </div>
-    <% } else{ %>
+
+    <% }); %> <% } else{ %>
     <tbody>
       <tr>
         <td colspan="10">No pets found.</td>
