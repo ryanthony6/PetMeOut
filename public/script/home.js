@@ -1,56 +1,56 @@
-// Mengambil data pada json
+
 document.addEventListener("DOMContentLoaded", function () {
-  fetch("/data.json")
-    .then(response => response.json())
-    .then(data => {
-      displayPets(data);
-    })
-    .catch(error => console.error('Error fetching pets:', error));
-});
-
-
-// Menampilkan hewan-hewan sesuai json
-function displayPets(pets) {
-  const cardContainer = document.getElementById("cardContainer");
-  cardContainer.innerHTML = ""; // Clear previous content
-
-  pets.forEach((pet, index) => {
-    const card = document.createElement("div");
-    card.className = "cards";
-    card.innerHTML = `
-          <img src="${pet.image}" />
-          <div class="info">
-              <p>${pet.name}</p>
-              <p>${pet.petRace}</p>
-              <a href="/details?id=${
-                index + 1
-              }" class="readmore-btn" data-index="${index}">Read More</a>
-          </div>
-      `;
-    cardContainer.appendChild(card);
+  const searchForm = document.getElementById("searchForm");
+  searchForm.addEventListener("submit", function (event) {
+    event.preventDefault(); 
+    searchPets();
   });
-}
-
-// Menyaring jenis hewan yang dicari
-function filterPets() {
-  const searchInput = document.getElementById('searchInput').value.toLowerCase();
-  const categorySelect = document.getElementById('categorySelect').value.toLowerCase();
-
-  fetch("/data.json")
-    .then(response => response.json())
-    .then(data => {
-      let filteredPets = data.filter(pet =>
-        (pet.name.toLowerCase().includes(searchInput) || pet.petRace.toLowerCase().includes(searchInput)) &&
-        (categorySelect === '' || pet.category.toLowerCase() === categorySelect)
-      );
-      displayPets(filteredPets);
-    })
-    .catch(error => console.error('Error fetching and filtering pets:', error));
-}
-
-const findPetButton = document.querySelector('.hero-btn');
-
-findPetButton.addEventListener('click', () => {
-  const searchSection = document.querySelector('.searchSection');
-  searchSection.scrollIntoView({ behavior: 'smooth' });
 });
+
+async function searchPets() {
+  const query = document.getElementById("searchInput").value;
+  const category = document.getElementById("categorySelect").value;
+  const sorting = document.getElementById("sortingSelect").value;
+
+  const url = `/pets?query=${query}&category=${category}&sorting=${sorting}`;
+  const response = await fetch(url);
+  const data = await response.json();
+
+  displaySearchResults(data.data);
+}
+
+function displaySearchResults(pets) {
+  const cardContainer = document.getElementById("cardContainer");
+  cardContainer.innerHTML = "";
+
+  if (pets.length > 0) {
+    if (document.getElementById("sortingSelect").value === "asc") {
+      pets.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (document.getElementById("sortingSelect").value === "desc") {
+      pets.sort((a, b) => b.name.localeCompare(a.name));
+    }
+
+    pets.forEach((pet) => {
+      const card = document.createElement("div");
+      card.classList.add("cards");
+
+      const img = document.createElement("img");
+      img.src = pet.image;
+      img.alt = pet.name;
+
+      const info = document.createElement("div");
+      info.classList.add("info");
+      info.innerHTML = `
+        <p>${pet.name}</p>
+        <p>${pet.breed}</p>
+        <a href="/details/${pet._id}" class="readmore-btn">Read More</a>
+      `;
+
+      card.appendChild(img);
+      card.appendChild(info);
+      cardContainer.appendChild(card);
+    });
+  } else {
+    cardContainer.innerHTML = "<p>No pets found.</p>";
+  }
+}

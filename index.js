@@ -25,8 +25,7 @@ app.set("view engine", "ejs");
 app.use(expressLayouts);
 app.use(express.static("public"));
 app.use(express.static("uploads"));
-app.use('/uploads', express.static('public/uploads'));
-
+app.use("/uploads", express.static("public/uploads"));
 
 app.use(
   session({
@@ -58,39 +57,22 @@ var upload = multer({ storage: storage }).single("image");
 
 // Halaman Home
 app.get("/", async (req, res) => {
-  if (req.isAuthenticated()) {
-    res.render("home.ejs", {
-      title: "Home",
-      layout: "mainlayout.ejs",
-      isAuthenticated: true,
-      isAdmin: req.user.isAdmin,
-    });
-  } else {
-    res.render("home.ejs", {
-      title: "Home",
-      layout: "mainlayout.ejs",
-      isAuthenticated: false,
-    });
-  }
-});
-
-app.get("/tes", async (req, res) => {
   try {
     let id = req.params.id;
     const pets = await Pet.find(id).exec();
 
     if (req.isAuthenticated()) {
-      res.render("tes.ejs", {
+      res.render("home.ejs", {
         pets: pets,
-        title: "Tes",
+        title: "Home",
         layout: "mainlayout.ejs",
         isAuthenticated: true,
         isAdmin: req.user.isAdmin,
       });
     } else {
-      res.render("tes.ejs", {
+      res.render("home.ejs", {
         pets: pets,
-        title: "Tes",
+        title: "Home",
         layout: "mainlayout.ejs",
         isAuthenticated: false,
       });
@@ -102,7 +84,6 @@ app.get("/tes", async (req, res) => {
 });
 
 app.get("/FAQ", (req, res) => {
-
   if (req.isAuthenticated()) {
     res.render("FAQ.ejs", {
       title: "Tes",
@@ -117,7 +98,6 @@ app.get("/FAQ", (req, res) => {
       isAuthenticated: false,
     });
   }
-  
 });
 
 app.get("/about", (req, res) => {
@@ -130,7 +110,6 @@ app.get("/about", (req, res) => {
     });
   } else {
     res.render("about.ejs", {
-
       title: "Tes",
       layout: "mainlayout.ejs",
       isAuthenticated: false,
@@ -255,10 +234,9 @@ app.get("/edit/:name", async (req, res) => {
     }
   } catch (err) {
     console.error(err);
-    res.redirect("/tes");
+    res.redirect("/");
   }
 });
-
 
 app.post("/update/:id", upload, async (req, res) => {
   let id = req.params.id;
@@ -293,22 +271,48 @@ app.post("/update/:id", upload, async (req, res) => {
   }
 });
 
-app.get("/delete/:id", async (req, res) => {
+// app.get("/delete/:id", async (req, res) => {
+//   try {
+//     let id = req.params.id;
+//     let pet = await Pet.findById(id).exec();
+
+//     if (!pet) {
+//       return res.redirect("/");
+//     } else {
+//       fs.unlinkSync("./uploads/" + pet.image);
+
+//       await Pet.findByIdAndDelete(id);
+//       res.redirect("/dashboard");
+//     }
+//   } catch (err) {
+//     console.error(err);
+//     res.redirect("/");
+//   }
+// });
+
+// app.delete("/delete/:id", async (req, res) => {
+
+//   try {
+//     await Pet.findByIdAndDelete(req.params.id);
+//     res.sendStatus(200);
+//   } catch (error) {
+//     res.status(500).send("Internal Server Error");
+//   }
+// });
+
+app.delete("/delete/:id", async (req, res) => {
   try {
-    let id = req.params.id;
-    let pet = await Pet.findById(id).exec();
-
+    const pet = await Pet.findByIdAndDelete(req.params.id); // Find and delete the pet document
     if (!pet) {
-      return res.redirect("/tes");
-    } else {
-      fs.unlinkSync("./uploads/" + pet.image);
-
-      await Pet.findByIdAndDelete(id);
-      res.redirect("/dashboard");
+      return res.status(404).send("Pet not found"); // If pet not found, return 404
     }
-  } catch (err) {
-    console.error(err);
-    res.redirect("/tes");
+
+    // Delete the corresponding image file from the uploads directory
+    fs.unlinkSync("./uploads/" + pet.image);
+
+    res.sendStatus(200); // Send 200 OK status after successful deletion
+  } catch (error) {
+    res.status(500).send("Internal Server Error"); // Handle server errors
   }
 });
 
@@ -325,24 +329,48 @@ app.get("/delete/:id", async (req, res) => {
 //   });
 // });
 
+// app.get("/detaails/:id", async (req, res) => {
+//   try {
+//     let id = req.params.id;
+//     let pet = await Pet.findById(id);
 
-app.get("/detaails/:id", async (req, res) => {
+//     res.render("detaails.ejs", {
+//       layout: false,
+//       pets: pet,
+//       isAuthenticated: true,
+//       isAdmin: req.user.isAdmin,
+//     });
+//   } catch (err) {
+//     console.error(err);
+//     res.redirect("/home");
+//   }
+// });
+
+app.get("/detaails/:name", async (req, res) => {
   try {
-    let id = req.params.id;
-    let pet = await Pet.findById(id);
+    let petName = req.params.name;
+    let pet = await Pet.findOne({ name: petName }); // Menggunakan nama pet sebagai kriteria pencarian
 
-      res.render("detaails.ejs", {
+    if (!pet) {
+      return res.render("errorPage.ejs", {
         layout: false,
-        pets: pet,
         isAuthenticated: true,
         isAdmin: req.user.isAdmin,
-      });
-    
+      })
+    }
+
+    res.render("detaails.ejs", {
+      layout: false,
+      pets: pet,
+      isAuthenticated: true,
+      isAdmin: req.user.isAdmin,
+    });
   } catch (err) {
     console.error(err);
-    res.redirect("/tes");
+    res.redirect("/");
   }
 });
+
 
 
 // Route untuk sign up
@@ -399,7 +427,7 @@ function isLoggedIn(req, res, next) {
 app.post(
   "/login",
   passport.authenticate("local", {
-    successRedirect: "/tes",
+    successRedirect: "/",
     failureRedirect: "/signinup",
     failureFlash: true,
   })
@@ -436,13 +464,39 @@ app.get("/logout", (req, res) => {
       console.error("Error logging out:", err);
       return res.status(500).send("Error logging out");
     }
-    res.redirect("/tes");
+    res.redirect("/");
   });
 });
 
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
   next();
+});
+
+app.get("/pets", async (req, res) => {
+  try {
+    const { query, category } = req.query;
+    let filter = {};
+
+    if (query) {
+      filter = {
+        $or: [
+          { name: { $regex: query, $options: "i" } }, // case-insensitive search for pet name
+          { breed: { $regex: query, $options: "i" } }, // case-insensitive search for pet breed
+        ],
+      };
+    }
+
+    if (category) {
+      filter.category = category;
+    }
+
+    const pets = await Pet.find(filter);
+
+    res.json({ success: true, data: pets });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
 });
 
 app.listen(port, () => {
