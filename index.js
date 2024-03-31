@@ -1,13 +1,13 @@
 const express = require("express");
-
 const bcrypt = require("bcrypt");
 const flash = require("connect-flash");
-
 const session = require("express-session");
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 require("dotenv").config();
 require("./utils/db");
 
 const passport = require("./models/passport");
+const GoogleData = require("./models/googleData");
 const Pet = require("./models/petData");
 const UserData = require("./models/userData");
 const multer = require("multer");
@@ -38,11 +38,58 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+passport.use(new GoogleStrategy({
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  callbackURL: "/auth/google/callback"
+},
+
+async function (req, accessToken, refreshToken, profile, done) {
+  try {
+    let user = await GoogleData.findOne({ googleId: profile.id });
+
+    if (user) {
+      console.log("User authenticated successfully:", user);
+      // Tandai pengguna sebagai terautentikasi
+      return done(null, user);
+    } else {
+      user = await GoogleData.create({
+        name: profile.displayName,
+        email: profile.emails[0].value,
+        googleId: profile.id,
+        isAdmin: false
+      });
+      console.log("New user registered and authenticated:", user);
+      // Tandai pengguna sebagai terautentikasi
+      return done(null, user);
+    }
+  } catch (error) {
+    console.error("Error during authentication:", error);
+    return done(error, null);
+  }
+}
+));
+
+app.get("/auth/google/callback", passport.authenticate("google", {
+  scope: ["profile", "email"],
+  successRedirect: "/tes",
+  failureRedirect: "/signinup"
+}), (req, res) => {
+  req.session.isAuthenticated = true;
+  res.redirect("/tes");
+});
+
+
+
 app.use(flash());
+
 app.use((req, res, next) => {
-  res.locals.isAuthenticated = req.isAuthenticated();
+  res.locals.isAuthenticated = req.isAuthenticated() || req.session.isAuthenticated;
+  res.locals.currentUser = req.user;
   next();
 });
+
 
 // Image upload
 var storage = multer.diskStorage({
@@ -146,6 +193,10 @@ app.get("/signinup", (req, res) => {
 
 app.get("/login", (req, res) => {
   res.render("login", { title: "Login", layout: false, messages: req.flash() });
+});
+
+app.get("/forgotPassword", (req, res) => {
+  res.render("forgotPassword", { title: "forgotPassword", layout: false, messages: req.flash() });
 });
 
 app.get("/add", (req, res) => {
@@ -423,6 +474,42 @@ function isLoggedIn(req, res, next) {
   }
 }
 
+app.post("/forgotPassword", async (req, res) => {
+  try {
+    const { email, password, confirmNewPassword } = req.body;
+
+    // Check if passwords match
+    if (password !== confirmNewPassword) {
+      req.flash("error", "Passwords do not match");
+      return res.redirect("/forgotPassword");
+    }
+
+    // Hash the new password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Update user's password in the database
+    const user = await UserData.findOneAndUpdate(
+      { email: email },
+      { password: hashedPassword },
+      { new: true }
+    );
+
+    if (!user) {
+      req.flash("error", "Email not found");
+      return res.redirect("/forgotPassword");
+    }
+
+    req.flash("success", "Password updated successfully");
+    res.redirect("/forgotPassword");
+  } catch (error) {
+    console.error("Error updating password:", error.message);
+    req.flash("error", "Error updating password");
+    res.redirect("/forgotPassword");
+  }
+});
+
+
+
 // Route untuk login
 app.post(
   "/login",
@@ -464,7 +551,9 @@ app.get("/logout", (req, res) => {
       console.error("Error logging out:", err);
       return res.status(500).send("Error logging out");
     }
-    res.redirect("/");
+    req.session.destroy(() => {
+      res.redirect("/tes");
+    })
   });
 });
 
