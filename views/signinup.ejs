@@ -21,13 +21,13 @@
             <p class="error-message"><%= messages.error && messages.error.includes('Error registering user') ? 'Error registering user' : '' %></p>
             <p class="error-message"><%= messages.error && messages.error.includes('Username already exists') ? 'Username already exists' : '' %></p>
             <p class="error-message"><%= messages.error && messages.error.includes('Email already registered') ? 'Email already registered' : '' %></p>
-          <a href="#">Forgot your Password</a>
+          <a href="/forgotPassword">Forgot your Password</a>
 
           <button type="submit" name="login">Sign In</button>
 
           <div class="social-container">
             <a href="#" class="social"><i class="fa-brands fa-facebook"></i></a>
-            <a href="#" class="social"><i class="fa-brands fa-google"></i></a>
+            <a href="/auth/google/callback" class="social"><i class="fa-brands fa-google"></i></a>
             <a href="#" class="social"><i class="fa-brands fa-linkedin"></i></a>
           </div>
         </form>

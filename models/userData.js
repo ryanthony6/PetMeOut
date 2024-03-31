@@ -18,6 +18,9 @@ const userDataSchema = new Schema({
   isAdmin: {
     type: Boolean,
     default: false // Defaultnya diatur sebagai false
+  },
+  googleId: {
+    type: String
   }
 });
 
