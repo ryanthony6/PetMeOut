@@ -198,3 +198,20 @@ p {
 .close-btn:hover {
   color: #555555;
 }
+
+.error-message {
+  color: red;
+  font-weight: 400;
+}
+
+.success-message {
+  color: blue;
+  font-weight: 400;
+}
+
+.error-message,
+.success-message {
+  margin-top: 10px; 
+  margin-bottom: 5px; 
+  display: none;
+}

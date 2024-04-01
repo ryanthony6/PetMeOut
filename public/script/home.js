@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", function () {
   const searchForm = document.getElementById("searchForm");
   searchForm.addEventListener("submit", function (event) {

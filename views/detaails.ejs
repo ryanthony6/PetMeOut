@@ -29,15 +29,14 @@
   <div class="popup-form">
     <span class="close-btn" onclick="closeForm()">&times;</span>
     <h2>Adoption Form</h2>
-    <form action="" method="post">
+    <form action="/adoption-form" method="post">
       <div class="form-group">
         <label for="fname" class="required-label">First Name</label>
-        <input type="text" id="fname" name="fname" required />
+        <input type="text" id="firstname" name="fname" required />
       </div>
-
       <div class="form-group">
         <label for="lname" class="required-label">Last Name</label>
-        <input type="text" id="lname" name="lname" required />
+        <input type="text" id="lastname" name="lname" required />
       </div>
       <div class="form-group">
         <label for="email" class="required-label">Email</label>
@@ -49,7 +48,7 @@
       </div>
       <div class="form-group">
         <label for="address" class="required-label">Address</label>
-        <input type="text" id="address" />
+        <input type="text" id="address" name="address" required/>
       </div>
       <div class="form-group">
         <label for="phone" class="required-label">Telephone</label>
@@ -57,13 +56,12 @@
       </div>
       <div class="form-group">
         <label for="have-pets">Do you have pets?</label>
-        <input type="text" id="have-pets" name="have-pets" />
+        <input type="text" id="have-pets" name="havePets" />
       </div>
       <div class="form-group">
         <label for="have-children">Do you have children in your house?</label>
-        <input type="text" id="have-children" name="have-children" />
+        <input type="text" id="have-children" name="haveChildren" />
       </div>
-
       <input
         type="button"
         class="cancel-btn"
@@ -77,5 +75,6 @@
 
 <link rel="stylesheet" href="/style/styleDetails.css" />
 
-<!-- <script src="/script/ResponsiveNavbarTes.js"></script> -->
 <script src="/script/details.js"></script>
+
+<script src="sweetalert2.all.min.js"></script>

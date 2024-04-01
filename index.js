@@ -2,10 +2,12 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const flash = require("connect-flash");
 const session = require("express-session");
+const Swal = require('sweetalert2');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 require("dotenv").config();
 require("./utils/db");
 
+const FormData = require("./models/formData");
 const passport = require("./models/passport");
 const GoogleData = require("./models/googleData");
 const Pet = require("./models/petData");
@@ -371,7 +373,7 @@ app.delete("/delete/:id", async (req, res) => {
 
 app.get("/detaails/:name", isLoggedIn, async (req, res) => {
   try {
-    let petName = req.params.name;
+    let petName = req.session.petName || req.params.name; // Gunakan session jika ada, jika tidak gunakan nama dari parameter URL
     let pet = await Pet.findOne({ name: petName }); // Menggunakan nama pet sebagai kriteria pencarian
 
     if (!pet) {
@@ -379,6 +381,7 @@ app.get("/detaails/:name", isLoggedIn, async (req, res) => {
         layout: false,
         isAuthenticated: true,
         isAdmin: req.user.isAdmin,
+        messages: req.flash()
       })
     }
 
@@ -387,6 +390,7 @@ app.get("/detaails/:name", isLoggedIn, async (req, res) => {
       pets: pet,
       isAuthenticated: true,
       isAdmin: req.user.isAdmin,
+      messages: req.flash()
     });
   } catch (err) {
     console.error(err);
@@ -394,7 +398,44 @@ app.get("/detaails/:name", isLoggedIn, async (req, res) => {
   }
 });
 
-
+app.post("/adoption-form", async (req, res) => {
+  try {
+    // Proses penyimpanan data formulir adopsi ke MongoDB
+    const formData = new FormData({
+      fname: req.body.fname,
+      lname: req.body.lname,
+      email: req.body.email,
+      dob: req.body.dob,
+      address: req.body.address,
+      phone: req.body.phone,
+      havePets: req.body.havePets,
+      haveChildren: req.body.haveChildren,
+    });
+    await formData.save();
+    // Tampilkan SweetAlert jika penyimpanan berhasil
+    Swal.fire({
+      icon: 'success',
+      title: 'Form submitted successfully!',
+      text: 'Thank you for your adoption form submission! We will inform you via email you fill!',
+      didClose: () => {
+        // Redirect ke halaman utama setelah SweetAlert ditutup
+        res.redirect("/");
+      }
+    });
+  } catch (error) {
+    console.error("Error submitting adoption form:", error);
+    // Tampilkan SweetAlert jika terjadi kesalahan
+    Swal.fire({
+      icon: 'error',
+      title: 'Error submitting adoption form',
+      text: 'An error occurred while submitting the adoption form. Please try again later.',
+      didClose: () => {
+        // Redirect ke halaman utama setelah SweetAlert ditutup
+        res.redirect("/");
+      }
+    });
+  }
+});
 
 // Route untuk sign up
 app.post("/signup", async (req, res) => {
