@@ -12,6 +12,7 @@ const Pet = require("./models/petData");
 const UserData = require("./models/userData");
 const multer = require("multer");
 const fs = require("fs");
+var morgan = require('morgan')
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -20,12 +21,12 @@ const expressLayouts = require("express-ejs-layouts");
 app.use(flash());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(morgan('dev'));
 
 app.set("view engine", "ejs");
 app.use(expressLayouts);
 app.use(express.static("public"));
 app.use(express.static("uploads"));
-app.use("/uploads", express.static("public/uploads"));
 
 app.use(
   session({
@@ -73,11 +74,11 @@ async function (req, accessToken, refreshToken, profile, done) {
 
 app.get("/auth/google/callback", passport.authenticate("google", {
   scope: ["profile", "email"],
-  successRedirect: "/tes",
+  successRedirect: "/",
   failureRedirect: "/signinup"
 }), (req, res) => {
   req.session.isAuthenticated = true;
-  res.redirect("/tes");
+  res.redirect("/");
 });
 
 
@@ -273,7 +274,7 @@ app.get("/dashboard", async (req, res) => {
 
 app.get("/edit/:name", async (req, res) => {
   try {
-    let pet = await Pet.findOne({ name: req.params.name }); // Menggunakan findOne untuk mencari berdasarkan nama pet
+    let pet = await Pet.findOne({ name: req.params.name });
 
     if (!pet) {
       return res.redirect("/");
@@ -321,35 +322,6 @@ app.post("/update/:id", upload, async (req, res) => {
     res.redirect("/");
   }
 });
-
-// app.get("/delete/:id", async (req, res) => {
-//   try {
-//     let id = req.params.id;
-//     let pet = await Pet.findById(id).exec();
-
-//     if (!pet) {
-//       return res.redirect("/");
-//     } else {
-//       fs.unlinkSync("./uploads/" + pet.image);
-
-//       await Pet.findByIdAndDelete(id);
-//       res.redirect("/dashboard");
-//     }
-//   } catch (err) {
-//     console.error(err);
-//     res.redirect("/");
-//   }
-// });
-
-// app.delete("/delete/:id", async (req, res) => {
-
-//   try {
-//     await Pet.findByIdAndDelete(req.params.id);
-//     res.sendStatus(200);
-//   } catch (error) {
-//     res.status(500).send("Internal Server Error");
-//   }
-// });
 
 app.delete("/delete/:id", async (req, res) => {
   try {
@@ -552,7 +524,7 @@ app.get("/logout", (req, res) => {
       return res.status(500).send("Error logging out");
     }
     req.session.destroy(() => {
-      res.redirect("/tes");
+      res.redirect("/");
     })
   });
 });
@@ -570,8 +542,8 @@ app.get("/pets", async (req, res) => {
     if (query) {
       filter = {
         $or: [
-          { name: { $regex: query, $options: "i" } }, // case-insensitive search for pet name
-          { breed: { $regex: query, $options: "i" } }, // case-insensitive search for pet breed
+          { name: { $regex: query, $options: "i" } }, 
+          { breed: { $regex: query, $options: "i" } }, 
         ],
       };
     }
