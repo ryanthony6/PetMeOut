@@ -14,6 +14,21 @@
 </section>
 <!-- Hero section end -->
 
+<p class="success-message">
+  <%= messages.success && messages.success.includes('Successful, your form has been submitted') ? '' : '' %>
+  <% if (messages.success && messages.success.includes('Successful, your form has been submitted')) { %>
+    <script>
+      // Menampilkan pop-up SweetAlert2 untuk pesan sukses registrasi
+      Swal.fire({
+        icon: 'success',
+        title: 'Adoption form submitted',
+        text: 'Thank you for your submission!',
+        confirmButtonText: 'OK'
+      });
+    </script>
+  <% } %>
+</p>
+
 <!-- List section start -->
 <section class="cardList">
   <h1 class="list-heading">Adoptable Animals Highlight</h1>
@@ -194,3 +209,4 @@
     })
     .catch((error) => console.error("Error:", error));
 </script>
+
