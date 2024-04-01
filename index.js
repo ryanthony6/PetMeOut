@@ -193,11 +193,11 @@ app.get("/signinup", (req, res) => {
 });
 
 app.get("/login", (req, res) => {
-  res.render("login", { title: "Login", layout: false, messages: req.flash() });
+  res.render("login", { title: "Login", layout: false, messages: req.flash()});
 });
 
 app.get("/forgotPassword", (req, res) => {
-  res.render("forgotPassword", { title: "forgotPassword", layout: false, messages: req.flash() });
+  res.render("forgotPassword", { title: "forgotPassword", layout: false, messages: req.flash()});
 });
 
 app.get("/add", (req, res) => {
@@ -369,7 +369,7 @@ app.delete("/delete/:id", async (req, res) => {
 //   }
 // });
 
-app.get("/detaails/:name", async (req, res) => {
+app.get("/detaails/:name", isLoggedIn, async (req, res) => {
   try {
     let petName = req.params.name;
     let pet = await Pet.findOne({ name: petName }); // Menggunakan nama pet sebagai kriteria pencarian
@@ -452,7 +452,24 @@ app.post("/forgotPassword", async (req, res) => {
 
     // Check if passwords match
     if (password !== confirmNewPassword) {
-      req.flash("error", "Passwords do not match");
+      req.flash("error", "Passwords does not match");
+      return res.redirect("/forgotPassword");
+    }
+
+    if (!email) {
+      req.flash("error", "Email is required");
+      return res.redirect("/forgotPassword");
+    }
+
+    if (!password) {
+      req.flash("error", "Password is required");
+      return res.redirect("/forgotPassword");
+    }
+
+    const existingUser = await UserData.findOne({ email: email });
+    if (existingUser &&existingUser.isAdmin) {
+      req.flash("error", "This is an admin account. Password cannot be changed.");
+      console.log("jancok")
       return res.redirect("/forgotPassword");
     }
 
