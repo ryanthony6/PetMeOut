@@ -2,19 +2,19 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const flash = require("connect-flash");
 const session = require("express-session");
-const Swal = require('sweetalert2');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const Swal = require("sweetalert2");
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
 require("dotenv").config();
 require("./utils/db");
 
 const FormData = require("./models/formData");
-const passport = require("./models/passport");
+const passport = require("./api/passport");
 const GoogleData = require("./models/googleData");
 const Pet = require("./models/petData");
 const UserData = require("./models/userData");
 const multer = require("multer");
 const fs = require("fs");
-var morgan = require('morgan')
+var morgan = require("morgan");
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -23,8 +23,7 @@ const expressLayouts = require("express-ejs-layouts");
 app.use(flash());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(morgan('dev'));
-
+app.use(morgan("dev"));
 app.set("view engine", "ejs");
 app.use(expressLayouts);
 app.use(express.static("public"));
@@ -41,58 +40,62 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
-
-passport.use(new GoogleStrategy({
-  clientID: process.env.GOOGLE_CLIENT_ID,
-  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: "/auth/google/callback"
-},
-
-async function (req, accessToken, refreshToken, profile, done) {
-  try {
-    let user = await GoogleData.findOne({ googleId: profile.id });
-
-    if (user) {
-      console.log("User authenticated successfully:", user);
-      // Tandai pengguna sebagai terautentikasi
-      return done(null, user);
-    } else {
-      user = await GoogleData.create({
-        name: profile.displayName,
-        email: profile.emails[0].value,
-        googleId: profile.id,
-        isAdmin: false
-      });
-      console.log("New user registered and authenticated:", user);
-      // Tandai pengguna sebagai terautentikasi
-      return done(null, user);
-    }
-  } catch (error) {
-    console.error("Error during authentication:", error);
-    return done(error, null);
-  }
-}
-));
-
-app.get("/auth/google/callback", passport.authenticate("google", {
-  scope: ["profile", "email"],
-  successRedirect: "/",
-  failureRedirect: "/signinup"
-}), (req, res) => {
-  req.session.isAuthenticated = true;
-  res.redirect("/");
-});
-
-
-
 app.use(flash());
 
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: "/auth/google/callback",
+    },
+
+    async function (req, accessToken, refreshToken, profile, done) {
+      try {
+        let user = await GoogleData.findOne({ googleId: profile.id });
+
+        if (user) {
+          console.log("User authenticated successfully:", user);
+          // Tandai pengguna sebagai terautentikasi
+          return done(null, user);
+        } else {
+          user = await GoogleData.create({
+            name: profile.displayName,
+            email: profile.emails[0].value,
+            googleId: profile.id,
+            isAdmin: false,
+          });
+          console.log("New user registered and authenticated:", user);
+          // Tandai pengguna sebagai terautentikasi
+          return done(null, user);
+        }
+      } catch (error) {
+        console.error("Error during authentication:", error);
+        return done(error, null);
+      }
+    }
+  )
+);
+
+app.get(
+  "/auth/google/callback",
+  passport.authenticate("google", {
+    scope: ["profile", "email"],
+    successRedirect: "/",
+    failureRedirect: "/signinup",
+  }),
+  (req, res) => {
+    req.session.isAuthenticated = true;
+    res.redirect("/");
+  }
+);
+
 app.use((req, res, next) => {
-  res.locals.isAuthenticated = req.isAuthenticated() || req.session.isAuthenticated;
+  res.locals.isAuthenticated =
+    req.isAuthenticated() || req.session.isAuthenticated;
   res.locals.currentUser = req.user;
   next();
 });
-
 
 // Image upload
 var storage = multer.diskStorage({
@@ -133,6 +136,13 @@ app.get("/", async (req, res) => {
   }
 });
 
+app.get("/tes", (req, res) => {
+  res.render("tes.ejs", {
+    title: "Tes",
+    layout: false,
+  });
+});
+
 app.get("/FAQ", (req, res) => {
   if (req.isAuthenticated()) {
     res.render("FAQ.ejs", {
@@ -167,15 +177,6 @@ app.get("/about", (req, res) => {
   }
 });
 
-// app.get("/details", isLoggedIn, (req, res) => {
-//   res.render("details.ejs", {
-//     title: "details",
-//     layout: "detailslayout.ejs",
-//     isAuthenticated: true,
-//     isAdmin: req.user.isAdmin,
-//   });
-// });
-
 app.get("/error", (req, res) => {
   res.render("errorPage.ejs", {
     title: "error",
@@ -195,11 +196,15 @@ app.get("/signinup", (req, res) => {
 });
 
 app.get("/login", (req, res) => {
-  res.render("login", { title: "Login", layout: false, messages: req.flash()});
+  res.render("login", { title: "Login", layout: false, messages: req.flash() });
 });
 
 app.get("/forgotPassword", (req, res) => {
-  res.render("forgotPassword", { title: "forgotPassword", layout: false, messages: req.flash()});
+  res.render("forgotPassword", {
+    title: "forgotPassword",
+    layout: false,
+    messages: req.flash(),
+  });
 });
 
 app.get("/add", (req, res) => {
@@ -255,24 +260,6 @@ app.get("/dashboard", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
-
-// app.get("/edit/:name", async (req, res) => {
-//   try {
-//     let pet = await Pet.findById(req.params.id);
-
-//     if (!pet) {
-//       return res.redirect("/");
-//     } else {
-//       res.render("editPetData.ejs", {
-//         layout: false,
-//         pets: pet,
-//       });
-//     }
-//   } catch (err) {
-//     console.error(err);
-//     res.redirect("/tes");
-//   }
-// });
 
 app.get("/edit/:name", async (req, res) => {
   try {
@@ -341,37 +328,7 @@ app.delete("/delete/:id", async (req, res) => {
   }
 });
 
-// app.get("/detaails/:id", async (req, res) => {
-//   let id = req.params.id;
-
-//   let pet = await Pet.findById(id).exec();
-//   res.render("detaails.ejs", {
-//     title: "details",
-//     pets: pet,
-//     layout: "detailslayout.ejs",
-//     isAuthenticated: true,
-//     isAdmin: req.user.isAdmin,
-//   });
-// });
-
-// app.get("/detaails/:id", async (req, res) => {
-//   try {
-//     let id = req.params.id;
-//     let pet = await Pet.findById(id);
-
-//     res.render("detaails.ejs", {
-//       layout: false,
-//       pets: pet,
-//       isAuthenticated: true,
-//       isAdmin: req.user.isAdmin,
-//     });
-//   } catch (err) {
-//     console.error(err);
-//     res.redirect("/home");
-//   }
-// });
-
-app.get("/detaails/:name", isLoggedIn, async (req, res) => {
+app.get("/details/:name", isLoggedIn, async (req, res) => {
   try {
     let petName = req.session.petName || req.params.name; // Gunakan session jika ada, jika tidak gunakan nama dari parameter URL
     let pet = await Pet.findOne({ name: petName }); // Menggunakan nama pet sebagai kriteria pencarian
@@ -381,16 +338,16 @@ app.get("/detaails/:name", isLoggedIn, async (req, res) => {
         layout: false,
         isAuthenticated: true,
         isAdmin: req.user.isAdmin,
-        messages: req.flash()
-      })
+        messages: req.flash(),
+      });
     }
 
-    res.render("detaails.ejs", {
+    res.render("details.ejs", {
       layout: false,
       pets: pet,
       isAuthenticated: true,
       isAdmin: req.user.isAdmin,
-      messages: req.flash()
+      messages: req.flash(),
     });
   } catch (err) {
     console.error(err);
@@ -398,6 +355,7 @@ app.get("/detaails/:name", isLoggedIn, async (req, res) => {
   }
 });
 
+// Route for handling form submission
 app.post("/adoption-form", async (req, res) => {
   try {
     // Proses penyimpanan data formulir adopsi ke MongoDB
@@ -414,25 +372,25 @@ app.post("/adoption-form", async (req, res) => {
     await formData.save();
     // Tampilkan SweetAlert jika penyimpanan berhasil
     Swal.fire({
-      icon: 'success',
-      title: 'Form submitted successfully!',
-      text: 'Thank you for your adoption form submission! We will inform you via email you fill!',
-      didClose: () => {
-        // Redirect ke halaman utama setelah SweetAlert ditutup
-        res.redirect("/");
-      }
+      icon: "success",
+      title: "Form submitted successfully!",
+      text: "Thank you for your adoption form submission! We will inform you via email you fill!",
+    }).then(() => {
+      // Redirect to the homepage after the user closes the Swal popup
+      window.location.href = "/";
     });
+    
   } catch (error) {
     console.error("Error submitting adoption form:", error);
     // Tampilkan SweetAlert jika terjadi kesalahan
     Swal.fire({
-      icon: 'error',
-      title: 'Error submitting adoption form',
-      text: 'An error occurred while submitting the adoption form. Please try again later.',
+      icon: "error",
+      title: "Error submitting adoption form",
+      text: "An error occurred while submitting the adoption form. Please try again later.",
       didClose: () => {
         // Redirect ke halaman utama setelah SweetAlert ditutup
         res.redirect("/");
-      }
+      },
     });
   }
 });
@@ -508,9 +466,12 @@ app.post("/forgotPassword", async (req, res) => {
     }
 
     const existingUser = await UserData.findOne({ email: email });
-    if (existingUser &&existingUser.isAdmin) {
-      req.flash("error", "This is an admin account. Password cannot be changed.");
-      console.log("jancok")
+    if (existingUser && existingUser.isAdmin) {
+      req.flash(
+        "error",
+        "This is an admin account. Password cannot be changed."
+      );
+      console.log("jancok");
       return res.redirect("/forgotPassword");
     }
 
@@ -537,8 +498,6 @@ app.post("/forgotPassword", async (req, res) => {
     res.redirect("/forgotPassword");
   }
 });
-
-
 
 // Route untuk login
 app.post(
@@ -583,7 +542,7 @@ app.get("/logout", (req, res) => {
     }
     req.session.destroy(() => {
       res.redirect("/");
-    })
+    });
   });
 });
 
@@ -600,8 +559,8 @@ app.get("/pets", async (req, res) => {
     if (query) {
       filter = {
         $or: [
-          { name: { $regex: query, $options: "i" } }, 
-          { breed: { $regex: query, $options: "i" } }, 
+          { name: { $regex: query, $options: "i" } },
+          { breed: { $regex: query, $options: "i" } },
         ],
       };
     }

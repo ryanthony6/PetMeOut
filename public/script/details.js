@@ -7,13 +7,11 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("popup-form-container").style.display = "block";
   }
 
-  
-      const adoptButton = document.getElementById("btn-contact");
-      adoptButton.addEventListener("click", () => {
-        openForm();
-      });
-   
-  
+  const adoptButton = document.getElementById("btn-contact");
+  adoptButton.addEventListener("click", () => {
+    openForm();
+  });
+
   document
     .querySelector(".close-btn")
     .addEventListener("click", function (event) {

@@ -164,8 +164,7 @@
       <div class="info">
         <p><%= pet.name %></p>
         <p><%= pet.breed %></p>
-        <!-- <a href="/detaails/<%= pet._id %>" class="readmore-btn">Read More</a> -->
-        <a href="/detaails/<%= pet.name %>" class="readmore-btn">Read More</a>
+        <a href="/details/<%= pet.name %>" class="readmore-btn">Read More</a>
       </div>
     </div>
     <% }); %>
@@ -185,12 +184,3 @@
 <script src="/script/ResponsiveNavbarTes.js"></script>
 <script src="/script/swiper.js"></script>
 <script src="/script/home.js"></script>
-
-<script>
-  fetch(`/details/${petName}`) // Menggunakan nama pet sebagai bagian dari URL
-    .then((response) => response.json())
-    .then((data) => {
-      // Lakukan sesuatu dengan data detail pet yang diterima
-    })
-    .catch((error) => console.error("Error:", error));
-</script>

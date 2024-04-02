@@ -42,7 +42,7 @@ function displaySearchResults(pets) {
       info.innerHTML = `
         <p>${pet.name}</p>
         <p>${pet.breed}</p>
-        <a href="/details/${pet._id}" class="readmore-btn">Read More</a>
+        <a href="/details/${pet.name}" class="readmore-btn">Read More</a>
       `;
 
       card.appendChild(img);
