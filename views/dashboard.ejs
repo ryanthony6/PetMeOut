@@ -1,5 +1,5 @@
 <div class="container">
-  <table>
+  <table id="petTable">
     <% if (pets.length > 0) { %>
     <!-- Menggunakan .length untuk memeriksa apakah pets tidak kosong -->
     <thead>
@@ -31,9 +31,7 @@
         <td class="actions">
           <a href="/edit/<%= row.name %>" class="edit">Edit</a>
           <!-- Menggunakan row._id untuk link edit -->
-          <a onclick="deleteProduct('<%= row._id %>')" class="delete"
-            >Delete</a
-          >
+          <a onclick="deleteProduct('<%= row._id %>')" class="delete">Delete</a>
           <!-- Menambahkan onclick event untuk menghapus -->
         </td>
       </tr>
@@ -55,19 +53,44 @@
         <th>Actions</th>
       </tr>
     </thead>
-    <tbody>
-      <tr>
-        <td colspan="10">No pets found.</td>
-      </tr>
-    </tbody>
+
     <% } %>
   </table>
 </div>
+
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"
+/>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 
 <link rel="stylesheet" href="style/dashboard.css" />
 <script src="/script/ResponsiveNavbarTes.js"></script>
 
 <script>
+  $(document).ready(function () {
+    $("#petTable").DataTable({
+      pageLength: 6,
+      pagingType: "full_numbers",
+      columnDefs: [
+        { visible: false, targets: [2, 3] }, // Hide columns 3 and 4 by default
+      ],
+      order: [[1, "asc"]], // Sort by the second column in ascending order by default
+      searching: false, // Disable the search input
+      language: {
+        paginate: {
+          first: "First",
+          last: "Last",
+          next: "Next",
+          previous: "Previous",
+        },
+        emptyTable: "No data available in table",
+      },
+    });
+  });
+
   function deleteProduct(petID) {
     fetch(`/delete/${petID}`, {
       method: "DELETE",
