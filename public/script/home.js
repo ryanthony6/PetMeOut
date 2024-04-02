@@ -53,3 +53,5 @@ function displaySearchResults(pets) {
     cardContainer.innerHTML = "<p>No pets found.</p>";
   }
 }
+
+

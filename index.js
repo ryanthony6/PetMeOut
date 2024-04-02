@@ -121,6 +121,7 @@ app.get("/", async (req, res) => {
         layout: "mainlayout.ejs",
         isAuthenticated: true,
         isAdmin: req.user.isAdmin,
+        messages: req.flash(),
       });
     } else {
       res.render("home.ejs", {
@@ -128,6 +129,7 @@ app.get("/", async (req, res) => {
         title: "Home",
         layout: "mainlayout.ejs",
         isAuthenticated: false,
+        messages: req.flash(),
       });
     }
   } catch (err) {
@@ -370,30 +372,18 @@ app.post("/adoption-form", async (req, res) => {
       haveChildren: req.body.haveChildren,
     });
     await formData.save();
-    // Tampilkan SweetAlert jika penyimpanan berhasil
-    Swal.fire({
-      icon: "success",
-      title: "Form submitted successfully!",
-      text: "Thank you for your adoption form submission! We will inform you via email you fill!",
-    }).then(() => {
-      // Redirect to the homepage after the user closes the Swal popup
-      window.location.href = "/";
-    });
-    
+
+    // Mengarahkan kembali ke halaman utama dengan pop-up SweetAlert2
+    req.flash("success", "Successful, your form has been submitted");
+    res.redirect("/");
+
   } catch (error) {
     console.error("Error submitting adoption form:", error);
-    // Tampilkan SweetAlert jika terjadi kesalahan
-    Swal.fire({
-      icon: "error",
-      title: "Error submitting adoption form",
-      text: "An error occurred while submitting the adoption form. Please try again later.",
-      didClose: () => {
-        // Redirect ke halaman utama setelah SweetAlert ditutup
-        res.redirect("/");
-      },
-    });
+    req.flash("error", "Error submitting adoption form");
+    res.redirect("/");
   }
 });
+
 
 // Route untuk sign up
 app.post("/signup", async (req, res) => {
