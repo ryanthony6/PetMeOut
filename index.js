@@ -345,7 +345,7 @@ app.get("/details/:name", isLoggedIn, async (req, res) => {
     }
 
     res.render("details.ejs", {
-      layout: false,
+      layout: "detailslayout.ejs",
       pets: pet,
       isAuthenticated: true,
       isAdmin: req.user.isAdmin,
