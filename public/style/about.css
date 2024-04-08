@@ -10,34 +10,86 @@
   text-decoration: none;
 }
 
-/* Know us section start */
-.knowUs {
-  min-height: 100vh;
-  background-color: #f4f3ef;
+.main-content {
+  position: relative;
+}
+.main-content-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
 }
 
-.knowUs h2 {
-  padding-top: 5rem;
-  font-size: 2.25rem;
+.main-content-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.1;
+  animation: zoom 20s ease-in-out infinite;
+}
+
+@keyframes zoom {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* about us section start */
+.aboutUs {
+  min-height: 100vh;
+}
+
+.idea-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 9%;
+}
+
+.idea-image {
+  max-width: 50%;
+  padding: 3rem 0;
+}
+
+.idea-image img {
+  display: block;
+  max-width: 100%;
+  height: 550px;
+  mix-blend-mode: multiply;
+}
+
+.idea-content {
+  max-width: 50%;
+  padding: 20px;
+}
+
+.idea-content h1 {
+  font-size: 3rem;
   text-align: center;
   color: #4e4e4e;
-  font-family: "Inter", sans-serif;
-  font-weight: 900;
+  font-family: "Quicksand", sans-serif;
+  font-weight: medium 700;
   font-style: normal;
 }
 
-.knowUs-content {
-  padding: 1rem 15%;
-}
-
-.knowUs p {
-  color: #4e4e4e;
-  text-align: center;
+.idea-content p {
+  padding: 1rem 0;
   font-size: 1.2rem;
-  padding: 1.3rem 10rem;
-  font-family: "Inter", sans-serif;
+  font-family: "Quicksand", sans-serif;
   font-weight: 500;
   font-style: normal;
+  text-align: justify;
+  /* color: #4e4e4e; */
 }
 
 .social-container {
@@ -55,7 +107,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #e7e7e7;
+  background: #ffffff;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   overflow: hidden;
@@ -78,14 +130,14 @@
   content: "";
   left: 0;
   justify-content: flex-end;
-  background-color: #f4f3ef;
+  background-color: #ffffff;
 }
 
 .card::after {
   content: "";
   right: 0;
   justify-content: flex-start;
-  background-color: #f4f3ef;
+  background-color: #ffffff;
 }
 
 .card:hover {
@@ -163,28 +215,24 @@
     transform: scale(1);
   }
 }
-/* Know us section end */
+/* about us section end */
 
 /* Why adopt section start */
-.whyAdopt {
+.service {
   min-height: 100vh;
-  background-color: #fafcff;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
 }
 
-.whyAdopt h2 {
-  padding-top: 4rem;
-  font-size: 2.5rem;
+.service h2 {
+  padding-top: 5rem;
+  font-size: 2rem;
   text-align: center;
-  color: #19a7ce;
-  font-size: 3.5rem;
+  color: #4e4e4e;
   font-family: "Quicksand", sans-serif;
-  font-weight: 700;
+  font-weight: medium 700;
+  font-style: normal;
 }
 
-.adopt-heading {
+.about-heading {
   text-align: center;
   font-size: 1.2rem;
   font-family: "Quicksand", sans-serif;
@@ -193,62 +241,67 @@
   color: #4e4e4e;
 }
 
-.whyAdopt p {
-  font-size: 1.1rem;
-  text-align: justify;
+.row {
+  padding: 1rem 8rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.serviceCard {
+  width: 350px;
+  margin: 40px 25px;
+  text-align: center;
+  padding: 45px 2rem;
+  border-radius: 15px;
+  box-shadow: 5px 5px 7px 0 rgba(0, 0, 0, 0.15);
+  background-color: #ffffff;
+}
+
+.serviceIcon {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.serviceIcon img {
+  max-width: 75px;
+  max-height: 75px;
+  filter: invert(67%) sepia(93%) saturate(2927%) hue-rotate(151deg)
+    brightness(90%) contrast(60%);
+}
+
+.serviceContent {
   padding-top: 1rem;
 }
 
-.whyAdopt-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem 15%;
+.serviceContent h3 {
+  font-size: 1.3rem;
 }
 
-.whyAdopt-card {
-  background-color: #fff;
-  border-radius: 11px;
-  box-shadow: 0 3px 10px #9a9a9a;
-  padding: 20px;
-  margin: 30px;
+.serviceContent p {
+  padding-top: 0.8rem;
+  font-size: 1rem;
   font-family: "Inter", sans-serif;
-  font-weight: 300;
-  font-style: normal;
-  color: white;
-}
-
-.whyAdopt-card h3 {
-  font-size: 1.5rem;
-  color: #19a7ce;
-  font-family: "Quicksand", sans-serif;
-  font-weight: 600;
-  font-style: normal;
-}
-
-.whyAdopt-card p {
-  font-size: 1.2rem;
-  color: #4e4e4e;
-  font-family: "Quicksand", sans-serif;
   font-weight: 400;
   font-style: normal;
 }
+
 /* why adopt section end */
 
 /* Blog section start */
 .blog {
   min-height: 100vh;
-  background-color: #f4f3ef;
 }
 
 .blog h2 {
-  color: #4e4e4e;
-  font-family: "Inter", sans-serif;
-  font-weight: 700;
-  font-style: normal;
-  padding-top: 5rem;
+  padding-top: 4rem;
+  font-size: 2rem;
   text-align: center;
-  font-size: 3rem;
+  color: #4e4e4e;
+  font-family: "Quicksand", sans-serif;
+  font-weight: medium 700;
+  font-style: normal;
 }
 
 .blog p {
@@ -258,9 +311,9 @@
   font-family: "Inter", sans-serif;
   font-weight: 500;
   font-style: normal;
-  display: -webkit-box; 
-  -webkit-box-orient: vertical; 
-  -webkit-line-clamp: 3; 
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
   text-overflow: ellipsis;
   overflow: hidden;
   margin: 20px 0px;
@@ -281,6 +334,7 @@
   border-radius: 0.75rem;
   box-shadow: 0 10px 15px -3px #0000001a, 0 4px 6px -4px #0000001a;
   margin: 20px;
+  overflow: hidden;
 }
 
 .blog-img {
@@ -312,11 +366,24 @@
 }
 
 .blog-link {
-  padding-top: 0.5rem;
-  color: #272727;
+  text-align: center;
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 1rem;
+  padding: 0.4rem 0.75rem;
+  background-color: #19a7ce;
+  color: #fff;
+  border-radius: 0.5rem;
+  border: 2px solid #19a7ce;
+  width: 115px;
+  text-decoration: none;
+  transition: 0.3s ease-in-out;
+  cursor: pointer;
 }
 
 .blog-link:hover {
+  background-color: #ffffff;
   color: #19a7ce;
   transition: 0.3s ease-in-out;
 }
@@ -328,55 +395,6 @@
 
 /* Responsiv */
 @media (max-width: 768px) {
-  .knowUs p {
-    padding: 1.3rem 2rem;
-    font-size: 20px;
-  }
-
-  .card {
-    height: 40px;
-    width: 150px;
-  }
-
-  .card span {
-    font-size: 18px;
-  }
-  .social-container {
-    padding-bottom: 3rem;
-  }
-  .social-link {
-    font-size: 20px;
-  }
-
-  .whyAdopt h2 {
-    padding: 1rem;
-    font-size: 2rem;
-  }
-
-  .adopt-heading {
-    padding: 1rem 2rem;
-    font-size: 20px;
-  }
-
-  .whyAdopt-container {
-    flex-direction: column;
-    align-items: center;
-    padding: 2rem 5%;
-  }
-
-  .whyAdopt-card {
-    padding: 15px;
-    margin: 15px;
-  }
-
-  .whyAdopt-card h3 {
-    padding: 1rem 2rem;
-    text-align: center;
-  }
-
-  .whyAdopt-card p {
-    font-size: 1rem;
-  }
 }
 
 @media (max-width: 1250px) {
