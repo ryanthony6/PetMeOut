@@ -12,5 +12,5 @@ if (successMessage.innerText !== "") {
 }
 
 function redirectToSignInUp() {
-  window.location.href = "/signinup";
+  window.location.href = "/account";
 }

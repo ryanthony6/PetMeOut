@@ -85,6 +85,13 @@ button.ghost {
   width: 40px;
 }
 
+.social:hover{
+  background-color: #19a7ce;
+  color: #ffffff;
+  
+  transition: 0.3s ease-in-out;
+}
+
 form {
   background-color: #fafcff;
   display: flex;

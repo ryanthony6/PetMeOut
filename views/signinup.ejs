@@ -1,6 +1,6 @@
     <div class="container" id="container">
       <div class="form-container sign-up-container">
-        <form action="/signup" method="post">
+        <form action="/account/signup"  method="post">
           <h1>Create Account</h1>
           <span>or use your email for registration</span>
           <input type="text" name="username" placeholder="Name" />
@@ -11,7 +11,7 @@
       </div>
 
       <div class="form-container sign-in-container">
-        <form action="/login" method="post">
+        <form action="/account/login" method="post">
           <h1>Login</h1>
           <span>or use your account</span>
           <input type="email" name="email" placeholder="Email" />
@@ -21,6 +21,7 @@
             <p class="error-message"><%= messages.error && messages.error.includes('Error registering user') ? 'Error registering user' : '' %></p>
             <p class="error-message"><%= messages.error && messages.error.includes('Username already exists') ? 'Username already exists' : '' %></p>
             <p class="error-message"><%= messages.error && messages.error.includes('Email already registered') ? 'Email already registered' : '' %></p>
+            <p class="error-message"><%= messages.error && messages.error.includes('Password must be at least 8 characters long') ? 'Password must be at least 8 characters long' : '' %></p>
           <a href="/forgotPassword">Forgot your Password</a>
 
           <button type="submit" name="login">Sign In</button>
@@ -48,8 +49,6 @@
     </div>
 
     <!-- signinup.ejs -->
-
-
     <link rel="stylesheet" href="/style/login.css" />
 
     <script src="/script/signinup.js"></script>
