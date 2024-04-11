@@ -1,7 +1,7 @@
 <div class="container">
   <div class="addContainer">
     <H1>Add Data</H1>
-    <button>ADD</button>
+    <button class="add" onclick="redirectToAddPage()">ADD</button>
   </div>
   <table id="petTable">
     <% if (pets.length > 0) { %>
@@ -17,6 +17,7 @@
         <th>Breed</th>
         <th>Location</th>
         <th>Category</th>
+        <th>Description</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -39,6 +40,7 @@
         <td><%= row.breed %></td>
         <td><%= row.location %></td>
         <td><%= row.category %></td>
+        <td><%= row.description %></td>
         <td class="actions">
           <a href="/edit/<%= row.name %>" class="edit">Edit</a>
           <!-- Menggunakan row._id untuk link edit -->
@@ -79,40 +81,8 @@
 
 <link rel="stylesheet" href="style/dashboard.css" />
 <script src="/script/ResponsiveNavbarTes.js"></script>
+<script src="/script/dashboard.js"></script>
 
 <script>
-  $(document).ready(function () {
-    $("#petTable").DataTable({
-      pageLength: 6,
-      pagingType: "full_numbers",
-      columnDefs: [{ visible: false, targets: [2, 3] }],
-      order: [[1, "asc"]],
-      searching: true,
-      language: {
-        paginate: {
-          first: "First",
-          last: "Last",
-          next: "Next",
-          previous: "Previous",
-        },
-        emptyTable: "No data available in table",
-      },
-    });
-  });
-
-  function deleteProduct(petID) {
-    fetch(`/delete/${petID}`, {
-      method: "DELETE",
-    })
-      .then((response) => {
-        if (response.ok) {
-          window.location.reload();
-        } else {
-          throw new Error("Failed to delete product");
-        }
-      })
-      .catch((error) => {
-        alert("Failed to delete product. Please try again.");
-      });
-  }
+ 
 </script>

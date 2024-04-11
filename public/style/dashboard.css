@@ -13,6 +13,24 @@
 .addContainer{
   display: flex;
   flex-direction: row;
+  margin-bottom: 1rem;
+}
+
+.add {
+  display: block;
+  width: fit-content;
+  margin: 0 1rem;
+  padding: 10px 20px;
+  border: none;
+  background-color: #19a7ce;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.add:hover {
+  background-color: #1ec1ee;
 }
 
 table {

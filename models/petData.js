@@ -29,10 +29,18 @@ const petDataSchema = new Schema({
     type: String,
     required: true,
   },
+  stockimage: {
+    type: [String],
+    required: true,
+  },
   category: {
     type: String,
     required: true,
   },
+  description:{
+    type: String,
+    required: true,
+  }
 });
 
 module.exports = model("petData", petDataSchema);

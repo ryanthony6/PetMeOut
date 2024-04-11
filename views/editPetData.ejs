@@ -93,6 +93,22 @@
       </div>
 
       <div class="form_group">
+        <label class="sub_title" for="description"
+          >Description (Max 200 characters)</label
+        >
+        <span id="charCount">0/200</span>
+        <textarea
+          class="textarea_style"
+          id="description"
+          name="description"
+          rows="4"
+          oninput="maxLengthCheck(this)"
+          maxlength="200"
+          required
+        ><%= pets.description %></textarea>
+      </div>
+
+      <div class="form_group">
         <label class="sub_title">Category</label>
         <div class="container_radio">
           <div class="gender_radio">
@@ -122,9 +138,24 @@
             name="image"
             accept="image/*"
           />
-
         </div>
         <input type="hidden" name="old_image" value="<%= pets.image %>" />
+      </div>
+
+      <div class="form_group">
+        <label class="sub_title" for="image">stock image</label>
+        <div class="container_radio">
+          <input
+            id="stock-image"
+            class="formimg_style"
+            type="file"
+            name="stockimage"
+            accept="image/*"
+           
+            multiple
+          />
+        </div>
+        <input type="hidden" name="old_stockimages" value="<%= pets.stockimage %>" />
       </div>
 
       <button type="submit" class="btn">UPDATE DATA</button>

@@ -33,16 +33,17 @@ app.set("view engine", "ejs");
 app.use(expressLayouts);
 app.use(express.static("public"));
 app.use(express.static("uploads"));
-app.use("/account", require('./routes/api/account'));
+app.use("/account", require("./routes/api/account"));
 
 app.use((req, res, next) => {
-  res.locals.isAuthenticated = req.isAuthenticated() || req.session.isAuthenticated;
+  res.locals.isAuthenticated =
+    req.isAuthenticated() || req.session.isAuthenticated;
   res.locals.currentUser = req.user;
   next();
 });
 
-
 // Image upload
+// Multer configuration
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./uploads");
@@ -51,8 +52,9 @@ var storage = multer.diskStorage({
     cb(null, file.fieldname + "-" + Date.now() + "-" + file.originalname);
   },
 });
-var upload = multer({ storage: storage }).single("image");
 
+// Middleware for handling both single and array of files upload
+var upload = multer({ storage})
 
 app.get(
   "/auth/google/callback",
@@ -68,10 +70,10 @@ app.get(
 );
 
 app.get("/tes", (req, res) => {
-  res.render("tes.ejs",{
-    layout: false
+  res.render("tes.ejs", {
+    layout: false,
   });
-})
+});
 
 // Halaman Home
 app.get("/", async (req, res) => {
@@ -102,7 +104,6 @@ app.get("/", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
-
 
 // Halaman About
 app.get("/about", (req, res) => {
@@ -169,22 +170,35 @@ app.get("/add", (req, res) => {
 });
 
 // Insert pet data into database
-app.post("/add", upload, async (req, res) => {
-  if (!req.file) {
-    return res.status(400).json({ message: "No file uploaded", type: "error" });
-  }
-  const pet = new Pet({
-    name: req.body.name,
-    age: req.body.age,
-    gender: req.body.gender,
-    size: req.body.size,
-    breed: req.body.breed,
-    location: req.body.location,
-    category: req.body.category,
-    image: req.file.filename,
-  });
-
+app.post("/add", upload.fields([
+  { name: "image", maxCount: 1 },
+  { name: "stockimage", maxCount: 3 }
+]), async (req, res) => {
   try {
+    if (!req.files || !req.files['image'] || req.files['image'].length === 0) {
+      return res.status(400).json({ message: "No main image uploaded", type: "error" });
+    }
+
+    const mainImage = req.files['image'][0].filename;
+
+    let stockImages = [];
+    if (req.files['stockimage'] && req.files['stockimage'].length > 0) {
+      stockImages = req.files['stockimage'].map(file => file.filename);
+    }
+
+    const pet = new Pet({
+      name: req.body.name,
+      age: req.body.age,
+      gender: req.body.gender,
+      size: req.body.size,
+      breed: req.body.breed,
+      location: req.body.location,
+      category: req.body.category,
+      description: req.body.description,
+      image: mainImage,
+      stockimage: stockImages
+    });
+
     const newPet = await pet.save();
     if (newPet) {
       res.redirect("/dashboard");
@@ -196,6 +210,7 @@ app.post("/add", upload, async (req, res) => {
     res.status(500).send("Error adding pet data");
   }
 });
+
 
 // Render halaman dashboard untuk admin
 app.get("/dashboard", async (req, res) => {
@@ -234,19 +249,42 @@ app.get("/edit/:name", async (req, res) => {
 });
 
 // Update pet data
-app.post("/update/:id", upload, async (req, res) => {
+app.post("/update/:id", upload.fields([
+  { name: "image", maxCount: 1 },
+  { name: "stockimage", maxCount: 3 }
+]), async (req, res) => {
   let id = req.params.id;
-  let new_image = "";
+  let new_image = req.body.old_image;
+  let new_stock_images = req.body.old_stockimages ? req.body.old_stockimages.split(",") : [];
 
-  if (req.file) {
-    new_image = req.file.filename;
-    try {
-      fs.unlinkSync("./uploads/" + req.body.old_image);
-    } catch (err) {
-      console.log(err);
+  if (req.files) {
+    // Handle main image upload
+    if (req.files['image'] && req.files['image'].length > 0) {
+      new_image = req.files['image'][0].filename;
+      // Delete old main image
+      try {
+        fs.unlinkSync("./uploads/" + req.body.old_image);
+      } catch (err) {
+        console.log(err);
+      }
     }
-  } else {
-    new_image = req.body.old_image;
+
+    // Handle multiple stock image upload
+    if (req.files['stockimage'] && req.files['stockimage'].length > 0) {
+      // Delete old stock images if they exist
+      if (new_stock_images.length > 0) {
+        new_stock_images.forEach(oldImage => {
+          try {
+            fs.unlinkSync("./uploads/" + oldImage.trim());
+          } catch (err) {
+            console.log(err);
+          }
+        });
+      }
+
+      // Store new stock images filenames
+      new_stock_images = req.files['stockimage'].map(file => file.filename);
+    }
   }
 
   try {
@@ -258,7 +296,9 @@ app.post("/update/:id", upload, async (req, res) => {
       breed: req.body.breed,
       location: req.body.location,
       category: req.body.category,
+      description: req.body.description,
       image: new_image,
+      stockimage: new_stock_images.join(",")
     });
     res.redirect("/dashboard");
   } catch (err) {
@@ -267,6 +307,7 @@ app.post("/update/:id", upload, async (req, res) => {
   }
 });
 
+
 // Delete pet
 app.delete("/delete/:id", async (req, res) => {
   try {
@@ -274,9 +315,23 @@ app.delete("/delete/:id", async (req, res) => {
     if (!pet) {
       return res.status(404).send("Pet not found");
     }
+
+    // Delete main image
     fs.unlinkSync("./uploads/" + pet.image);
+
+    // Delete stock images
+    if (Array.isArray(pet.stockimage)) {
+      pet.stockimage.forEach(filename => {
+        fs.unlinkSync("./uploads/" + filename);
+      });
+    } else {
+      // If stockimage is a string, delete it as a single file
+      fs.unlinkSync("./uploads/" + pet.stockimage);
+    }
+
     res.sendStatus(200);
   } catch (error) {
+    console.error(error);
     res.status(500).send("Internal Server Error");
   }
 });
@@ -285,7 +340,7 @@ app.delete("/delete/:id", async (req, res) => {
 app.get("/details/:name", isLoggedIn, async (req, res) => {
   try {
     let petName = req.session.petName || req.params.name;
-    let pet = await Pet.findOne({ name: petName }); 
+    let pet = await Pet.findOne({ name: petName });
 
     if (!pet) {
       return res.render("errorPage.ejs", {
@@ -297,7 +352,7 @@ app.get("/details/:name", isLoggedIn, async (req, res) => {
     }
 
     res.render("details.ejs", {
-      layout: false,
+      layout: "detailslayout.ejs",
       pets: pet,
       isAuthenticated: true,
       isAdmin: req.user.isAdmin,
@@ -366,8 +421,6 @@ app.get("/pets", async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 });
-
-
 
 app.listen(port, () => {
   console.log(`Webserver app listening on http://localhost:${port}/`);
