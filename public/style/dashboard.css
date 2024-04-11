@@ -10,6 +10,11 @@
   padding-top: 4rem;
 }
 
+.addContainer{
+  display: flex;
+  flex-direction: row;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;

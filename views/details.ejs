@@ -1,26 +1,41 @@
 <!-- Card detail hewan start -->
-<section class="detail-hewan">
-  <div id="detailContent" class="detailContent">
-    <% if(pets){ %>
-    <div class="card">
-      <div class="details">
-        <h2>Detail Hewan</h2>
-        <p><b>Nama:</b> <%= pets.name %></p>
-        <p><b>Umur:</b> <%= pets.age %></p>
-        <p><b>Gender:</b> <%= pets.gender %></p>
-        <p><b>Ukuran:</b> <%= pets.size %></p>
-        <p><b>Jenis:</b> <%= pets.breed %></p>
-        <p><b>Lokasi:</b> <%= pets.location %></p>
+<section class="details">
+  <% if(pets){ %>
+    <div class="container flex">
+      <div class="left">
+        <div class="main_image">
+          <img src="img/dogs/dog4.jpg" class="slide">
+        </div>
+        <div class="option flex">
+          <img src="img/dogs/dog4.jpg" onclick="img('image/p1.jpg')">
+          <img src="img/dogs/dog4.jpg" onclick="img('image/p2.jpg')">
+          <img src="img/dogs/dog4.jpg" onclick="img('image/p3.jpg')">
+        </div>
+      </div>
+      <div class="right">
+        <h3>Bonbon</h3>
+
+        <h5>General Information</h5>
+        <div class="petDetails">
+         <p> Age: </p>
+         <p> Gender: </p>
+         <p>Breed: </p>
+         <p> Size: </p>
+         <p> Location: </p>
+       
+        </div>
+        
+        <h5 class="descHeading">Description</h5>
+        <p class="desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+     
+   
+
         <button class="btn-contact" id="btn-contact"><b>Adopt pet</b></button>
       </div>
-      <div class="image">
-        <img src="/<%= pets.image %>" alt="Pet" class="pet-image" />
-      </div>
-      <% } else{ %>
-      <p>Pet not found.</p>
-      <% } %>
     </div>
-  </div>
+  <% } else{ %>
+  <p>Pet not found.</p>
+  <% } %>
 </section>
 <!-- Card detail hewan end-->
 
@@ -29,7 +44,7 @@
   <div class="popup-form">
     <span class="close-btn" onclick="closeForm()">&times;</span>
     <h2>Adoption Form</h2>
-    <form action="/adoption-form" method="post" >
+    <form action="/adoption-form" method="post">
       <div class="form-group">
         <label for="fname" class="required-label">First Name</label>
         <input type="text" id="firstname" name="fname" required />
@@ -73,7 +88,13 @@
   </div>
 </div>
 
-<link rel="stylesheet" href="/style/styleDetails.css" />
+<link rel="stylesheet" href="/style/details.css" />
 <link rel="stylesheet" href="/style/ResponsiveNavbarTes.css" />
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
+crossorigin="anonymous"
+/>
 
 <script src="/script/details.js"></script>

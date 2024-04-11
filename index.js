@@ -67,6 +67,12 @@ app.get(
   }
 );
 
+app.get("/tes", (req, res) => {
+  res.render("tes.ejs",{
+    layout: false
+  });
+})
+
 // Halaman Home
 app.get("/", async (req, res) => {
   try {
@@ -291,7 +297,7 @@ app.get("/details/:name", isLoggedIn, async (req, res) => {
     }
 
     res.render("details.ejs", {
-      layout: "detailslayout.ejs",
+      layout: false,
       pets: pet,
       isAuthenticated: true,
       isAdmin: req.user.isAdmin,

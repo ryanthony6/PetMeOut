@@ -46,8 +46,9 @@ accountRouter.post("/signup", async (req, res) => {
     req.flash("success", "User registered successfully! Please login.");
     res.redirect("/account");
   } catch (error) {
-    console.error("Error registering user:", error.message);
-    req.flash("error", "Error registering user");
+    // console.error("Error registering user:", error.message);
+    console.error(error);
+    // req.flash("error", "Error registering user");
     res.redirect("/account");
   }
 });
