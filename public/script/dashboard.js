@@ -17,22 +17,6 @@ $(document).ready(function () {
   });
 });
 
-function deleteProduct(petID) {
-  fetch(`/delete/${petID}`, {
-    method: "DELETE",
-  })
-    .then((response) => {
-      if (response.ok) {
-        window.location.reload();
-      } else {
-        throw new Error("Failed to delete product");
-      }
-    })
-    .catch((error) => {
-      alert("Failed to delete product. Please try again.");
-    });
-}
-
 function redirectToAddPage() {
   window.location.href = "/add";
 }

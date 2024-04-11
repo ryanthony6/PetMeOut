@@ -255,35 +255,38 @@ app.post("/update/:id", upload.fields([
 ]), async (req, res) => {
   let id = req.params.id;
   let new_image = req.body.old_image;
-  let new_stock_images = req.body.old_stockimages ? req.body.old_stockimages.split(",") : [];
+  let new_stock_images = [];
 
   if (req.files) {
     // Handle main image upload
     if (req.files['image'] && req.files['image'].length > 0) {
       new_image = req.files['image'][0].filename;
-      // Delete old main image
       try {
         fs.unlinkSync("./uploads/" + req.body.old_image);
       } catch (err) {
         console.log(err);
       }
     }
+    else{
+      new_image = req.body.old_image
+    }
 
     // Handle multiple stock image upload
     if (req.files['stockimage'] && req.files['stockimage'].length > 0) {
-      // Delete old stock images if they exist
-      if (new_stock_images.length > 0) {
-        new_stock_images.forEach(oldImage => {
-          try {
-            fs.unlinkSync("./uploads/" + oldImage.trim());
-          } catch (err) {
-            console.log(err);
-          }
-        });
-      }
+      // Delete old stock images
+      req.body.old_stockimages.split(",").forEach(oldImage => {
+        try {
+          fs.unlinkSync("./uploads/" + oldImage.trim());
+        } catch (err) {
+          console.log(err);
+        }
+      });
 
       // Store new stock images filenames
       new_stock_images = req.files['stockimage'].map(file => file.filename);
+    }
+    else{
+      new_stock_images = req.body.old_stockimages.split(",");
     }
   }
 
@@ -298,7 +301,7 @@ app.post("/update/:id", upload.fields([
       category: req.body.category,
       description: req.body.description,
       image: new_image,
-      stockimage: new_stock_images.join(",")
+      stockimage: new_stock_images
     });
     res.redirect("/dashboard");
   } catch (err) {
@@ -318,16 +321,14 @@ app.delete("/delete/:id", async (req, res) => {
 
     // Delete main image
     fs.unlinkSync("./uploads/" + pet.image);
-
-    // Delete stock images
-    if (Array.isArray(pet.stockimage)) {
-      pet.stockimage.forEach(filename => {
-        fs.unlinkSync("./uploads/" + filename);
-      });
-    } else {
-      // If stockimage is a string, delete it as a single file
-      fs.unlinkSync("./uploads/" + pet.stockimage);
-    }
+    pet.stockimage.forEach(filename => {
+      const trimmedFilename = filename.trim();
+      try {
+        fs.unlinkSync("./uploads/" + trimmedFilename);
+      } catch (err) {
+        console.error(err);
+      }
+    });
 
     res.sendStatus(200);
   } catch (error) {
