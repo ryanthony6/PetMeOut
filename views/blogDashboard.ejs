@@ -137,34 +137,42 @@
   }
 
   document.addEventListener("DOMContentLoaded", function () {
-    function openForm() {
-      document.getElementById("formContainer").style.display = "block";
-    }
-  
-    const addButton = document.getElementById("btnAddBlog");
-    addButton.addEventListener("click", () => {
-      openForm();
-      console.log("halo");
-    });
-  
-    document
-      .querySelector(".cancel-btn")
-      .addEventListener("click", function (event) {
-        event.preventDefault();
-        closeForm();
-      });
-
-      window.addEventListener("click", function (event) {
-        var popup = document.getElementById("formContainer");
-        if (event.target === popup) {
-          closeForm();
-        }
-      });
-  
-  });
-  
-  function closeForm() {
-    document.getElementById("formContainer").style.display = "none";
+  // Fungsi untuk memeriksa jumlah baris dalam tabel
+  function checkRowCount() {
+    const rowCount = document.querySelectorAll("tbody tr").length;
+    return rowCount;
   }
-  
+
+  function openForm() {
+    // Memeriksa apakah jumlah baris sudah mencapai 3
+    if (checkRowCount() < 3) {
+      document.getElementById("formContainer").style.display = "block";
+    } else {
+      alert("Tidak dapat menambahkan lebih dari 3 data.");
+    }
+  }
+
+  const addButton = document.getElementById("btnAddBlog");
+  addButton.addEventListener("click", () => {
+    openForm();
+  });
+
+  document.querySelector(".cancel-btn").addEventListener("click", function (event) {
+    event.preventDefault();
+    closeForm();
+  });
+
+  window.addEventListener("click", function (event) {
+    var popup = document.getElementById("formContainer");
+    if (event.target === popup) {
+      closeForm();
+    }
+  });
+
+});
+
+function closeForm() {
+  document.getElementById("formContainer").style.display = "none";
+}
+
 </script>
