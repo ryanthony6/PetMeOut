@@ -7,8 +7,7 @@
 
 body {
   font-family: sans-serif;
- background-color: #837D7C;
-
+  background-color: #837d7c;
 }
 
 .container {
@@ -20,7 +19,8 @@ body {
   box-shadow: 5px 5px 10px 3px rgba(0, 0, 0, 0.3);
 }
 
-.left, .right {
+.left,
+.right {
   width: 50%;
   padding: 30px;
 }
@@ -34,8 +34,9 @@ body {
   display: flex;
 }
 
-.petDetails{
-  padding: 0 0 .5rem 0;
+.petDetails {
+  text-transform: capitalize;
+  padding: 0 0 0.5rem 0;
 }
 
 .main_image {
@@ -44,10 +45,10 @@ body {
   padding-top: 2rem;
 }
 
-.main_image img{
+.main_image img {
   width: 100%;
   object-fit: cover;
-  
+
   border-radius: 15px;
 }
 
@@ -67,11 +68,10 @@ body {
   font-size: 25px;
 }
 
-
 .right h5,
 p,
 small {
-  color: #837D7C;
+  color: #837d7c;
 }
 
 h4 {
@@ -88,10 +88,10 @@ h5 {
   font-size: 15px;
 }
 
-.headingDesc{
+.headingDesc {
   padding-top: 1rem;
 }
-.desc{
+.desc {
   font-size: 1rem;
   text-align: justify;
   padding-bottom: 1rem;
@@ -229,15 +229,15 @@ h5 {
   color: #555555;
 }
 
-
-@media only screen and (max-width:768px) {
+@media only screen and (max-width: 768px) {
   .container {
     max-width: 90%;
     margin: auto;
     height: auto;
   }
 
-  .left, .right {
+  .left,
+  .right {
     width: 100%;
   }
 
@@ -246,14 +246,15 @@ h5 {
   }
 }
 
-@media only screen and (max-width:511px) {
+@media only screen and (max-width: 511px) {
   .container {
     max-width: 100%;
     height: auto;
     padding: 10px;
   }
 
-  .left, .right {
+  .left,
+  .right {
     padding: 0;
   }
 
@@ -268,24 +269,24 @@ h5 {
   }
 }
 
-@media screen and (min-width: 992px){
-  .card{
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      grid-gap: 1.5rem;
+@media screen and (min-width: 992px) {
+  .card {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 1.5rem;
   }
-  .card-wrapper{
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+  .card-wrapper {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
-  .product-imgs{
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+  .product-imgs {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
-  .product-content{
-      padding-top: 0;
+  .product-content {
+    padding-top: 0;
   }
 }

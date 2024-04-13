@@ -157,6 +157,7 @@
 }
 /* list section end */
 
+
 /* Search section start */
 .searchSection {
   min-height: 100vh;
@@ -327,9 +328,31 @@
   background: #19a7ce;
   color: white;
 }
+
+#loadMoreBtn {
+  margin-top: 20px;
+  display: inline-block;
+  padding: 10px 30px;
+  border: 1px solid ;
+  color: #ffffff;
+  font-size: 1rem;
+  border-radius: 15px;
+  background-color: #19a7ce;
+}
+
+#loadMoreBtn:hover {
+  background-color: #ffffff;
+  color: #19a7ce;
+  
+  transition: 0.3s ease-in-out;
+}
+
+
 /* Search section end */
 
-/* Responsiv */
+
+
+/* Responsive */
 @media (max-width: 768px) {
   .hero {
     flex-direction: column;

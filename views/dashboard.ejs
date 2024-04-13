@@ -9,7 +9,6 @@
     <thead>
       <tr>
         <th>ID</th>
-        <th>Image</th>
         <th>Name</th>
         <th>Age</th>
         <th>Gender</th>
@@ -25,15 +24,7 @@
       <% pets.forEach((row, index) => { %>
       <tr>
         <td><%= index + 1 %></td>
-        <td>
-          <img
-            src="<%= row.image %>"
-            alt="Pet"
-            class="pet-image"
-            loading="lazy"
-          />
-        </td>
-        <td><%= row.name %></td>
+        <td> <a href="/details/<%= row.name %>"><%= row.name %></td>
         <td><%= row.age %></td>
         <td><%= row.gender %></td>
         <td><%= row.size %></td>

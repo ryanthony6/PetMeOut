@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   const searchForm = document.getElementById("searchForm");
   searchForm.addEventListener("submit", function (event) {
-    event.preventDefault(); 
+    event.preventDefault();
     searchPets();
   });
 });
@@ -53,5 +53,3 @@ function displaySearchResults(pets) {
     cardContainer.innerHTML = "<p>No pets found.</p>";
   }
 }
-
-

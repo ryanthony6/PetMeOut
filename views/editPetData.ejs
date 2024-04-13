@@ -105,7 +105,9 @@
           oninput="maxLengthCheck(this)"
           maxlength="200"
           required
-        ><%= pets.description %></textarea>
+        >
+<%= pets.description %></textarea
+        >
       </div>
 
       <div class="form_group">
@@ -143,7 +145,9 @@
       </div>
 
       <div class="form_group">
-        <label class="sub_title" for="image">stock image</label>
+        <label class="sub_title" for="image"
+          >stock image (select up to 3 img)</label
+        >
         <div class="container_radio">
           <input
             id="stock-image"
@@ -151,11 +155,14 @@
             type="file"
             name="stockimage"
             accept="image/*"
-           
             multiple
           />
         </div>
-        <input type="hidden" name="old_stockimages" value="<%= pets.stockimage %>" />
+        <input
+          type="hidden"
+          name="old_stockimages"
+          value="<%= pets.stockimage %>"
+        />
       </div>
 
       <button type="submit" class="btn">UPDATE DATA</button>
@@ -164,3 +171,28 @@
 </div>
 
 <link rel="stylesheet" href="/style/editPetData.css" />
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var textarea = document.getElementById("description");
+    maxLengthCheck(textarea);
+  });
+
+  function maxLengthCheck(object) {
+    var charCount = object.value.length;
+    if (charCount > object.maxLength)
+      object.value = object.value.slice(0, object.maxLength);
+    document.getElementById("charCount").innerHTML =
+      charCount + "/" + object.maxLength;
+  }
+
+  document
+    .getElementById("stock-image")
+    .addEventListener("change", function () {
+      var files = this.files;
+      if (files.length > 3) {
+        alert("Please select up to 3 files.");
+        this.value = "";
+      }
+    });
+</script>

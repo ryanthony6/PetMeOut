@@ -172,23 +172,24 @@
   </div>
 
   <% if (pets != '') { %>
-  <div class="card-container" id="cardContainer">
-    <% pets.forEach((pet,index) => { %>
-    <div class="cards">
-      <img src="<%= pet.image %>" alt="tes" loading="lazy"/>
-      <div class="info">
-        <p><%= pet.name %></p>
-        <p><%= pet.breed %></p>
-        <a href="/details/<%= pet.name %>" class="readmore-btn">Read More</a>
+    <div class="card-container" id="cardContainer">
+      <% pets.forEach((pet,index) => { %>
+      <div class="cards">
+        <img src="<%= pet.image %>" alt="tes" loading="lazy"/>
+        <div class="info">
+          <p><%= pet.name %></p>
+          <p><%= pet.breed %></p>
+          <a href="/details/<%= pet.name %>" class="readmore-btn">Read More</a>
+        </div>
       </div>
+      <% }); %>
     </div>
-    <% }); %>
-  </div>
-  <% } else{ %>
-<div class="cardContainer"> <p>No pets found.</p></div>
- 
-
-  <% } %>
+    <% } else{ %>
+  <div class="cardContainer"> <p>No pets found.</p></div>
+   
+  
+    <% } %>
+  
 </section>
 
 <!-- Search section end -->

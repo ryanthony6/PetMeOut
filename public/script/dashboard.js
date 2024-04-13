@@ -1,8 +1,9 @@
 $(document).ready(function () {
   $("#petTable").DataTable({
+    responsive: true,
     pageLength: 6,
     pagingType: "full_numbers",
-    columnDefs: [{ visible: false, targets: [2, 3] }],
+    // columnDefs: [{ visible: false, targets: [2, 3] }],
     order: [[1, "asc"]],
     searching: true,
     language: {
@@ -14,6 +15,9 @@ $(document).ready(function () {
       },
       emptyTable: "No data available in table",
     },
+    columnDefs: [
+      { width: "200px", targets: 9 } // Adjust width as needed
+    ]
   });
 });
 
