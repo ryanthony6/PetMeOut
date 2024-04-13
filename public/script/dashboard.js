@@ -3,8 +3,7 @@ $(document).ready(function () {
     responsive: true,
     pageLength: 6,
     pagingType: "full_numbers",
-    // columnDefs: [{ visible: false, targets: [2, 3] }],
-    order: [[1, "asc"]],
+    order: [[0, "asc"]],
     searching: true,
     language: {
       paginate: {

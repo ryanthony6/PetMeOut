@@ -1,0 +1,170 @@
+<div class="container">
+  <div class="addContainer">
+    <H1>Add Blog</H1>
+    <button class="add" id="btnAddBlog">ADD</button>
+  </div>
+
+  <table>
+    <% if (blogs.length > 0) { %>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Link</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+        <% blogs.forEach((row, index) => { %>
+      <tr>
+        <td><%= index + 1 %></td>
+        <td><a href=""><%= row.title %></a></td>
+        <td><%= row.desc %></td>
+        <td><%= row.link %> %></td>
+        <td class="actions">
+          <a href="" class="edit">Edit</a>
+          <!-- Menggunakan row._id untuk link edit -->
+          <a onclick="deleteBlog('<%= row._id %>')" class="delete">Delete</a>
+          <!-- Menambahkan onclick event untuk menghapus -->
+        </td>
+      </tr>
+      <% }); %>
+    </tbody>
+
+    <% } else { %>
+    <thead>
+        <tr>
+          <th>ID</th>
+          <th>Title</th>
+          <th>Desc</th>
+          <th>Link</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      
+    <% } %>
+  </table>
+</div>
+
+
+
+<div class="formContainer" id="formContainer">
+  <div class="form_area" id="addBlog">
+    <p class="title">Pet Data</p>
+
+    <form action="/addBlog" method="post" enctype="multipart/form-data">
+      <div class="form_group">
+        <label class="sub_title" for="name">Title</label>
+        <input
+          placeholder="Enter blog title"
+          class="form_style"
+          type="text"
+          id="title"
+          name="title"
+          required
+        />
+      </div>
+
+      <div class="form_group">
+        <label class="sub_title" for="description">Blog Description</label>
+        <textarea
+          placeholder="Enter blog description"
+          class="textarea_style"
+          id="desc"
+          name="desc"
+          rows="4"
+          oninput="maxLengthCheck(this)"
+          maxlength="200"
+          required
+        ></textarea>
+      </div>
+
+      <div class="form_group">
+        <label class="sub_title" for="name">Blog Link</label>
+        <input
+          placeholder="Enter blog link"
+          class="form_style"
+          type="text"
+          id="link"
+          name="link"
+          required
+        />
+      </div>
+
+      <div class="form_group">
+        <label class="sub_title" for="image">Image</label>
+
+        <input
+          id="image"
+          class="formimg_style"
+          type="file"
+          name="image"
+          accept="image/*"
+          required
+        />
+      </div>
+
+      <div class="btnBox">
+        <button type="submit" class="btn">ADD BLOG</button>
+        <button class="cancel-btn" id="cancelAdd" onclick="closeForm()">
+          CANCEL
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<link rel="stylesheet" href="style/dashboard.css" />
+<link rel="stylesheet" href="style/blogDashboard.css" />
+<script src="/script/ResponsiveNavbarTes.js"></script>
+
+<script>
+  function deleteBlog(blogID) {
+    fetch(`/deleteBlog/${blogID}`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (response.ok) {
+          window.location.reload();
+        } else {
+          throw new Error("Failed to delete product");
+        }
+      })
+      .catch((error) => {
+        alert("Failed to delete product. Please try again.");
+      });
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    function openForm() {
+      document.getElementById("formContainer").style.display = "block";
+    }
+  
+    const addButton = document.getElementById("btnAddBlog");
+    addButton.addEventListener("click", () => {
+      openForm();
+      console.log("halo");
+    });
+  
+    document
+      .querySelector(".cancel-btn")
+      .addEventListener("click", function (event) {
+        event.preventDefault();
+        closeForm();
+      });
+
+      window.addEventListener("click", function (event) {
+        var popup = document.getElementById("formContainer");
+        if (event.target === popup) {
+          closeForm();
+        }
+      });
+  
+  });
+  
+  function closeForm() {
+    document.getElementById("formContainer").style.display = "none";
+  }
+  
+</script>

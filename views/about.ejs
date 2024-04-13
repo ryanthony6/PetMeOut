@@ -204,7 +204,7 @@
     <div class="row">
       <div class="serviceCard">
         <div class="serviceIcon">
-          <img src="../img/dog.png" loading="lazy"/>
+          <img src="../img/dog.png" loading="lazy" />
         </div>
         <div class="serviceContent">
           <h3>Pet Grooming</h3>
@@ -218,7 +218,7 @@
       </div>
       <div class="serviceCard">
         <div class="serviceIcon">
-          <img src="../img/dog-lover.png" loading="lazy"/>
+          <img src="../img/dog-lover.png" loading="lazy" />
         </div>
         <div class="serviceContent">
           <h3>Pet Supplies</h3>
@@ -232,7 +232,7 @@
       </div>
       <div class="serviceCard">
         <div class="serviceIcon">
-          <img src="../img/adopted.png" loading="lazy"/>
+          <img src="../img/adopted.png" loading="lazy" />
         </div>
         <div class="serviceContent">
           <h3>Lost and Found</h3>
@@ -249,13 +249,22 @@
 
   <!-- Blog section start -->
   <section class="blog">
+    <% if (isAuthenticated && currentUser.isAdmin) { %>
+
+    <h2>
+      Latest News <span class="editSpan"><a href="/blog">edit</a></span>
+    </h2>
+    <% } else { %>
     <h2>Latest News</h2>
+    <% } %>
     <h5 class="about-heading">Daily dose of animals</h5>
+    <% if (blogs != '') { %>
     <div class="blog-container">
+      <% blogs.forEach((blog,index) => { %>
       <div class="blog-card">
         <div class="blog-img">
           <img
-            src="/img/blog1.jpg"
+            src="<%= blog.image %>"
             alt="project"
             loading="lazy"
             class="project-img"
@@ -263,87 +272,22 @@
         </div>
 
         <div class="blog-content">
-          <a
-            href="https://www.animalleague.org/blog/tips/pet-health-and-wellness/keeping-your-pet-safe-from-upper-respiratory-illness/"
-            class="blog-title"
-            >Keeping Your Pet Safe from Upper Respiratory Illness</a
+          <a href="<%= blog.link %>" target="_blank" class="blog-title"
+            ><%= blog.title %></a
           >
-          <p>
-            As seasons change and temperatures drop we can all get a little run
-            down, and before you know it the first signs of an upper respiratory
-            illness start to appear. The same is true for our pets. Know how to
-            recognize the signs that your furry friend might be a little under
-            the weather and how you can avoid these health risks in the future.
-          </p>
-          <a
-            href="https://www.animalleague.org/blog/tips/pet-health-and-wellness/keeping-your-pet-safe-from-upper-respiratory-illness/"
-            target="_blank"
-            class="blog-link"
+          <p><%= blog.desc %></p>
+          <a href="<%= blog.link %>" target="_blank" class="blog-link"
             >Read More</a
           >
         </div>
       </div>
-      <div class="blog-card">
-        <div class="blog-img">
-          <img
-            src="/img/blog2.jpg"
-            alt="project"
-            loading="lazy"
-            class="project-img"
-          />
-        </div>
-
-        <div class="blog-content">
-          <a
-            href="https://www.animalleague.org/blog/spotlight-stories/adoption-stories/hearts-unleashed-a-love-story-of-second-chances/"
-            class="blog-title"
-            >Hearts Unleashed: A Love Story of Second Chances</a
-          >
-          <p>
-            Love and compassion filled the air at the Pet Health Centers when
-            Leah, a sweet hound mix puppy, and Donnie, a charming cat with
-            special needs, found themselves at the center of a story that
-            transcended barriers and melted hearts.
-          </p>
-          <a
-            href="https://www.animalleague.org/blog/spotlight-stories/adoption-stories/hearts-unleashed-a-love-story-of-second-chances/"
-            target="_blank"
-            class="blog-link"
-            >Read More</a
-          >
-        </div>
-      </div>
-
-      <div class="blog-card">
-        <div class="blog-img">
-          <img
-            src="/img/blog3.jpg"
-            alt="project"
-            loading="lazy"
-            class="project-img"
-          />
-        </div>
-
-        <div class="blog-content">
-          <a
-            href="https://www.animalleague.org/blog/beths-blog/december2023/"
-            class="blog-title"
-            >The Spirit of Desember</a
-          >
-          <p>
-            I read recently that the spirit animal for December is the deer, and
-            it made perfect sense. Santa's reindeer come immediately to my mind,
-            but because deer shed and regrow
-          </p>
-          <a
-            href="https://www.animalleague.org/blog/beths-blog/december2023/"
-            target="_blank"
-            class="blog-link"
-            >Read More</a
-          >
-        </div>
-      </div>
+      <% }); %>
     </div>
+    <% } else{ %>
+    <div class="cardContainer"><p>No blogs found.</p></div>
+    <% } %>
+
+    
   </section>
   <!-- Blog section end -->
 </div>

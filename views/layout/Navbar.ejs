@@ -27,7 +27,6 @@
   <li><a href="/about">About</a></li>
   <li><a href="/FAQ">FAQ</a></li>
   <% if (isAuthenticated && isAdmin) { %> <!-- Tampilkan opsi untuk admin -->
-    <li><a href="/add">Add Data</a></li>
     <li><a href="/dashboard">Dashboard</a></li>
   <% } %>
   <% if (!isAuthenticated) { %>

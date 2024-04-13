@@ -7,6 +7,7 @@ require("./utils/db");
 const FormData = require("./models/formData");
 const passport = require("./routes/api/passport");
 const Pet = require("./models/petData");
+const Blog = require("./models/blogData");
 const multer = require("multer");
 const fs = require("fs");
 var morgan = require("morgan");
@@ -54,7 +55,7 @@ var storage = multer.diskStorage({
 });
 
 // Middleware for handling both single and array of files upload
-var upload = multer({ storage})
+var upload = multer({ storage: storage });
 
 app.get(
   "/auth/google/callback",
@@ -68,12 +69,6 @@ app.get(
     res.redirect("/");
   }
 );
-
-app.get("/tes", (req, res) => {
-  res.render("tes.ejs", {
-    layout: false,
-  });
-});
 
 // Halaman Home
 app.get("/", async (req, res) => {
@@ -106,20 +101,30 @@ app.get("/", async (req, res) => {
 });
 
 // Halaman About
-app.get("/about", (req, res) => {
-  if (req.isAuthenticated()) {
-    res.render("about.ejs", {
-      title: "Tes",
-      layout: "mainlayout.ejs",
-      isAuthenticated: true,
-      isAdmin: req.user.isAdmin,
-    });
-  } else {
-    res.render("about.ejs", {
-      title: "Tes",
-      layout: "mainlayout.ejs",
-      isAuthenticated: false,
-    });
+app.get("/about", async (req, res) => {
+  try {
+    let id = req.params.id;
+    const blogs = await Blog.find(id).exec();
+
+    if (req.isAuthenticated()) {
+      res.render("about.ejs", {
+        blogs: blogs,
+        title: "Tes",
+        layout: "mainlayout.ejs",
+        isAuthenticated: true,
+        isAdmin: req.user.isAdmin,
+      });
+    } else {
+      res.render("about.ejs", {
+        blogs: blogs,
+        title: "Tes",
+        layout: "mainlayout.ejs",
+        isAuthenticated: false,
+      });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Internal Server Error");
   }
 });
 
@@ -169,48 +174,117 @@ app.get("/add", (req, res) => {
   });
 });
 
-// Insert pet data into database
-app.post("/add", upload.fields([
-  { name: "image", maxCount: 1 },
-  { name: "stockimage", maxCount: 3 }
-]), async (req, res) => {
+app.get("/blog", async (req, res) => {
   try {
-    if (!req.files || !req.files['image'] || req.files['image'].length === 0) {
-      return res.status(400).json({ message: "No main image uploaded", type: "error" });
-    }
-
-    const mainImage = req.files['image'][0].filename;
-
-    let stockImages = [];
-    if (req.files['stockimage'] && req.files['stockimage'].length > 0) {
-      stockImages = req.files['stockimage'].map(file => file.filename);
-    }
-
-    const pet = new Pet({
-      name: req.body.name,
-      age: req.body.age,
-      gender: req.body.gender,
-      size: req.body.size,
-      breed: req.body.breed,
-      location: req.body.location,
-      category: req.body.category,
-      description: req.body.description,
-      image: mainImage,
-      stockimage: stockImages
+    const blogs = await Blog.find();
+    res.render("blogDashboard.ejs", {
+      blogs: blogs,
+      title: "blogDashboard",
+      layout: "detailslayout.ejs",
+      isAuthenticated: true,
+      isAdmin: req.user.isAdmin,
     });
-
-    const newPet = await pet.save();
-    if (newPet) {
-      res.redirect("/dashboard");
-    } else {
-      res.status(500).send("Error adding pet data");
-    }
-  } catch (error) {
-    console.error("Error adding pet:", error.message);
-    res.status(500).send("Error adding pet data");
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Internal Server Error");
   }
 });
 
+// Insert pet data into database
+app.post(
+  "/add",
+  upload.fields([
+    { name: "image", maxCount: 1 },
+    { name: "stockimage", maxCount: 3 },
+  ]),
+  async (req, res) => {
+    try {
+      if (
+        !req.files ||
+        !req.files["image"] ||
+        req.files["image"].length === 0
+      ) {
+        return res
+          .status(400)
+          .json({ message: "No main image uploaded", type: "error" });
+      }
+
+      const mainImage = req.files["image"][0].filename;
+
+      let stockImages = [];
+      if (req.files["stockimage"] && req.files["stockimage"].length > 0) {
+        stockImages = req.files["stockimage"].map((file) => file.filename);
+      }
+
+      const pet = new Pet({
+        name: req.body.name,
+        age: req.body.age,
+        gender: req.body.gender,
+        size: req.body.size,
+        breed: req.body.breed,
+        location: req.body.location,
+        category: req.body.category,
+        description: req.body.description,
+        image: mainImage,
+        stockimage: stockImages,
+      });
+
+      const newPet = await pet.save();
+      if (newPet) {
+        res.redirect("/dashboard");
+      } else {
+        res.status(500).send("Error adding pet data");
+      }
+    } catch (error) {
+      console.error("Error adding pet:", error.message);
+      res.status(500).send("Error adding pet data");
+    }
+  }
+);
+
+app.post("/addBlog", upload.single("image"), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res
+        .status(400)
+        .json({ message: "No image uploaded", type: "error" });
+    }
+
+    const blog = new Blog({
+      title: req.body.title,
+      desc: req.body.desc,
+      link: req.body.link,
+      image: req.file.filename,
+    });
+
+    const newBlog = await blog.save();
+    if (newBlog) {
+      res.redirect("/blog"); // Redirect to dashboard after successful addition
+    } else {
+      res.status(500).send("Error adding blog");
+    }
+  } catch (error) {
+    console.error("Error adding blog:", error.message);
+    res.status(500).send("Error adding blog");
+  }
+});
+
+app.delete("/deleteBlog/:id", async (req, res) => {
+  try {
+    const blog = await Blog.findByIdAndDelete(req.params.id);
+    if (!blog) {
+      return res.status(404).send("Pet not found");
+    }
+
+    // Delete main image
+    fs.unlinkSync("./uploads/" + blog.image);
+
+    res.sendStatus(200);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+});
 
 // Render halaman dashboard untuk admin
 app.get("/dashboard", async (req, res) => {
@@ -226,6 +300,24 @@ app.get("/dashboard", async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).send("Internal Server Error");
+  }
+});
+
+app.get("/blogedit/:name", async (req, res) => {
+  try {
+    let blog = await Blog.findOne({ name: req.params.name });
+
+    if (!blog) {
+      return res.redirect("/");
+    } else {
+      res.render("editPetData.ejs", {
+        layout: false,
+        pets: pet,
+      });
+    }
+  } catch (err) {
+    console.error(err);
+    res.redirect("/");
   }
 });
 
@@ -249,67 +341,68 @@ app.get("/edit/:name", async (req, res) => {
 });
 
 // Update pet data
-app.post("/update/:id", upload.fields([
-  { name: "image", maxCount: 1 },
-  { name: "stockimage", maxCount: 3 }
-]), async (req, res) => {
-  let id = req.params.id;
-  let new_image = req.body.old_image;
-  let new_stock_images = [];
+app.post(
+  "/update/:id",
+  upload.fields([
+    { name: "image", maxCount: 1 },
+    { name: "stockimage", maxCount: 3 },
+  ]),
+  async (req, res) => {
+    let id = req.params.id;
+    let new_image = req.body.old_image;
+    let new_stock_images = [];
 
-  if (req.files) {
-    // Handle main image upload
-    if (req.files['image'] && req.files['image'].length > 0) {
-      new_image = req.files['image'][0].filename;
-      try {
-        fs.unlinkSync("./uploads/" + req.body.old_image);
-      } catch (err) {
-        console.log(err);
-      }
-    }
-    else{
-      new_image = req.body.old_image
-    }
-
-    // Handle multiple stock image upload
-    if (req.files['stockimage'] && req.files['stockimage'].length > 0) {
-      // Delete old stock images
-      req.body.old_stockimages.split(",").forEach(oldImage => {
+    if (req.files) {
+      // Handle main image upload
+      if (req.files["image"] && req.files["image"].length > 0) {
+        new_image = req.files["image"][0].filename;
         try {
-          fs.unlinkSync("./uploads/" + oldImage.trim());
+          fs.unlinkSync("./uploads/" + req.body.old_image);
         } catch (err) {
           console.log(err);
         }
+      } else {
+        new_image = req.body.old_image;
+      }
+
+      // Handle multiple stock image upload
+      if (req.files["stockimage"] && req.files["stockimage"].length > 0) {
+        // Delete old stock images
+        req.body.old_stockimages.split(",").forEach((oldImage) => {
+          try {
+            fs.unlinkSync("./uploads/" + oldImage.trim());
+          } catch (err) {
+            console.log(err);
+          }
+        });
+
+        // Store new stock images filenames
+        new_stock_images = req.files["stockimage"].map((file) => file.filename);
+      } else {
+        new_stock_images = req.body.old_stockimages.split(",");
+      }
+    }
+
+    try {
+      await Pet.findByIdAndUpdate(id, {
+        name: req.body.name,
+        age: req.body.age,
+        gender: req.body.gender,
+        size: req.body.size,
+        breed: req.body.breed,
+        location: req.body.location,
+        category: req.body.category,
+        description: req.body.description,
+        image: new_image,
+        stockimage: new_stock_images,
       });
-
-      // Store new stock images filenames
-      new_stock_images = req.files['stockimage'].map(file => file.filename);
-    }
-    else{
-      new_stock_images = req.body.old_stockimages.split(",");
+      res.redirect("/dashboard");
+    } catch (err) {
+      console.log(err);
+      res.redirect("/");
     }
   }
-
-  try {
-    await Pet.findByIdAndUpdate(id, {
-      name: req.body.name,
-      age: req.body.age,
-      gender: req.body.gender,
-      size: req.body.size,
-      breed: req.body.breed,
-      location: req.body.location,
-      category: req.body.category,
-      description: req.body.description,
-      image: new_image,
-      stockimage: new_stock_images
-    });
-    res.redirect("/dashboard");
-  } catch (err) {
-    console.log(err);
-    res.redirect("/");
-  }
-});
-
+);
 
 // Delete pet
 app.delete("/delete/:id", async (req, res) => {
@@ -321,7 +414,7 @@ app.delete("/delete/:id", async (req, res) => {
 
     // Delete main image
     fs.unlinkSync("./uploads/" + pet.image);
-    pet.stockimage.forEach(filename => {
+    pet.stockimage.forEach((filename) => {
       const trimmedFilename = filename.trim();
       try {
         fs.unlinkSync("./uploads/" + trimmedFilename);

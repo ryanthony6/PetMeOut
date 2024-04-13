@@ -304,6 +304,15 @@
   font-style: normal;
 }
 
+.editSpan{
+  font-size: 0.8rem;
+  
+}
+
+.editSpan a{
+  color: #19a7ce;
+}
+
 .blog p {
   text-align: center;
   color: #4e4e4e;
