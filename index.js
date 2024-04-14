@@ -327,6 +327,7 @@ app.post("/updateBlog/:id",upload.single("image"), async (req, res) => {
   let new_image = req.body.old_image;
 
   if (req.file) {
+    new_image = req.file.filename;
     try {
       fs.unlinkSync("./uploads/" + req.body.old_image);
     } catch (err) {
