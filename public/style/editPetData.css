@@ -33,12 +33,8 @@
   margin-top: 20px;
 }
 
-.goBack{
-  font-size: 0.8rem;
- 
-}
-
 .goBack a{
+  font-size: 0.8rem;
   text-decoration: none;
   color: red;
 }

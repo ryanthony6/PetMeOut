@@ -174,12 +174,29 @@ app.get("/add", (req, res) => {
   });
 });
 
+// Render halaman dashboard untuk admin
+app.get("/dashboard", async (req, res) => {
+  try {
+    const pets = await Pet.find();
+
+    res.render("dashboard.ejs", {
+      pets: pets,
+      layout: "detailslayout.ejs",
+      isAuthenticated: true,
+      isAdmin: req.user.isAdmin,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+
 app.get("/blog", async (req, res) => {
   try {
     const blogs = await Blog.find();
     res.render("blogDashboard.ejs", {
       blogs: blogs,
-      title: "blogDashboard",
       layout: "detailslayout.ejs",
       isAuthenticated: true,
       isAdmin: req.user.isAdmin,
@@ -286,37 +303,49 @@ app.delete("/deleteBlog/:id", async (req, res) => {
   }
 });
 
-// Render halaman dashboard untuk admin
-app.get("/dashboard", async (req, res) => {
-  try {
-    const pets = await Pet.find();
 
-    res.render("dashboard.ejs", {
-      pets: pets,
-      layout: "detailslayout.ejs",
-      isAuthenticated: true,
-      isAdmin: req.user.isAdmin,
-    });
-  } catch (err) {
-    console.log(err);
-    res.status(500).send("Internal Server Error");
-  }
-});
-
-app.get("/blogedit/:name", async (req, res) => {
+app.get("/editBlog/:title", async (req, res) => {
   try {
-    let blog = await Blog.findOne({ name: req.params.name });
+    let blog = await Blog.findOne({ title: req.params.title });
 
     if (!blog) {
       return res.redirect("/");
     } else {
-      res.render("editPetData.ejs", {
+      res.render("editBlogData.ejs", {
         layout: false,
-        pets: pet,
+        blogs: blog,
       });
     }
   } catch (err) {
     console.error(err);
+    res.redirect("/");
+  }
+});
+
+app.post("/updateBlog/:id",upload.single("image"), async (req, res) => {
+  let id = req.params.id;
+  let new_image = req.body.old_image;
+
+  if (req.file) {
+    try {
+      fs.unlinkSync("./uploads/" + req.body.old_image);
+    } catch (err) {
+      console.log(err);
+    }
+  } else {
+    new_image = req.body.old_image;
+  }
+
+  try {
+    await Blog.findByIdAndUpdate(id, {
+      title: req.body.title,
+      desc: req.body.desc,
+      link: req.body.link,
+      image: new_image,
+    });
+    res.redirect("/blog");
+  } catch (err) {
+    console.log(err);
     res.redirect("/");
   }
 });

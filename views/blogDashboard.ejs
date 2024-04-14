@@ -4,7 +4,7 @@
     <button class="add" id="btnAddBlog">ADD</button>
   </div>
 
-  <table>
+  <table class="blogTable">
     <% if (blogs.length > 0) { %>
     <thead>
       <tr>
@@ -16,14 +16,15 @@
       </tr>
     </thead>
     <tbody>
-        <% blogs.forEach((row, index) => { %>
+      <% blogs.forEach((row, index) => { %>
       <tr>
         <td><%= index + 1 %></td>
         <td><a href=""><%= row.title %></a></td>
         <td><%= row.desc %></td>
         <td><%= row.link %> %></td>
         <td class="actions">
-          <a href="" class="edit">Edit</a>
+          <!-- <a id="btnEditBlog" class="edit">Edit</a> -->
+          <a href="/editBlog/<%= row.title %>" class="edit">Edit</a>
           <!-- Menggunakan row._id untuk link edit -->
           <a onclick="deleteBlog('<%= row._id %>')" class="delete">Delete</a>
           <!-- Menambahkan onclick event untuk menghapus -->
@@ -34,24 +35,26 @@
 
     <% } else { %>
     <thead>
-        <tr>
-          <th>ID</th>
-          <th>Title</th>
-          <th>Desc</th>
-          <th>Link</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Desc</th>
+        <th>Link</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td colspan="5" style="text-align: center">NO DATA FOUND</td>
+      </tr>
+    </tbody>
     <% } %>
   </table>
 </div>
 
-
-
 <div class="formContainer" id="formContainer">
   <div class="form_area" id="addBlog">
-    <p class="title">Pet Data</p>
+    <p class="title">Add Blog Data</p>
 
     <form action="/addBlog" method="post" enctype="multipart/form-data">
       <div class="form_group">
@@ -115,64 +118,8 @@
   </div>
 </div>
 
-<link rel="stylesheet" href="style/dashboard.css" />
+
 <link rel="stylesheet" href="style/blogDashboard.css" />
+<link rel="stylesheet" href="style/dashboard.css" />
 <script src="/script/ResponsiveNavbarTes.js"></script>
-
-<script>
-  function deleteBlog(blogID) {
-    fetch(`/deleteBlog/${blogID}`, {
-      method: "DELETE",
-    })
-      .then((response) => {
-        if (response.ok) {
-          window.location.reload();
-        } else {
-          throw new Error("Failed to delete product");
-        }
-      })
-      .catch((error) => {
-        alert("Failed to delete product. Please try again.");
-      });
-  }
-
-  document.addEventListener("DOMContentLoaded", function () {
-  // Fungsi untuk memeriksa jumlah baris dalam tabel
-  function checkRowCount() {
-    const rowCount = document.querySelectorAll("tbody tr").length;
-    return rowCount;
-  }
-
-  function openForm() {
-    // Memeriksa apakah jumlah baris sudah mencapai 3
-    if (checkRowCount() < 3) {
-      document.getElementById("formContainer").style.display = "block";
-    } else {
-      alert("Tidak dapat menambahkan lebih dari 3 data.");
-    }
-  }
-
-  const addButton = document.getElementById("btnAddBlog");
-  addButton.addEventListener("click", () => {
-    openForm();
-  });
-
-  document.querySelector(".cancel-btn").addEventListener("click", function (event) {
-    event.preventDefault();
-    closeForm();
-  });
-
-  window.addEventListener("click", function (event) {
-    var popup = document.getElementById("formContainer");
-    if (event.target === popup) {
-      closeForm();
-    }
-  });
-
-});
-
-function closeForm() {
-  document.getElementById("formContainer").style.display = "none";
-}
-
-</script>
+<script src="/script/blog.js"></script>

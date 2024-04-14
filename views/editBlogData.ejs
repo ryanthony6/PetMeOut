@@ -1,0 +1,67 @@
+<div class="editFormContainer" id="editFormContainer">
+    <div class="form_area">
+      <p class="title">Edit Blog Data</p>
+      <span class="goBack"><a href="/blog">back to dashboard</a></span>
+
+    
+          <form id="editFormContainer" action="/updateBlog/<%= blogs._id%>" method="post" enctype="multipart/form-data">
+            <div class="form_group">
+              <label class="sub_title" for="title">Title</label>
+              <input
+                placeholder="Enter blog title"
+                class="form_style"
+                type="text"
+                id="title"
+                name="title"
+                value="<%= blogs.title %>"
+              />
+            </div>
+  
+            <div class="form_group">
+              <label class="sub_title" for="description">Blog Description</label>
+              <textarea
+                placeholder="Enter blog description"
+                class="textarea_style"
+                id="desc"
+                name="desc"
+                rows="4"
+                oninput="maxLengthCheck(this)"
+                maxlength="200"
+              ><%= blogs.desc %></textarea>
+            </div>
+  
+            <div class="form_group">
+              <label class="sub_title" for="name">Blog Link</label>
+              <input
+                placeholder="Enter blog link"
+                class="form_style"
+                type="text"
+                id="link"
+                name="link"
+                value="<%= blogs.link %>"
+              />
+            </div>
+  
+            <div class="form_group">
+              <label class="sub_title" for="image">Image</label>
+  
+              <input
+                id="image"
+                class="formimg_style"
+                type="file"
+                name="image"
+                accept="image/*"
+              />
+            </div>
+            <input type="hidden" name="old_image" value="<%= blogs.image %>" />
+  
+            <div class="btnBox">
+              <button type="submit" class="btn">EDIT BLOG</button>
+            </div>
+          </form>
+  
+    </div>
+  </div>
+
+
+  <link rel="stylesheet" href="/style/blogDashboard.css" />
