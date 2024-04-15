@@ -18,16 +18,57 @@
       <% if (!isAuthenticated) { %>
         <a href="/account" class="action-button">Login/Register</a>
       <% } else { %>
-        <div class="dropdown">
-          <button class="dropbtn">
-            <i class="fa-solid fa-user-circle"></i> <!-- Icon profil -->
-          </button>
-          <div class="dropdown-content">
-            <a href="/account/logout">Logout</a>
+        <div class="profile-dropdown">
+          <div onclick="toggle()" class="profile-dropdown-btn">
+            <% if (isAuthenticated && isAdmin){ %>
+            <div class="profile-img">
+              <img src="/img/admin.png"> 
+            </div>
+            <span
+              >Admin
+              <i class="fa-solid fa-angle-down"></i>
+            </span>
+            <ul class="profile-dropdown-list">
+              <li class="profile-dropdown-list-item">
+                <a href="/account/logout">
+                  <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                  Log out
+                </a>
+              </li>
+            </ul>
+            <% } else { %>
+              <div class="profile-img">
+                <img src="/img/dogs/dog.jpg"> 
+              </div>
+              <span
+                >Marvell
+                <i class="fa-solid fa-angle-down"></i>
+              </span>
+              <ul class="profile-dropdown-list">
+                <li class="profile-dropdown-list-item">
+                  <a href="#">
+                    <i class="fa-regular fa-user"></i>
+                    Edit Profile
+                  </a>
+                </li>
+    
+                <li class="profile-dropdown-list-item">
+                  <a href="/account/logout">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    Log out
+                  </a>
+                </li>
+              </ul>
+              <% } %>
           </div>
-        </div>
+  
+          
+  
       <% } %>
     </div>
+    
+
+
     <div class="toggle-button">
       <i class="fa-solid fa-bars"></i>
     </div>

@@ -32,7 +32,11 @@
     margin-top: 20px;
   }
   
+  .goBack {
+      text-align: center;
+  }
   .goBack a{
+    text-align: center;
     font-size: 0.8rem;
     text-decoration: none;
     color: red;
