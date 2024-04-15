@@ -1,3 +1,5 @@
+
+
 <header class="nav-header">
   <div class="navbar">
     <div class="logo">
@@ -11,28 +13,38 @@
         <li><a href="/dashboard">Dashboard</a></li>
       <% } %>
     </ul>
-    <% if (!isAuthenticated) { %>
-      <a href="/account" class="action-button">Login/Register</a>
-    <% } else { %>
-      <a href="/account/logout" class="action-button">Logout</a>
-    <% } %>
+    
+    <div class="profile-dropdown"> <!-- Tambahkan div untuk profile dropdown -->
+      <% if (!isAuthenticated) { %>
+        <a href="/account" class="action-button">Login/Register</a>
+      <% } else { %>
+        <div class="dropdown">
+          <button class="dropbtn">
+            <i class="fa-solid fa-user-circle"></i> <!-- Icon profil -->
+          </button>
+          <div class="dropdown-content">
+            <a href="/account/logout">Logout</a>
+          </div>
+        </div>
+      <% } %>
+    </div>
     <div class="toggle-button">
       <i class="fa-solid fa-bars"></i>
     </div>
   </div>
 
-<!-- Dropdown menu pada navbar (untuk mobile) -->
-<div class="dropdown-menu">
-  <li><a href="/">Home</a></li>
-  <li><a href="/about">About</a></li>
-  <li><a href="/FAQ">FAQ</a></li>
-  <% if (isAuthenticated && isAdmin) { %> <!-- Tampilkan opsi untuk admin -->
-    <li><a href="/dashboard">Dashboard</a></li>
-  <% } %>
-  <% if (!isAuthenticated) { %>
-    <a href="/signinup" class="action-button">Login/Register</a>
-  <% } else { %>
-    <a href="/logout" class="action-button">Logout</a>
-  <% } %>
-</div>
+  <!-- Dropdown menu pada navbar (untuk mobile) -->
+  <div class="dropdown-menu">
+    <li><a href="/">Home</a></li>
+    <li><a href="/about">About</a></li>
+    <li><a href="/FAQ">FAQ</a></li>
+    <% if (isAuthenticated && isAdmin) { %> <!-- Tampilkan opsi untuk admin -->
+      <li><a href="/dashboard">Dashboard</a></li>
+    <% } %>
+    <% if (!isAuthenticated) { %>
+      <a href="/signinup" class="action-button">Login/Register</a>
+    <% } else { %>
+      <a href="/logout" class="action-button">Logout</a>
+    <% } %>
+  </div>
 </header>
