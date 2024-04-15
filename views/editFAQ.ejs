@@ -1,0 +1,23 @@
+<div class="FAQ-container">
+    <div id="faq-title" class="FAQ-title">
+        <h1 class="FAQ-container-heading">Edit FAQ</h1>
+    </div>
+    <form action="/edit-faq/<%= faq._id %>" method="POST" class="add-faq-form">
+        <label for="faqTitle">FAQ Title:</label>
+        <input type="text" id="faqTitle" name="faqTitle" value="<%= faq.title %>" required>
+
+        <label for="faqContent">FAQ Content:</label>
+        <textarea id="faqContent" name="faqContent" rows="4" required><%= faq.content %></textarea>
+
+        <label for="faqCategory">FAQ Category:</label>
+        <select id="faqCategory" name="faqCategory">
+            <option value="Basic Information" <% if (faq.category === 'Basic Information') { %> selected <% } %>>Basic Information</option>
+            <option value="Adoption" <% if (faq.category === 'Adoption') { %> selected <% } %>>Adoption</option>
+            <option value="How to help" <% if (faq.category === 'How to help') { %> selected <% } %>>How to help</option>
+        </select>
+
+        <button type="submit">Edit FAQ</button>
+    </form>
+</div>
+
+<link rel="stylesheet" href="/style/addFAQ.css">

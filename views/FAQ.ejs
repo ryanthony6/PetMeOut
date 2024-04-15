@@ -1,8 +1,8 @@
-
-    <!-- Navbar end -->
+<!-- 
+    <-- Navbar end -->
 
     <!-- FAQ section start -->
-    <section class="FAQ">
+    <!-- <section class="FAQ">
       <h1 class="heading" >
         How can we help ?
       </h1>
@@ -18,10 +18,10 @@
         <li class="button-item">
           <a id="help-button" class="nav_link">How to help</a>
         </li>
-      </ul>
+      </ul> -->
 
       <!-- Basic information -->
-      <div class="FAQ-container">
+      <!-- <div class="FAQ-container">
         <div id="faq-title" class="FAQ-title">
           <h1 class="FAQ-container-heading">Basic Information</h1>
           <h5 class="FAQ-container-subheading">
@@ -89,10 +89,10 @@
             </p>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <!-- adoption -->
-      <div class="FAQ-container">
+      <!-- <div class="FAQ-container">
         <div id="faq-title" class="FAQ-title">
           <h1 class="FAQ-container-heading">Adoption</h1>
           <h5 class="FAQ-container-subheading">
@@ -137,10 +137,10 @@
             </p>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <!-- How To Help -->
-      <div class="FAQ-container" >
+      <!-- <div class="FAQ-container" >
         <div id="faq-title" class="FAQ-title">
           <h1 class="FAQ-container-heading">How to help</h1>
           <h5 class="FAQ-container-subheading">
@@ -194,14 +194,74 @@
           </div>
         </div>
       </div>
-    </section>
-    <!-- FAQ section end -->
+    </section> -->
 
-    <!-- Footer start  -->
-    
-    <!-- Footer end -->
+    <!-- Navbar end -->
+
+<!-- FAQ section start -->
+<section class="FAQ">
+  <h1 class="heading">
+    How can we help ?
+  </h1>
+  <% if (isAdmin) { %>
+  <h4 class="addfaqfont">
+    Add FAQ
+  </h4>
+  <button class="add" onclick="redirectToAddPage()">ADD</button>
+  <% } %>
+  <h5 class="subheading">choose one of the topic below</h5>
+
+  <ul class="button-list">
+    <% Object.keys(faqCategories).forEach(category => { %>
+      <li class="button-item">
+        <a id="<%= category.toLowerCase() %>-button" class="nav_link"><%= category %></a>
+      </li>
+    <% }); %>
+  </ul>
+
+  <% Object.entries(faqCategories).forEach(([category, faqs]) => { %>
+    <div class="FAQ-container" id="<%= category.toLowerCase() %>-container">
+      <div class="FAQ-title">
+        <h1 class="FAQ-container-heading"><%= category %></h1>
+        <% if (category === "Basic Information") { %>
+          <h5 class="FAQ-container-subheading">
+            Learn more from our website so you can help us to encourage people around you to adopt a pet rather than buying animals.
+          </h5>
+        <% } else if (category === "Adoption") { %>
+          <h5 class="FAQ-container-subheading">
+            By adopting a rescue or stray animals, you will get a forever-loyal
+            companion.
+          </h5>
+        <% } else if (category === "How to help") { %>
+          <h5 class="FAQ-container-subheading">
+            PetMeOut is a society product, we believe in the power of human-animal love and compassion will help PetMeOut to realize our dream. please help us to reach our goals!
+          </h5>
+        <% } %>
+      </div>
+      <div class="accordion-container">
+        <% faqs.forEach(faq => { %>
+          <div class="accordion-content">
+            <header>
+              <span class="title"><%= faq.title %></span>
+              <div class="button-container">
+                <% if (isAdmin) { %>
+                  <button class="edit-button" onclick="editFaq('<%= faq._id %>')"><i class="fa-solid fa-pen-to-square"></i></button>
+                  <button class="delete-button" onclick="deleteFaq('<%= faq._id %>')"><i class="fa-solid fa-trash"></i></button>
+                <% } %>
+                <i class="fa-solid fa-plus"></i>
+              </div>
+            </header>
+            <p class="description" data-faq-id="<%= faq._id %>"><%= faq.content %></p>
+          </div>
+        <% }); %>
+      </div>
+    </div>
+  <% }); %>
+
+</section>
+<!-- FAQ section end -->
+  
     <link rel="stylesheet" href="/style/FAQ.css" />
     <!-- Script -->
     <script src="/script/faq.js"></script>
     <script src="/script/ResponsiveNavbarTes.js"></script>
- 

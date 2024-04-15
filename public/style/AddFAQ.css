@@ -1,0 +1,71 @@
+*{
+    padding: 0;
+    margin: 0;
+    font-family: sans-serif;
+}
+  
+.FAQ-container {
+    padding: 4rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+  
+.FAQ-title {
+    margin: 20px 20px;
+}
+  
+.FAQ-container-heading {
+    color: #264143;
+    font-weight: 900;
+    font-size: 1.5em;
+}
+  
+.add-faq-form {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #ffffff;
+    border: 2px solid #264143;
+    border-radius: 20px;
+    box-shadow: 3px 4px 0px 1px #1dbfec;
+    padding: 20px;
+    width: 500px;
+}
+  
+.add-faq-form label {
+    font-weight: 600;
+    margin: 10px 0;
+}
+  
+.add-faq-form input[type="text"],
+.add-faq-form textarea,
+.add-faq-form select {
+    outline: none;
+    border: 2px solid #264143;
+    box-shadow: 3px 4px 0px 1px #1dbfec;
+    width: 100%;
+    padding: 12px 10px;
+    border-radius: 5px;
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+  
+.add-faq-form button[type="submit"] {
+    padding: 15px;
+    border: 2px solid #264143;
+    margin-top: 20px;
+    width: 100%;
+    font-size: 15px;
+    background: #fff;
+    border-radius: 10px;
+    font-weight: 800;
+    box-shadow: 3px 3px 0px 0px #1dbfec;
+    cursor: pointer;
+}
+  
+.add-faq-form button[type="submit"]:hover {
+    opacity: 0.9;
+}
+  
