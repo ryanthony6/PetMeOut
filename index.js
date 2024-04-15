@@ -7,6 +7,7 @@ require("./utils/db");
 const FormData = require("./models/formData");
 const passport = require("./routes/api/passport");
 const Pet = require("./models/petData");
+const FAQ = require("./models/faqData");
 const Blog = require("./models/blogData");
 const multer = require("multer");
 const fs = require("fs");
@@ -70,6 +71,7 @@ app.get(
   }
 );
 
+
 // Halaman Home
 app.get("/", async (req, res) => {
   try {
@@ -129,22 +131,132 @@ app.get("/about", async (req, res) => {
 });
 
 // Halaman FAQ
-app.get("/FAQ", (req, res) => {
-  if (req.isAuthenticated()) {
-    res.render("FAQ.ejs", {
-      title: "Tes",
-      layout: "mainlayout.ejs",
-      isAuthenticated: true,
-      isAdmin: req.user.isAdmin,
+app.get("/FAQ", async (req, res) => {
+  try {
+    const allFaqs = await FAQ.find(); // Ambil semua data FAQ dari database
+
+    // Mengelompokkan FAQ berdasarkan kategori
+    const faqCategories = {};
+    allFaqs.forEach(faq => {
+      if (!faqCategories[faq.category]) {
+        faqCategories[faq.category] = [];
+      }
+      faqCategories[faq.category].push(faq);
     });
-  } else {
-    res.render("FAQ.ejs", {
-      title: "Tes",
-      layout: "mainlayout.ejs",
-      isAuthenticated: false,
-    });
+
+    if (req.isAuthenticated()) {
+      res.render("FAQ.ejs", {
+        title: "Tes",
+        layout: "mainlayout.ejs",
+        isAuthenticated: true,
+        isAdmin: req.user.isAdmin,
+        faqCategories: faqCategories // Kirim data FAQ ke halaman FAQ untuk ditampilkan
+      });
+    } else {
+      res.render("FAQ.ejs", {
+        title: "Tes",
+        layout: "mainlayout.ejs",
+        isAuthenticated: false,
+        isAdmin: false,
+        faqCategories: faqCategories // Kirim data FAQ ke halaman FAQ untuk ditampilkan
+      });
+    }
+  } catch (error) {
+    console.error('Error fetching FAQs:', error);
+    res.status(500).send('Failed to fetch FAQs');
   }
 });
+
+
+app.get("/addFAQ", (req, res) => {
+  res.render("AddFAQ.ejs", {
+    title: "add_faq",
+    layout: "detailslayout.ejs",
+    isAuthenticated: true,
+    isAdmin: req.user.isAdmin,
+  });
+});
+
+app.post('/add-faq', async (req, res) => {
+  const { faqTitle, faqContent, faqCategory } = req.body;
+  try {
+    const newFAQ = new FAQ({
+      title: faqTitle,
+      content: faqContent,
+      category: faqCategory
+    });
+    await newFAQ.save();
+    res.redirect('/FAQ');
+  } catch (error) {
+    console.error('Error adding FAQ:', error);
+    res.status(500).send('Failed to add FAQ');
+  }
+});
+
+// Route untuk menghapus FAQ berdasarkan ID
+app.delete("/delete-faq/:id", async (req, res) => {
+  try {
+    const faq = await FAQ.findByIdAndDelete(req.params.id);
+    if (!faq) {
+      return res.status(404).send("FAQ not found");
+    }
+
+    // Tindakan tambahan yang mungkin diperlukan, seperti menghapus referensi FAQ dari entitas lain
+
+    res.sendStatus(200);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// Route untuk mengambil halaman edit FAQ berdasarkan ID
+app.get('/edit-faq/:id', async (req, res) => {
+  const faqId = req.params.id;
+  try {
+    // Cari FAQ dari database berdasarkan ID
+    const faq = await FAQ.findById(faqId);
+    if (!faq) {
+      return res.status(404).send('FAQ not found');
+    }
+    // Render halaman edit FAQ dan kirim data FAQ ke dalam template
+    res.render('editFAQ.ejs', {
+      title: 'editFAQ',
+      layout: false,
+      isAuthenticated: true,
+      isAdmin: req.user.isAdmin,
+      faq: faq
+    });
+  } catch (error) {
+    console.error('Error editing FAQ:', error);
+    res.status(500).send('Failed to edit FAQ');
+  }
+});
+
+// Route untuk memproses permintaan pengeditan FAQ
+app.post('/edit-faq/:id', async (req, res) => {
+  const faqId = req.params.id;
+  const { faqTitle, faqContent, faqCategory } = req.body;
+  try {
+    // Temukan FAQ yang akan diubah berdasarkan ID
+    const faq = await FAQ.findById(faqId);
+    if (!faq) {
+      return res.status(404).send('FAQ not found');
+    }
+    // Perbarui informasi FAQ dengan data baru
+    faq.title = faqTitle;
+    faq.content = faqContent;
+    faq.category = faqCategory;
+    // Simpan perubahan ke database
+    await faq.save();
+    res.redirect('/FAQ');
+  } catch (error) {
+    console.error('Error editing FAQ:', error);
+    res.status(500).send('Failed to edit FAQ');
+  }
+});
+
+
 
 // Jika route tidak sesuai akan diarahkan ke halaman error ini
 app.get("/error", (req, res) => {

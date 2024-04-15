@@ -17,6 +17,7 @@
   text-align: center;
   font-size: 3rem;
   padding-top: 5rem;
+  padding-bottom: 2rem;
   color: #4e4e4e;
   font-family: "Quicksand", sans-serif;
   font-weight: 800;
@@ -38,6 +39,11 @@
   justify-content: center;
   list-style-type: none;
   margin: 1rem 30rem;
+}
+
+.button-container{
+  display: flex;
+  gap: 8px;
 }
 
 .button-item {
@@ -113,7 +119,6 @@
   display: flex;
   min-height: 50px;
   padding: 0 15px;
-  cursor: pointer;
   align-items: center;
   justify-content: space-between;
   transition: all 0.2s;
@@ -131,10 +136,13 @@
   margin: 0;
 }
 
+.edit-button,
+.delete-button,
 .accordion-content header i {
   font-size: 15px;
   color: #333;
   margin-left: 10px;
+  cursor: pointer;
 }
 
 .accordion-content .description {
@@ -155,6 +163,9 @@
   color: #fff;
   background-color: #19a7ce;
 }
+
+
+
 /* FAQ section end */
 
 /* responsive */
@@ -216,3 +227,42 @@
     font-size: 1rem;
   }
 }
+
+.FAQ-container:nth-of-type(2),
+.FAQ-container:nth-of-type(3) {
+  display: none;
+}
+
+.FAQ-container:nth-of-type(1) {
+  display: block;
+}
+
+.add {
+  /* Menggunakan flexbox untuk menempatkan tombol di tengah secara horizontal */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  margin: 0 auto; /* Mengatur margin auto untuk pusat secara horizontal */
+  padding: 10px 20px;
+  border: none;
+  background-color: #19a7ce;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.addfaqfont{
+  text-align: center;
+  padding: 0 10rem;
+  padding-top: 0.8rem;
+  padding-bottom: 1rem;
+  font-size: 1.2rem;
+  color: #4e4e4e;
+  font-family: "Quicksand", sans-serif;
+  font-weight: 600;
+  font-style: italic;
+}
+
+

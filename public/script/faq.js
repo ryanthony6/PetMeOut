@@ -1,79 +1,79 @@
-// Untuk membuat accordion
-const accordionContent = document.querySelectorAll(".accordion-content");
-accordionContent.forEach((item, index) => {
-  let header = item.querySelector("header");
-  header.addEventListener("click", () => {
-    item.classList.toggle("open");
+document.addEventListener("DOMContentLoaded", function() {
+  const accordionContent = document.querySelectorAll(".accordion-content");
+  accordionContent.forEach((item, index) => {
+    let header = item.querySelector("header");
+    let iconPlusMinus = header.querySelector(".fa-plus"); // Tombol "+/-"
 
-    let description = item.querySelector(".description");
-    if (item.classList.contains("open")) {
-      description.style.height = `${description.scrollHeight}px`;
-      item.querySelector("i").classList.replace("fa-plus", "fa-minus");
-    } else {
-      description.style.height = "0px";
-      item.querySelector("i").classList.replace("fa-minus", "fa-plus");
-    }
-    removeOpen(index);
+    // Tambahkan event listener untuk tombol "+/-"
+    iconPlusMinus.addEventListener("click", () => {
+      item.classList.toggle("open");
+
+      let description = item.querySelector(".description");
+      if (item.classList.contains("open")) {
+        description.style.height = `${description.scrollHeight}px`;
+        if (iconPlusMinus.classList.contains("fa-plus")) {
+          iconPlusMinus.classList.replace("fa-plus", "fa-minus");
+        } else {
+          iconPlusMinus.classList.replace("fa-minus", "fa-plus");
+        }
+      } else {
+        description.style.height = "0px";
+        iconPlusMinus.classList.replace("fa-minus", "fa-plus");
+      }
+    });
   });
 });
 
-// Agar hanya ada 1 accordion saja yang bisa dibuka dalam 1 waktu tertentu
-function removeOpen(index1) {
-  accordionContent.forEach((item2, index2) => {
-    if (index1 != index2) {
-      item2.classList.remove("open");
-
-      let des = item2.querySelector(".description");
-      des.style.height = "0px";
-      item2.querySelector("i").classList.replace("fa-minus", "fa-plus");
-    }
-  });
-}
-
-// Membuat navlink pada button yang dipilih
 const navLinkFAQs = document.querySelectorAll(".nav_link");
 navLinkFAQs.forEach((navLinkFAQ) => {
   navLinkFAQ.addEventListener("click", () => {
-    document.querySelector(".active")?.classList.remove("active");
+    navLinkFAQs.forEach((link) => {
+      link.classList.remove("active");
+    });
+
     navLinkFAQ.classList.add("active");
+
+    const category = navLinkFAQ.textContent.trim().toLowerCase();
+    const containers = document.querySelectorAll(".FAQ-container");
+
+    containers.forEach((container) => {
+      if (container.id === `${category}-container`) {
+        container.style.display = "block";
+      } else {
+        container.style.display = "none";
+      }
+    });
   });
 });
 
-// Menampilkan konten sesuai dengan button yang ditekan
-const adoptionButton = document.getElementById("adoption-button");
-const basicInfoButton = document.getElementById("basic-button");
-const HowToHelpButton = document.getElementById("help-button");
+function editFaq(id) {
+  window.location.href = `/edit-faq/${id}`;
+}
 
-const basicInfoContainer = document.querySelector(
-  ".FAQ-container:nth-of-type(1)"
-);
-const adoptionContainer = document.querySelector(
-  ".FAQ-container:nth-of-type(2)"
-);
-const HowToHelpContainer = document.querySelector(
-  ".FAQ-container:nth-of-type(3)"
-);
+async function deleteFaq(faqID) {
+  try {
+    if (!faqID) {
+      throw new Error("FAQ ID is null");
+    }
 
-basicInfoContainer.style.display = "block";
-adoptionContainer.style.display = "none";
-HowToHelpContainer.style.display = "none";
+    const response = await fetch(`/delete-faq/${faqID}`, {
+      method: "DELETE",
+    });
 
-basicInfoButton.addEventListener("click", function () {
+    if (response.ok) {
+      window.location.reload();
+    } else {
+      throw new Error("Failed to delete FAQ");
+    }
+  } catch (error) {
+    if (error instanceof TypeError || error instanceof SyntaxError) {
+      alert("Failed to delete FAQ. Please try again.");
+    } else {
+      console.error(error);
+    }
+  }
+}
 
-  adoptionContainer.style.display = "none";
-  basicInfoContainer.style.display = "block";
-  HowToHelpContainer.style.display = "none";
-});
-
-adoptionButton.addEventListener("click", function () {
-  basicInfoContainer.style.display = "none";
-  adoptionContainer.style.display = "block";
-  HowToHelpContainer.style.display = "none";
-});
-
-HowToHelpButton.addEventListener("click", function () {
-  adoptionContainer.style.display = "none";
-  basicInfoContainer.style.display = "none";
-  HowToHelpContainer.style.display = "block";
-});
-
+function redirectToAddPage() {
+  window.location.href = "/addfaq";
+}

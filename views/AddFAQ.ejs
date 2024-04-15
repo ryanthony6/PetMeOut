@@ -1,0 +1,24 @@
+<!-- Form untuk menambah FAQ -->
+<div class="FAQ-container">
+    <div id="faq-title" class="FAQ-title">
+        <h1 class="FAQ-container-heading">Add FAQ</h1>
+    </div>
+    <form action="/add-faq" method="POST" class="add-faq-form">
+        <label for="faqTitle">FAQ Title:</label>
+        <input type="text" id="faqTitle" name="faqTitle" required>
+
+        <label for="faqContent">FAQ Content:</label>
+        <textarea id="faqContent" name="faqContent" rows="4" required></textarea>
+
+        <label for="faqCategory">FAQ Category:</label>
+        <select id="faqCategory" name="faqCategory">
+            <option value="Basic Information">Basic Information</option>
+            <option value="Adoption">Adoption</option>
+            <option value="How to help">How to help</option>
+        </select>
+
+        <button type="submit">Add FAQ</button>
+    </form>
+</div>
+
+<link rel="stylesheet" href="/style/AddFAQ.css">
