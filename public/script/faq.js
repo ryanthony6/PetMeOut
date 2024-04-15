@@ -47,7 +47,7 @@ navLinkFAQs.forEach((navLinkFAQ) => {
 });
 
 function editFaq(id) {
-  window.location.href = `/edit-faq/${id}`;
+  window.location.href = `/editFaq/${id}`;
 }
 
 async function deleteFaq(faqID) {
@@ -56,7 +56,7 @@ async function deleteFaq(faqID) {
       throw new Error("FAQ ID is null");
     }
 
-    const response = await fetch(`/delete-faq/${faqID}`, {
+    const response = await fetch(`/deleteFaq/${faqID}`, {
       method: "DELETE",
     });
 

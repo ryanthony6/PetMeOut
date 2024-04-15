@@ -12,17 +12,7 @@
     flex-direction: column;
 }
   
-.FAQ-title {
-    margin: 20px 20px;
-}
-  
-.FAQ-container-heading {
-    color: #264143;
-    font-weight: 900;
-    font-size: 1.5em;
-}
-  
-.add-faq-form {
+.form_area {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -32,8 +22,22 @@
     box-shadow: 3px 4px 0px 1px #1dbfec;
     padding: 20px;
     width: 500px;
-}
+  }
   
+  .title {
+    text-align: center;
+    color: #264143;
+    font-weight: 900;
+    font-size: 1.5em;
+    margin-top: 20px;
+  }
+  
+  .goBack a{
+    font-size: 0.8rem;
+    text-decoration: none;
+    color: red;
+  }
+
 .add-faq-form label {
     font-weight: 600;
     margin: 10px 0;

@@ -1,8 +1,10 @@
 <div class="FAQ-container">
-    <div id="faq-title" class="FAQ-title">
-        <h1 class="FAQ-container-heading">Edit FAQ</h1>
-    </div>
-    <form action="/edit-faq/<%= faq._id %>" method="POST" class="add-faq-form">
+    <div class="form_area">
+        <p class="title">Edit FAQ Data</p>
+        <span class="goBack"><a href="/FAQ">back to dashboard</a></span>
+
+  
+    <form action="/editFaq/<%= faq._id %>" method="POST" class="add-faq-form">
         <label for="faqTitle">FAQ Title:</label>
         <input type="text" id="faqTitle" name="faqTitle" value="<%= faq.title %>" required>
 
@@ -19,5 +21,6 @@
         <button type="submit">Edit FAQ</button>
     </form>
 </div>
+</div>
 
-<link rel="stylesheet" href="/style/addFAQ.css">
+<link rel="stylesheet" href="/style/AddFAQ.css">

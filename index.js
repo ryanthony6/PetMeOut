@@ -177,7 +177,7 @@ app.get("/addFAQ", (req, res) => {
   });
 });
 
-app.post('/add-faq', async (req, res) => {
+app.post('/addFaqData', async (req, res) => {
   const { faqTitle, faqContent, faqCategory } = req.body;
   try {
     const newFAQ = new FAQ({
@@ -194,7 +194,7 @@ app.post('/add-faq', async (req, res) => {
 });
 
 // Route untuk menghapus FAQ berdasarkan ID
-app.delete("/delete-faq/:id", async (req, res) => {
+app.delete("/deleteFaq/:id", async (req, res) => {
   try {
     const faq = await FAQ.findByIdAndDelete(req.params.id);
     if (!faq) {
@@ -211,7 +211,7 @@ app.delete("/delete-faq/:id", async (req, res) => {
 });
 
 // Route untuk mengambil halaman edit FAQ berdasarkan ID
-app.get('/edit-faq/:id', async (req, res) => {
+app.get('/editFaq/:id', async (req, res) => {
   const faqId = req.params.id;
   try {
     // Cari FAQ dari database berdasarkan ID
@@ -234,7 +234,7 @@ app.get('/edit-faq/:id', async (req, res) => {
 });
 
 // Route untuk memproses permintaan pengeditan FAQ
-app.post('/edit-faq/:id', async (req, res) => {
+app.post('/editFaq/:id', async (req, res) => {
   const faqId = req.params.id;
   const { faqTitle, faqContent, faqCategory } = req.body;
   try {
