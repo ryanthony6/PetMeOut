@@ -298,6 +298,23 @@ app.post('/editProfile/:id', upload.single("image"),async (req, res) => {
   }
 })
 
+app.delete("/deleteAccount/:id", async (req, res) => {
+  try {
+    const profile = await User.findByIdAndDelete(req.params.id);
+    if (!profile) {
+      return res.status(404).send("Pet not found");
+    }
+
+    // Delete main image
+    fs.unlinkSync("./uploads/" + profile.profilePict);
+
+    res.sendStatus(200);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 
 // Jika route tidak sesuai akan diarahkan ke halaman error ini
 app.get("/error", (req, res) => {

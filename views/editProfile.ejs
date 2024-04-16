@@ -39,7 +39,7 @@
       <div class="btnBx">
       <a href="/" class="btn">Back to home</a>
       <button type="submit" class="btn">Save</button>
-      <a href="/" class="btn">Delete Account</a>
+      <a onclick="deleteUser('<%= profile._id %>')" class="btn">Delete Account</a>
     </div>
     </div>
   </form>
@@ -47,24 +47,21 @@
 
 <link rel="stylesheet" href="/style/profile.css" />
 <script>
-  async function logout() {
-    try {
-      const response = await fetch(`/`, {
-        method: "DELETE",
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to LOGOUT");
+  function deleteUser(userID) {
+  fetch(`/deleteAccount/${userID}`, {
+    method: "DELETE",
+  })
+    .then((response) => {
+      if (response.ok) {
+        window.location.href = "/";
       } else {
-        console.log("Logout succes");
+        throw new Error("Failed to delete account");
       }
-
-      // Refresh halaman untuk memperbarui daftar review
-    } catch (error) {
-      console.error(error);
-      alert("Failed to logout");
-    }
-  }
+    })
+    .catch((error) => {
+      alert("Failed to delete account. Please try again.");
+    });
+}
 
   function previewProfilePicture(event) {
   var reader = new FileReader();
