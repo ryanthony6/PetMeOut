@@ -1,11 +1,8 @@
 const {Router} = require('express')
-const router = Router()
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const bcrypt = require("bcrypt");
 const UserData = require("../../models/userData");
-const GoogleData = require("../../models/googleData");
 
 passport.use(
   new LocalStrategy(
@@ -51,41 +48,5 @@ passport.deserializeUser(async (id, done) => {
     done(error);
   }
 });
-
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "/auth/google/callback",
-      passReqToCallback: true
-    },
-
-    async function (req, accessToken, refreshToken, profile, done) {
-      try {
-        const user = await GoogleData.findOne({ googleId: profile.id });
-
-        if (user) {
-          console.log("User authenticated successfully:", user);
-          // Tandai pengguna sebagai terautentikasi
-          return done(null, user);
-        } else {
-          const newUser = new GoogleData({
-            name: profile.displayName,
-            email: profile.emails[0].value,
-            googleId: profile.id,
-            isAdmin: false,
-          });
-          console.log("New user registered and authenticated:", user);
-          // Tandai pengguna sebagai terautentikasi
-          return done(null, newUser);
-        }
-      } catch (error) {
-        console.error("Error during authentication:", error);
-        return done(error, null);
-      }
-    }
-  )
-);
 
 module.exports = passport;

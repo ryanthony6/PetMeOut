@@ -229,7 +229,8 @@
   text-decoration: none;
   font-size: 0.9rem;
   font-weight: 500;
-  color: black;
+  color: #19a7ce;
+  font-family: "Roboto", sans-serif;
 }
 
 .profile-dropdown-list-item a i {
@@ -249,4 +250,8 @@
 .profile-dropdown-list-item:hover {
   padding-left: 1.5rem;
   background-color: #19a7ce;
+}
+
+.profile-dropdown-list-item:hover a {
+  color: #fff; /* Ganti dengan warna putih yang diinginkan saat dihover */
 }

@@ -59,20 +59,6 @@ var storage = multer.diskStorage({
 // Middleware for handling both single and array of files upload
 var upload = multer({ storage: storage });
 
-app.get(
-  "/auth/google/callback",
-  passport.authenticate("google", {
-    scope: ["profile", "email"],
-    successRedirect: "/",
-    failureRedirect: "/account",
-  }),
-  (req, res) => {
-    req.session.isAuthenticated = true;
-    res.redirect("/");
-  }
-);
-
-
 // Halaman Home
 app.get("/",async (req, res) => {
   try {
