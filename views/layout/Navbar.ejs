@@ -38,17 +38,25 @@
             </ul>
             <% } else { %>
               <div class="profile-img">
-                <img src="/img/dogs/dog.jpg"> 
+                <% if (currentUser.profilePict != null) { %>
+                  <div class="profile-img">
+                    <img src="/<%= currentUser.profilePict %>"> <!-- Render user's profile picture -->
+                  </div>
+                <% } else { %>
+                  <div class="profile-img">
+                    <img src="/img/profile-user.png"> 
+                  </div>
+                <% } %>
               </div>
               <span
-                >Marvell
+                ><%= currentUser.username%>
                 <i class="fa-solid fa-angle-down"></i>
               </span>
               <ul class="profile-dropdown-list">
                 <li class="profile-dropdown-list-item">
-                  <a href="#">
+                  <a href="/profile/<%= currentUser._id%>">
                     <i class="fa-regular fa-user"></i>
-                    Edit Profile
+                   Edit Profile
                   </a>
                 </li>
     

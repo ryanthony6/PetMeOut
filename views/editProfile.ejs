@@ -1,0 +1,85 @@
+<div class="form_area">
+  <% if (profile.profilePict != null) { %>
+      <img src="/<%=profile.profilePict%>"> <!-- Render user's profile picture -->
+  <% } else { %>
+    <img
+    src="/img/profile-user.png"
+    alt="current-picture"
+    id="current-profile-img"
+    loading="lazy"
+  />
+  <% } %>
+  <form action="/editProfile/<%= profile._id %>" method="post" enctype="multipart/form-data">
+    <div class="form_group">
+      <label class="sub_title" for="title">Name</label>
+      <input
+        placeholder="Enter name title"
+        class="form_style"
+        type="text"
+        id="username"
+        name="username"
+        value="<%= profile.username %>"
+      />
+    </div>
+
+    <div class="form_group">
+      <label class="sub_title" for="image">Image</label>
+      <input
+        id="image"
+        class="formimg_style"
+        type="file"
+        name="image"
+        accept="image/*"
+        
+        onchange="previewProfilePicture(event)"
+      />
+      
+      <input type="hidden" name="old_image" value="<%= profile.image %>" />
+
+      <div class="btnBx">
+      <a href="/" class="btn">Back to home</a>
+      <button type="submit" class="btn">Save</button>
+      <a href="/" class="btn">Delete Account</a>
+    </div>
+    </div>
+  </form>
+</div>
+
+<link rel="stylesheet" href="/style/profile.css" />
+<script>
+  async function logout() {
+    try {
+      const response = await fetch(`/`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to LOGOUT");
+      } else {
+        console.log("Logout succes");
+      }
+
+      // Refresh halaman untuk memperbarui daftar review
+    } catch (error) {
+      console.error(error);
+      alert("Failed to logout");
+    }
+  }
+
+  function previewProfilePicture(event) {
+  var reader = new FileReader();
+  reader.onload = function () {
+    var img = document.getElementById("current-profile-img");
+    img.src = reader.result;
+  };
+  
+  if (event.target.files.length > 0) {
+    // If a file is selected, preview it
+    reader.readAsDataURL(event.target.files[0]);
+  } else {
+    // If no file is selected, revert to the default profile picture
+    img.src = "/img/profile-user.png";
+  }
+}
+
+</script>

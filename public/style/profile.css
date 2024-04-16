@@ -1,0 +1,96 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: url("/img/banner.png") no-repeat;
+  background-size: cover;
+  background-position: center;
+  font-family: Arial, sans-serif;
+}
+
+.form_area {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #ffffff;
+  border: 2px solid #264143;
+  border-radius: 20px;
+  box-shadow: 3px 4px 0px 1px #1dbfec;
+  padding: 20px;
+  width: 500px;
+  text-align: center;
+}
+
+img {
+    margin: 0 auto;
+  width: 150px;
+  height: 150px;
+}
+
+.form_group {
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    margin: 10px;
+  }
+  
+  .form_style {
+    outline: none;
+    border: 2px solid #264143;
+    box-shadow: 3px 4px 0px 1px #1dbfec;
+    width: 100%;
+    padding: 12px 10px;
+    border-radius: 5px;
+    font-size: 15px;
+  }
+  
+  .formimg_style {
+    outline: none;
+    border: 2px solid #264143;
+    box-shadow: 3px 4px 0px 1px #1dbfec;
+    width: 100%;
+    padding: 12px 10px;
+    border-radius: 5px;
+    font-size: 15px;
+  }
+
+  .form_style:focus,
+.btn:focus,
+.formimg_style:focus {
+  transform: translateY(4px);
+  box-shadow: 1px 2px 0px 0px #1dbfec;
+}
+
+.btnBx{
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap; /* Tambahkan flex-wrap: wrap untuk mencegah overflow */
+}
+
+.btn {
+  padding: 10px;
+  margin: 10px; /* Mengurangi margin agar tidak terlalu besar */
+  width: 120px;
+  font-size: 15px;
+  background: #fff;
+  border-radius: 10px;
+  font-weight: 800;
+  box-shadow: 3px 3px 0px 0px #1dbfec;
+  border: solid 2px;
+  text-decoration: none;
+  color: black;
+}
+
+
+.btn:hover {
+  opacity: 0.9;
+}

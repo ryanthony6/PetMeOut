@@ -9,6 +9,7 @@ const passport = require("./routes/api/passport");
 const Pet = require("./models/petData");
 const FAQ = require("./models/faqData");
 const Blog = require("./models/blogData");
+const User = require("./models/userData");
 const multer = require("multer");
 const fs = require("fs");
 var morgan = require("morgan");
@@ -73,29 +74,19 @@ app.get(
 
 
 // Halaman Home
-app.get("/", async (req, res) => {
+app.get("/",async (req, res) => {
   try {
     let id = req.params.id;
-    const pets = await Pet.find(id).exec();
+    const pets = await Pet.find(id);
 
-    if (req.isAuthenticated()) {
-      res.render("home.ejs", {
-        pets: pets,
-        title: "Home",
-        layout: "mainlayout.ejs",
-        isAuthenticated: true,
-        isAdmin: req.user.isAdmin,
-        messages: req.flash(),
-      });
-    } else {
-      res.render("home.ejs", {
-        pets: pets,
-        title: "Home",
-        layout: "mainlayout.ejs",
-        isAuthenticated: false,
-        messages: req.flash(),
-      });
-    }
+    res.render("home.ejs", {
+      pets: pets,
+      title: "Home",
+      layout: "mainlayout.ejs",
+      isAuthenticated: req.isAuthenticated(),
+      isAdmin: req.user ? req.user.isAdmin : false,
+      messages: req.flash(),
+    });
   } catch (err) {
     console.log(err);
     res.status(500).send("Internal Server Error");
@@ -256,6 +247,56 @@ app.post('/editFaq/:id', async (req, res) => {
   }
 });
 
+app.get('/profile/:id', async (req, res) => {
+  const id = req.params.id;
+  try {
+    const profile = await User.findById(id);
+    if (!profile) {
+      return res.status(404).send('User not Found');
+    }
+    // Render halaman edit FAQ dan kirim data FAQ ke dalam template
+    res.render('editProfile.ejs', {
+      layout: false,
+      isAuthenticated: true,
+      profile: profile
+    });
+  } catch (error) {
+    console.error('Error editing:', error);
+    res.status(500).send('Failed to edit');
+  }
+});
+
+app.post('/editProfile/:id', upload.single("image"),async (req, res) => {
+  try {
+    const id = req.params.id;
+    let newImage = req.body.old_image;
+
+    // Check if a file was uploaded
+    if (req.file) {
+      newImage = req.file.filename;
+      
+      // Attempt to delete the old image file
+      if (req.body.old_image) {
+        try {
+          fs.unlinkSync("./uploads/" + req.body.old_image);
+        } catch (err) {
+          console.error("Error deleting old image file:", err);
+        }
+      }
+    }
+
+    // Update user profile with new data
+    await User.findByIdAndUpdate(id, {
+      username: req.body.username,
+      profilePict: newImage,
+    });
+
+    res.redirect("/");
+  } catch (err) {
+    console.error("Error updating profile:", err);
+    res.redirect("/");
+  }
+})
 
 
 // Jika route tidak sesuai akan diarahkan ke halaman error ini

@@ -18,7 +18,7 @@ const userDataSchema = new Schema({
     type: Boolean,
     default: false // Defaultnya diatur sebagai false
   },
-  googleId: {
+  profilePict: {
     type: String
   }
 });
