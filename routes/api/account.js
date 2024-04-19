@@ -3,6 +3,8 @@ const accountRouter = Router()
 const bcrypt = require("bcrypt");
 const UserData = require("../../models/userData");
 const passport = require("./passport");
+const nodemailer = require("nodemailer");
+const { generateToken } = require("../../utils/token");
 
 accountRouter.get("/", (req, res) => {
   res.render("signinup.ejs", {
@@ -11,6 +13,31 @@ accountRouter.get("/", (req, res) => {
     messages: req.flash(),
   });
 });
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL,
+    pass: process.env.PASSWORD,
+  },
+})
+const sendVerificationEmail = async (email, token) => {
+  const mailOptions = {
+    from: process.env.EMAIL, 
+    to: email,
+    subject: "Reset Password",
+    text: `To reset your password, click on the following link: http://localhost:3000/resetPassword/${token}`,
+    html: `<p>To reset your password, click on the following link: <a href="http://localhost:3000/resetPassword/${token}">Reset Password</a></p>`,
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log("Verification email sent successfully.");
+  } catch (error) {
+    console.error("Error sending verification email:", error.message);
+    throw new Error("Error sending verification email");
+  }
+};
 
 // Route untuk sign up
 accountRouter.post("/signup", async (req, res) => {
@@ -63,29 +90,12 @@ accountRouter.post(
   })
 );
 
-
 accountRouter.post("/forgotPassword", async (req, res) => {
   try {
-    const { email, password, confirmNewPassword } = req.body;
-
-    // Check if passwords match
-    if (password !== confirmNewPassword) {
-      req.flash("error", "Passwords does not match");
-      return res.redirect("/forgotPassword");
-    }
-
-    if(password === confirmNewPassword && password.length < 8) {
-      req.flash("error", "Password must be at least 8 characters long");
-      return res.redirect("/forgotPassword");
-    }
+    const { email } = req.body;
 
     if (!email) {
       req.flash("error", "Email is required");
-      return res.redirect("/forgotPassword");
-    }
-
-    if (!password) {
-      req.flash("error", "Password is required");
       return res.redirect("/forgotPassword");
     }
 
@@ -98,29 +108,92 @@ accountRouter.post("/forgotPassword", async (req, res) => {
       return res.redirect("/forgotPassword");
     }
 
-    // Hash the new password
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Update user's password in the database
-    const user = await UserData.findOneAndUpdate(
-      { email: email },
-      { password: hashedPassword },
-      { new: true }
-    );
-
-    if (!user) {
+    if (!existingUser) {
       req.flash("error", "Email not found");
       return res.redirect("/forgotPassword");
     }
 
-    req.flash("success", "Password updated successfully");
+
+    const token = generateToken();
+
+    existingUser.resetPasswordToken = token;
+    existingUser.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+    await existingUser.save();
+
+    await sendVerificationEmail(email, token);
+
+    req.flash("success", "Verification email sent. Please check your email to reset your password.");
     res.redirect("/forgotPassword");
   } catch (error) {
-    console.error("Error updating password:", error.message);
-    req.flash("error", "Error updating password");
+    console.error("Error sending verification email:", error.message);
+    req.flash("error", "Error sending verification email");
     res.redirect("/forgotPassword");
   }
 });
+
+accountRouter.get("/resetPassword/:token", async (req, res) => {
+  try {
+    const token = req.params.token;
+    const user = await UserData.findOne({
+      resetPasswordToken: token,
+      resetPasswordExpires: { $gt: Date.now() }, // Token masih berlaku
+    });
+
+    if (!user) {
+      req.flash("error", "Invalid or expired token");
+      return res.redirect(`/forgotPassword`); // Arahkan ke halaman /forgotPassword jika token tidak valid atau telah kedaluwarsa
+    }
+
+    res.render("resetPassword.ejs", { token }); // Ubah bagian ini agar token dapat diakses di template
+  } catch (error) {
+    console.error("Error displaying reset password form:", error.message);
+    req.flash("error", "Error displaying reset password form");
+    res.redirect("/forgotPassword");
+  }
+});
+
+
+accountRouter.post("/resetPassword/:token", async (req, res) => {
+  try {
+    const token = req.params.token;
+    const { password, confirmNewPassword } = req.body;
+
+    if (password !== confirmNewPassword) {
+      req.flash("error", "Passwords do not match");
+      return res.redirect(`/resetPassword/${token}`);
+    }
+
+    if (password.length < 8) {
+      req.flash("error", "Password must be at least 8 characters long");
+      return res.redirect(`/resetPassword/${token}`);
+    }
+
+    const user = await UserData.findOne({
+      resetPasswordToken: token,
+      resetPasswordExpires: { $gt: Date.now() }, // Token masih berlaku
+    });
+
+    if (!user) {
+      req.flash("error", "Invalid or expired token");
+      return res.redirect(`/forgotPassword`); // Arahkan ke halaman /forgotPassword jika token tidak valid atau telah kedaluwarsa
+    }
+
+    // Hash password baru dan simpan ke dalam database
+    const hashedPassword = await bcrypt.hash(password, 10);
+    user.password = hashedPassword;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+    await user.save();
+
+    req.flash("success", "Password reset successfully. Please log in with your new password.");
+    res.redirect("/account");
+  } catch (error) {
+    console.error("Error resetting password:", error.message);
+    req.flash("error", "Error resetting password");
+    res.redirect(`/resetPassword/${token}`);
+  }
+});
+
 
 // Route untuk logout
 accountRouter.get("/logout", (req, res) => {

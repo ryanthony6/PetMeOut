@@ -319,7 +319,6 @@ app.get("/forgotPassword", (req, res) => {
     messages: req.flash(),
   });
 });
-
 // Render halaman add
 app.get("/add", (req, res) => {
   res.render("addPet.ejs", {
