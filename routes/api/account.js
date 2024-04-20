@@ -26,8 +26,8 @@ const sendVerificationEmail = async (email, token) => {
     from: process.env.EMAIL, 
     to: email,
     subject: "Reset Password",
-    text: `To reset your password, click on the following link: http://localhost:3000/resetPassword/${token}`,
-    html: `<p>To reset your password, click on the following link: <a href="http://localhost:3000/resetPassword/${token}">Reset Password</a></p>`,
+    text: `To reset your password, click on the following link: http://localhost:3000/account/resetPassword/${token}`,
+    html: `<p>To reset your password, click on the following link: <a href="http://localhost:3000/account/resetPassword/${token}">Reset Password</a></p>`,
   };
 
   try {
@@ -128,69 +128,6 @@ accountRouter.post("/forgotPassword", async (req, res) => {
     console.error("Error sending verification email:", error.message);
     req.flash("error", "Error sending verification email");
     res.redirect("/forgotPassword");
-  }
-});
-
-accountRouter.get("/resetPassword/:token", async (req, res) => {
-  try {
-    const token = req.params.token;
-    const user = await UserData.findOne({
-      resetPasswordToken: token,
-      resetPasswordExpires: { $gt: Date.now() }, // Token masih berlaku
-    });
-
-    if (!user) {
-      req.flash("error", "Invalid or expired token");
-      return res.redirect(`/forgotPassword`); // Arahkan ke halaman /forgotPassword jika token tidak valid atau telah kedaluwarsa
-    }
-
-    res.render("resetPassword.ejs", { token }); // Ubah bagian ini agar token dapat diakses di template
-  } catch (error) {
-    console.error("Error displaying reset password form:", error.message);
-    req.flash("error", "Error displaying reset password form");
-    res.redirect("/forgotPassword");
-  }
-});
-
-
-accountRouter.post("/resetPassword/:token", async (req, res) => {
-  try {
-    const token = req.params.token;
-    const { password, confirmNewPassword } = req.body;
-
-    if (password !== confirmNewPassword) {
-      req.flash("error", "Passwords do not match");
-      return res.redirect(`/resetPassword/${token}`);
-    }
-
-    if (password.length < 8) {
-      req.flash("error", "Password must be at least 8 characters long");
-      return res.redirect(`/resetPassword/${token}`);
-    }
-
-    const user = await UserData.findOne({
-      resetPasswordToken: token,
-      resetPasswordExpires: { $gt: Date.now() }, // Token masih berlaku
-    });
-
-    if (!user) {
-      req.flash("error", "Invalid or expired token");
-      return res.redirect(`/forgotPassword`); // Arahkan ke halaman /forgotPassword jika token tidak valid atau telah kedaluwarsa
-    }
-
-    // Hash password baru dan simpan ke dalam database
-    const hashedPassword = await bcrypt.hash(password, 10);
-    user.password = hashedPassword;
-    user.resetPasswordToken = undefined;
-    user.resetPasswordExpires = undefined;
-    await user.save();
-
-    req.flash("success", "Password reset successfully. Please log in with your new password.");
-    res.redirect("/account");
-  } catch (error) {
-    console.error("Error resetting password:", error.message);
-    req.flash("error", "Error resetting password");
-    res.redirect(`/resetPassword/${token}`);
   }
 });
 

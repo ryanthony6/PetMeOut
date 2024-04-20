@@ -1,4 +1,5 @@
 const express = require("express");
+const bcrypt = require("bcrypt");
 const app = express();
 const flash = require("connect-flash");
 const session = require("express-session");
@@ -12,6 +13,8 @@ const Blog = require("./models/blogData");
 const User = require("./models/userData");
 const multer = require("multer");
 const fs = require("fs");
+require("nodemailer");
+require("./utils/token");
 var morgan = require("morgan");
 
 const port = process.env.PORT || 5000;
@@ -153,6 +156,7 @@ app.get("/addFAQ", (req, res) => {
     isAdmin: req.user.isAdmin,
   });
 });
+
 
 app.post('/addFaqData', async (req, res) => {
   const { faqTitle, faqContent, faqCategory } = req.body;
@@ -298,6 +302,73 @@ app.delete("/deleteAccount/:id", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");
+  }
+});
+
+app.get("/account/resetPassword/:token", async (req, res) => {
+  try {
+    const token = req.params.token;
+
+    // Cari pengguna berdasarkan token reset password
+    const user = await User.findOne({
+      resetPasswordToken: token,
+      resetPasswordExpires: { $gt: Date.now() },
+    });
+
+    if (!user) {
+      req.flash("error", "Invalid or expired token");
+      return res.redirect("/forgotPassword"); 
+    }
+    res.render("resetPassword.ejs", {
+      title: "Reset Password",
+      layout: false,
+      token: token,
+      messages: req.flash(),
+    });
+  } catch (error) {
+    console.error("Error resetting password:", error.message);
+    req.flash("error", "Error resetting password");
+    res.redirect("/forgotPassword"); 
+  }
+});
+
+app.post("/account/resetPassword/:token", async (req, res) => {
+  try {
+    const token = req.params.token;
+    const { password, confirmNewPassword } = req.body;
+
+    if (password !== confirmNewPassword) {
+      req.flash("error", "Passwords do not match");
+      return res.redirect(`/account/resetPassword/${token}`);
+    }
+
+    if (password.length < 8) {
+      req.flash("error", "Password must be at least 8 characters long");
+      return res.redirect(`/account/resetPassword/${token}`);
+    }
+
+    // Cari pengguna berdasarkan token reset password
+    const user = await User.findOne({
+      resetPasswordToken: token,
+      resetPasswordExpires: { $gt: Date.now() }, // Token masih valid
+    });
+
+    // Enkripsi password baru
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Simpan password baru ke dalam database
+    user.password = hashedPassword;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+    await user.save();
+
+    req.flash("success", "Password reset successfully. Please login with your new password.");
+    console.log("Success message:", req.flash("success"));
+    res.redirect("/account")
+  } catch (error) {
+    console.error("Error resetting password:", error.message);
+    req.flash("error", "Error resetting password");
+    res.redirect("/forgotPassword"); // Atau halaman lain yang sesuai
   }
 });
 

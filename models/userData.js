@@ -20,6 +20,12 @@ const userDataSchema = new Schema({
   },
   profilePict: {
     type: String
+  },
+  resetPasswordToken: {
+    type: String
+  },
+  resetPasswordExpires: {
+    type: Date
   }
 });
 
