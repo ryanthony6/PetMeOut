@@ -3,8 +3,6 @@ const accountRouter = Router()
 const bcrypt = require("bcrypt");
 const UserData = require("../../models/userData");
 const passport = require("./passport");
-const nodemailer = require("nodemailer");
-const { generateToken } = require("../../utils/token");
 
 accountRouter.get("/", (req, res) => {
   res.render("signinup.ejs", {
@@ -13,31 +11,6 @@ accountRouter.get("/", (req, res) => {
     messages: req.flash(),
   });
 });
-
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.EMAIL,
-    pass: process.env.PASSWORD,
-  },
-})
-const sendVerificationEmail = async (email, token) => {
-  const mailOptions = {
-    from: process.env.EMAIL, 
-    to: email,
-    subject: "Reset Password",
-    text: `To reset your password, click on the following link: http://localhost:3000/account/resetPassword/${token}`,
-    html: `<p>To reset your password, click on the following link: <a href="http://localhost:3000/account/resetPassword/${token}">Reset Password</a></p>`,
-  };
-
-  try {
-    await transporter.sendMail(mailOptions);
-    console.log("Verification email sent successfully.");
-  } catch (error) {
-    console.error("Error sending verification email:", error.message);
-    throw new Error("Error sending verification email");
-  }
-};
 
 // Route untuk sign up
 accountRouter.post("/signup", async (req, res) => {
@@ -89,48 +62,6 @@ accountRouter.post(
     failureFlash: true,
   })
 );
-
-accountRouter.post("/forgotPassword", async (req, res) => {
-  try {
-    const { email } = req.body;
-
-    if (!email) {
-      req.flash("error", "Email is required");
-      return res.redirect("/forgotPassword");
-    }
-
-    const existingUser = await UserData.findOne({ email: email });
-    if (existingUser && existingUser.isAdmin) {
-      req.flash(
-        "error",
-        "This is an admin account. Password cannot be changed."
-      );
-      return res.redirect("/forgotPassword");
-    }
-
-    if (!existingUser) {
-      req.flash("error", "Email not found");
-      return res.redirect("/forgotPassword");
-    }
-
-
-    const token = generateToken();
-
-    existingUser.resetPasswordToken = token;
-    existingUser.resetPasswordExpires = Date.now() + 3600000; // 1 hour
-    await existingUser.save();
-
-    await sendVerificationEmail(email, token);
-
-    req.flash("success", "Verification email sent. Please check your email to reset your password.");
-    res.redirect("/forgotPassword");
-  } catch (error) {
-    console.error("Error sending verification email:", error.message);
-    req.flash("error", "Error sending verification email");
-    res.redirect("/forgotPassword");
-  }
-});
-
 
 // Route untuk logout
 accountRouter.get("/logout", (req, res) => {

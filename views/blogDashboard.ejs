@@ -24,7 +24,7 @@
         <td><%= row.link %> %></td>
         <td class="actions">
           <!-- <a id="btnEditBlog" class="edit">Edit</a> -->
-          <a href="/editBlog/<%= row.title %>" class="edit">Edit</a>
+          <a href="/blogs/editBlog/<%= row.title %>" class="edit">Edit</a>
           <!-- Menggunakan row._id untuk link edit -->
           <a onclick="deleteBlog('<%= row._id %>')" class="delete">Delete</a>
           <!-- Menambahkan onclick event untuk menghapus -->
@@ -56,7 +56,7 @@
   <div class="form_area" id="addBlog">
     <p class="title">Add Blog Data</p>
 
-    <form action="/addBlog" method="post" enctype="multipart/form-data">
+    <form action="/blogs/addBlog" method="post" enctype="multipart/form-data">
       <div class="form_group">
         <label class="sub_title" for="name">Title</label>
         <input
@@ -119,7 +119,7 @@
 </div>
 
 
-<link rel="stylesheet" href="style/blogDashboard.css" />
-<link rel="stylesheet" href="style/dashboard.css" />
+<link rel="stylesheet" href="/style/blogDashboard.css" />
+<link rel="stylesheet" href="/style/dashboard.css" />
 <script src="/script/ResponsiveNavbarTes.js"></script>
 <script src="/script/blog.js"></script>

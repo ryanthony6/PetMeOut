@@ -47,7 +47,7 @@ navLinkFAQs.forEach((navLinkFAQ) => {
 });
 
 function editFaq(id) {
-  window.location.href = `/editFaq/${id}`;
+  window.location.href = `/faqs/editFaq/${id}`;
 }
 
 async function deleteFaq(faqID) {
@@ -56,7 +56,7 @@ async function deleteFaq(faqID) {
       throw new Error("FAQ ID is null");
     }
 
-    const response = await fetch(`/deleteFaq/${faqID}`, {
+    const response = await fetch(`/faqs/deleteFaq/${faqID}`, {
       method: "DELETE",
     });
 
@@ -75,5 +75,5 @@ async function deleteFaq(faqID) {
 }
 
 function redirectToAddPage() {
-  window.location.href = "/addfaq";
+  window.location.href = "/faqs/addfaq";
 }

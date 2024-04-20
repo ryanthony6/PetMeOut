@@ -1,6 +1,6 @@
 // menghapus blog
 function deleteBlog(blogID) {
-  fetch(`/deleteBlog/${blogID}`, {
+  fetch(`/blogs/deleteBlog/${blogID}`, {
     method: "DELETE",
   })
     .then((response) => {

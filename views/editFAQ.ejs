@@ -4,7 +4,7 @@
         <span class="goBack"><a href="/FAQ">back to faq</a></span>
 
   
-    <form action="/editFaq/<%= faq._id %>" method="POST" class="add-faq-form">
+    <form action="/faqs/editFaq/<%= faq._id %>" method="POST" class="add-faq-form">
         <label for="faqTitle">FAQ Title:</label>
         <input type="text" id="faqTitle" name="faqTitle" value="<%= faq.title %>" required>
 

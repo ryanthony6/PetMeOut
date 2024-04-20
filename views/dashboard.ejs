@@ -25,7 +25,7 @@
       <tr>
         <td><%= index + 1 %></td>
       
-        <td><a href="/details/<%= row.name %>"><%= row.name %></a></td>
+        <td><a href="/pets/details/<%= row.name %>"><%= row.name %></a></td>
         <td><%= row.age %></td>
         <td><%= row.gender %></td>
         <td><%= row.size %></td>
@@ -34,7 +34,7 @@
         <td><%= row.category %></td>
         <td><%= row.description %></td>
         <td class="actions">
-          <a href="/edit/<%= row.name %>" class="edit">Edit</a>
+          <a href="/pets/edit/<%= row.name %>" class="edit">Edit</a>
           <!-- Menggunakan row._id untuk link edit -->
           <a onclick="deleteProduct('<%= row._id %>')" class="delete">Delete</a>
           <!-- Menambahkan onclick event untuk menghapus -->
@@ -71,13 +71,13 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 
-<link rel="stylesheet" href="style/dashboard.css" />
+<link rel="stylesheet" href="/style/dashboard.css" />
 <script src="/script/ResponsiveNavbarTes.js"></script>
 <script src="/script/dashboard.js"></script>
 
 <script>
   function deleteProduct(petID) {
-    fetch(`/delete/${petID}`, {
+    fetch(`/pets/delete/${petID}`, {
       method: "DELETE",
     })
       .then((response) => {

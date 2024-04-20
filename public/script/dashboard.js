@@ -21,5 +21,5 @@ $(document).ready(function () {
 });
 
 function redirectToAddPage() {
-  window.location.href = "/add";
+  window.location.href = "/pets/add";
 }

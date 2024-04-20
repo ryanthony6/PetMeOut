@@ -1,9 +1,9 @@
 <div class="editFormContainer" id="editFormContainer">
     <div class="form_area">
       <p class="title">Edit Blog Data</p>
-      <span class="goBack"><a href="/blog">back to dashboard</a></span>
+      <span class="goBack"><a href="/blogs/dashboard">back to dashboard</a></span>
 
-          <form id="editFormContainer" action="/updateBlog/<%= blogs._id%>" method="post" enctype="multipart/form-data">
+          <form id="editFormContainer" action="/blogs/updateBlog/<%= blogs._id%>" method="post" enctype="multipart/form-data">
             <div class="form_group">
               <label class="sub_title" for="title">Title</label>
               <input
