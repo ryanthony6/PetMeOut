@@ -120,6 +120,17 @@ app.get("/blog", async (req, res) => {
 });
 
 // Handle requests for more blog posts
+app.get("/blog/load-more", async (req, res) => {
+  try {
+    const { skip } = req.query;
+    const blogs = await Blog.find().skip(parseInt(skip)).limit(3); // Skip already loaded posts
+
+    res.json(blogs);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
 
 
 // Halaman FAQ
