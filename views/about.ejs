@@ -246,50 +246,6 @@
     </div>
   </section>
   <!-- why adopt section end -->
-
-  <!-- Blog section start -->
-  <section class="blog">
-    <% if (isAuthenticated && currentUser.isAdmin) { %>
-
-    <h2>
-      Latest News <span class="editSpan"><a href="/blogs/dashboard">edit</a></span>
-    </h2>
-    <% } else { %>
-    <h2>Latest News</h2>
-    <% } %>
-    <h5 class="about-heading">Daily dose of animals</h5>
-    <% if (blogs != '') { %>
-    <div class="blog-container">
-      <% blogs.forEach((blog,index) => { %>
-      <div class="blog-card">
-        <div class="blog-img">
-          <img
-            src="<%= blog.image %>"
-            alt="project"
-            loading="lazy"
-            class="project-img"
-          />
-        </div>
-
-        <div class="blog-content">
-          <a href="<%= blog.link %>" target="_blank" class="blog-title"
-            ><%= blog.title %></a
-          >
-          <p><%= blog.desc %></p>
-          <a href="<%= blog.link %>" target="_blank" class="blog-link"
-            >Read More</a
-          >
-        </div>
-      </div>
-      <% }); %>
-    </div>
-    <% } else{ %>
-    <div class="cardContainer"><p>No blogs found.</p></div>
-    <% } %>
-
-    
-  </section>
-  <!-- Blog section end -->
 </div>
 
 <link rel="stylesheet" href="/style/about.css" />

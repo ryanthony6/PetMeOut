@@ -12,7 +12,6 @@ const multer = require("multer");
 const fs = require("fs");
 const Pet = require("./models/petData");
 var morgan = require("morgan");
-
 const port = process.env.PORT || 5000;
 const expressLayouts = require("express-ejs-layouts");
 
@@ -101,6 +100,27 @@ app.get("/about", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
+
+// Halaman blog
+app.get("/blog", async (req, res) => {
+  try {
+    const blogs = await Blog.find().limit(3); // Fetch the first set of 3 blog posts
+
+    res.render("blog.ejs", {
+      blogs: blogs,
+      title: "Blog",
+      layout: "mainlayout.ejs",
+      isAuthenticated: req.isAuthenticated(),
+      isAdmin: req.user ? req.user.isAdmin : false,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// Handle requests for more blog posts
+
 
 // Halaman FAQ
 app.get("/FAQ", async (req, res) => {

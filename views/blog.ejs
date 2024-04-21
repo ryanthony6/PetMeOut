@@ -1,0 +1,65 @@
+<header class="header">
+  <div class="header-content">
+    <h1 class="header-heading">Our Latest Blog</h1>
+    <p class="header-paragraph">
+      Explore the latest articles on pets and animals in our blog.
+    </p>
+    <div class="buttonWrapper">
+      <a href="#articles" class="exploreButton"
+        >Explore Article <img src="/img/mouse.svg" alt="Arrow Icon" />
+      </a>
+    </div>
+  </div>
+</header>
+<!-- Blog section start -->
+<section class="blog" id="articles">
+  <% if (isAuthenticated && currentUser.isAdmin) { %>
+
+  <h2>
+    Latest News
+    <span class="editSpan"><a href="/blogs/dashboard">edit</a></span>
+  </h2>
+  <% } else { %>
+  <h2>Latest News</h2>
+  <% } %>
+  <h5 class="blog-heading">Daily dose of animals</h5>
+  <% if (blogs != '') { %>
+
+  <div class="blog-container">
+    <% blogs.forEach((blog,index) => { %>
+    <div class="blog-card">
+      <div class="blog-img">
+        <img
+          src="<%= blog.image %>"
+          alt="project"
+          loading="lazy"
+          class="project-img"
+        />
+      </div>
+
+      <div class="blog-content">
+        <a href="<%= blog.link %>" target="_blank" class="blog-title"
+          ><%= blog.title %></a
+        >
+        <p><%= blog.desc %></p>
+
+        <div class="row">
+          <span class="blog-author">chRIZZ</span>
+          <span class="blog-category">Health</span>
+        </div>
+      </div>
+    </div>
+    <% }); %>
+  </div>
+  <div class="loadmore">
+    <button id="load-more-btn" data-page="1">Load More</button>
+  </div>
+
+  <% } else{ %>
+  <div class="blog-container"><p>No blogs found.</p></div>
+  <% } %>
+</section>
+<!-- Blog section end -->
+
+<link rel="stylesheet" href="/style/blog.css" />
+<script src="/script/blog.js"></script>

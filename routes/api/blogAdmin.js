@@ -121,4 +121,5 @@ blogRouter.post("/updateBlog/:id", upload.single("image"), async (req, res) => {
   }
 });
 
+
 module.exports = blogRouter;
