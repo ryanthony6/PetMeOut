@@ -7,7 +7,7 @@ const passport = require("./passport");
 accountRouter.get("/", (req, res) => {
   res.render("signinup.ejs", {
     title: "Sign up/Sign in",
-    layout: "SignupLayout.ejs",
+    layout: "headerlayout.ejs",
     messages: req.flash(),
   });
 });

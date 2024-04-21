@@ -32,6 +32,9 @@ img {
     margin: 0 auto;
   width: 150px;
   height: 150px;
+  border-radius: 50%;
+  background-size: cover;
+  border: solid 1px #000;
 }
 
 .form_group {

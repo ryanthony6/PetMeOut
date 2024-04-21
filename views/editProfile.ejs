@@ -1,15 +1,20 @@
 <div class="form_area">
   <% if (profile.profilePict != null) { %>
-      <img src="/<%=profile.profilePict%>"> <!-- Render user's profile picture -->
+  <img src="/<%=profile.profilePict%>" id="current-profile-img" />
+  <!-- Render user's profile picture -->
   <% } else { %>
-    <img
+  <img
     src="/img/profile-user.png"
     alt="current-picture"
     id="current-profile-img"
     loading="lazy"
   />
   <% } %>
-  <form action="/editProfile/<%= profile._id %>" method="post" enctype="multipart/form-data">
+  <form
+    action="/editProfile/<%= profile._id %>"
+    method="post"
+    enctype="multipart/form-data"
+  >
     <div class="form_group">
       <label class="sub_title" for="title">Name</label>
       <input
@@ -30,17 +35,24 @@
         type="file"
         name="image"
         accept="image/*"
-        
         onchange="previewProfilePicture(event)"
       />
-      
-      <input type="hidden" name="old_image" value="<%= profile.image %>" />
+
+      <% if (profile.profilePict) { %>
+      <input
+        type="hidden"
+        name="old_profile_image"
+        value="<%= profile.profilePict %>"
+      />
+      <% } %>
 
       <div class="btnBx">
-      <a href="/" class="btn">Back to home</a>
-      <button type="submit" class="btn">Save</button>
-      <a onclick="deleteUser('<%= profile._id %>')" class="btn">Delete Account</a>
-    </div>
+        <a href="/" class="btn">Back to home</a>
+        <button type="submit" class="btn">Save</button>
+        <a onclick="deleteUser('<%= profile._id %>')" class="btn"
+          >Delete Account</a
+        >
+      </div>
     </div>
   </form>
 </div>
@@ -48,35 +60,32 @@
 <link rel="stylesheet" href="/style/profile.css" />
 <script>
   function deleteUser(userID) {
-  fetch(`/deleteAccount/${userID}`, {
-    method: "DELETE",
-  })
-    .then((response) => {
-      if (response.ok) {
-        window.location.href = "/";
-      } else {
-        throw new Error("Failed to delete account");
-      }
-    })
-    .catch((error) => {
-      alert("Failed to delete account. Please try again.");
-    });
-}
+    if (confirm("Are you sure you want to delete your account?")) {
+      fetch(`/deleteAccount/${userID}`, {
+        method: "DELETE",
+      })
+        .then((response) => {
+          if (response.ok) {
+            window.location.href = "/";
+          } else {
+            throw new Error("Failed to delete account");
+          }
+        })
+        .catch((error) => {
+          alert("Failed to delete account. Please try again.");
+        });
+    }
+  }
 
   function previewProfilePicture(event) {
-  var reader = new FileReader();
-  reader.onload = function () {
     var img = document.getElementById("current-profile-img");
-    img.src = reader.result;
-  };
-  
-  if (event.target.files.length > 0) {
-    // If a file is selected, preview it
-    reader.readAsDataURL(event.target.files[0]);
-  } else {
-    // If no file is selected, revert to the default profile picture
-    img.src = "/img/profile-user.png";
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    } else {
+    }
   }
-}
-
 </script>

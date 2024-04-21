@@ -133,7 +133,7 @@ app.get('/profile/:id', async (req, res) => {
   try {
     const profile = await User.findById(id);
     if (!profile) {
-      return res.status(404).send('User not Found');
+      res.redirect('/error')
     }
     // Render halaman edit FAQ dan kirim data FAQ ke dalam template
     res.render('editProfile.ejs', {
@@ -147,37 +147,38 @@ app.get('/profile/:id', async (req, res) => {
   }
 });
 
-app.post('/editProfile/:id', upload.single("image"),async (req, res) => {
+app.post('/editProfile/:id', upload.single("image"), async (req, res) => {
   try {
     const id = req.params.id;
-    let newImage = req.body.old_image;
+    let newProfileImage = req.body.old_profile_image; // Changed variable name to newProfileImage
 
-    // Check if a file was uploaded
     if (req.file) {
-      newImage = req.file.filename;
-      
-      // Attempt to delete the old image file
-      if (req.body.old_image) {
+      newProfileImage = req.file.filename;
+      // Delete the old file if it exists
+      if (req.body.old_profile_image) {
         try {
-          fs.unlinkSync("./uploads/" + req.body.old_image);
+          fs.unlinkSync("./uploads/" + req.body.old_profile_image);
         } catch (err) {
           console.error("Error deleting old image file:", err);
         }
       }
+    } else {
+      // Use the old image if no new image is provided
+      newProfileImage = req.body.old_profile_image;
     }
 
     // Update user profile with new data
     await User.findByIdAndUpdate(id, {
       username: req.body.username,
-      profilePict: newImage,
+      profilePict: newProfileImage, // Changed variable name to newProfileImage
     });
 
-    res.redirect("/");
+    res.redirect('/');
   } catch (err) {
     console.error("Error updating profile:", err);
     res.redirect("/");
   }
-})
+});
 
 app.delete("/deleteAccount/:id", async (req, res) => {
   try {
