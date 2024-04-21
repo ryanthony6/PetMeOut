@@ -1,35 +1,62 @@
+// document.getElementById("load-more-btn").addEventListener("click", async function () {
+//   let skip = document.querySelectorAll(".blog-card").length;
+//   try {
+//     const response = await fetch(`/blog/load-more?skip=${skip}`);
+//     if (!response.ok) {
+//       throw new Error('Network response was not ok');
+//     }
+//     const data = await response.json();
+//     console.log(data);
+//     if (data.length > 0) {
+//       data.forEach((blog) => {
+//         // Append new blog card to the container
+//         // Adjust this part according to your HTML structure
+//         const blogContainer = document.querySelector(".blog-container");
+//         const blogCard = document.createElement("div");
+//         blogCard.classList.add("blog-card");
+//         blogCard.innerHTML = `
+//           <div class="blog-img">
+//             <img src="${blog.image}" alt="project" loading="lazy" class="project-img" />
+//           </div>
+//           <div class="blog-content">
+//             <a href="${blog.link}" target="_blank" class="blog-title">${blog.title}</a>
+//             <p>${blog.desc}</p>
+//             <div class="row">
+//               <span class="blog-author">${blog.author}</span>
+//               <span class="blog-category">${blog.blogCategory}</span>
+//             </div>
+//           </div>`;
+//         blogContainer.appendChild(blogCard);
+//       });
+//     } else {
+//       // If no more blogs, hide the "Load More" button
+//       document.getElementById("load-more-btn").style.display = "none";
+//     }
+//   } catch (error) {
+//     console.error("Error fetching more blog data:", error);
+//     // Handle errors gracefully, such as displaying an error message to the user
+//   }
+// });
+
+
+// Get reference to the category container
+
 document.getElementById("load-more-btn").addEventListener("click", async function () {
   let skip = document.querySelectorAll(".blog-card").length;
+  const selectedCategory = document.querySelector(".category.active").dataset.category; // Ambil kategori blog yang sedang aktif
+
   try {
-    const response = await fetch(`/blog/load-more?skip=${skip}`);
+    const response = await fetch(`/blog/load-more?skip=${skip}&category=${selectedCategory}`); // Sertakan kategori blog dalam permintaan
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
     const data = await response.json();
     console.log(data);
     if (data.length > 0) {
-      data.forEach((blog) => {
-        // Append new blog card to the container
-        // Adjust this part according to your HTML structure
-        const blogContainer = document.querySelector(".blog-container");
-        const blogCard = document.createElement("div");
-        blogCard.classList.add("blog-card");
-        blogCard.innerHTML = `
-          <div class="blog-img">
-            <img src="${blog.image}" alt="project" loading="lazy" class="project-img" />
-          </div>
-          <div class="blog-content">
-            <a href="${blog.link}" target="_blank" class="blog-title">${blog.title}</a>
-            <p>${blog.desc}</p>
-            <div class="row">
-              <span class="blog-author">${blog.author}</span>
-              <span class="blog-category">${blog.blogCategory}</span>
-            </div>
-          </div>`;
-        blogContainer.appendChild(blogCard);
-      });
+      // Render blog sesuai dengan kategori yang dipilih
+      renderBlogPosts(data);
     } else {
-      // If no more blogs, hide the "Load More" button
+      // Jika tidak ada blog lagi, sembunyikan tombol "Load More"
       document.getElementById("load-more-btn").style.display = "none";
     }
   } catch (error) {
@@ -39,7 +66,6 @@ document.getElementById("load-more-btn").addEventListener("click", async functio
 });
 
 
-// Get reference to the category container
 const categoryContainer = document.querySelector(".category-container");
 
 // Add event listener for category click

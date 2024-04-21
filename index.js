@@ -118,10 +118,19 @@ app.get("/blog", async (req, res) => {
 
 
 // Handle requests for more blog posts
+// Handle requests for more blog posts
 app.get("/blog/load-more", async (req, res) => {
   try {
-    const { skip } = req.query;
-    const blogs = await Blog.find().skip(parseInt(skip)).limit(3); 
+    const { skip, category } = req.query; // Ambil parameter skip dan category dari query string
+
+    // Inisialisasi filter untuk kategori blog jika kategori diberikan
+    let filter = {};
+    if (category && category !== 'All') {
+      filter.blogCategory = category;
+    }
+
+    // Fetch blog posts based on the filter and skip value
+    const blogs = await Blog.find(filter).skip(parseInt(skip)).limit(3);
 
     res.json(blogs);
   } catch (err) {
@@ -129,6 +138,7 @@ app.get("/blog/load-more", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
+
 
 // Handle requests for blogs by category
 app.get("/category", async (req, res) => {
