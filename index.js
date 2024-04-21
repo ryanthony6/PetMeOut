@@ -12,7 +12,7 @@ const multer = require("multer");
 const fs = require("fs");
 const Pet = require("./models/petData");
 var morgan = require("morgan");
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3000;
 const expressLayouts = require("express-ejs-layouts");
 
 app.use(express.urlencoded({ extended: true }));
@@ -85,11 +85,8 @@ app.get("/",async (req, res) => {
 // Halaman About
 app.get("/about", async (req, res) => {
   try {
-    let id = req.params.id;
-    const blogs = await Blog.find(id);
-
+    
     res.render("about.ejs", {
-      blogs: blogs,
       title: "About",
       layout: "mainlayout.ejs",
       isAuthenticated: req.isAuthenticated(),
@@ -119,11 +116,12 @@ app.get("/blog", async (req, res) => {
   }
 });
 
+
 // Handle requests for more blog posts
 app.get("/blog/load-more", async (req, res) => {
   try {
     const { skip } = req.query;
-    const blogs = await Blog.find().skip(parseInt(skip)).limit(3); // Skip already loaded posts
+    const blogs = await Blog.find().skip(parseInt(skip)).limit(3); 
 
     res.json(blogs);
   } catch (err) {
@@ -132,6 +130,29 @@ app.get("/blog/load-more", async (req, res) => {
   }
 });
 
+// Handle requests for blogs by category
+app.get("/category", async (req, res) => {
+  try {
+    const { category } = req.query;
+
+    // Initialize filter object
+    let filter = {};
+
+    // If category is provided and not "All", filter by category
+    if (category && category !== 'All') {
+      filter.blogCategory = category; // Assuming the field in the Blog model is named blogCategory
+    }
+
+    // Fetch blogs based on the filter
+    const blogs = await Blog.find(filter);
+
+    // Send the fetched blogs data as JSON response
+    res.json({ success: true, data: blogs });
+  } catch (err) {
+    console.error("Error fetching blogs:", err);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+});
 
 // Halaman FAQ
 app.get("/FAQ", async (req, res) => {
@@ -237,7 +258,7 @@ app.get("/error", (req, res) => {
   });
 });
 
-app.get("/petss", async (req, res) => {
+app.get("/pet", async (req, res) => {
   try {
     const { query, category } = req.query;
     let filter = {};

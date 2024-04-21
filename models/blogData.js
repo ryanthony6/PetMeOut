@@ -9,6 +9,14 @@ const blogDataSchema = new Schema({
     type: String,
     required: true,
   },
+  author: {
+    type: String,
+    required: true
+  },
+  blogCategory: {
+    type: String,
+    required: true
+  },
   link: {
     type: String,
     required: true

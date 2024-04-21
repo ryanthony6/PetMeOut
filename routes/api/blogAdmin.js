@@ -41,6 +41,8 @@ blogRouter.post("/addBlog", upload.single("image"), async (req, res) => {
     const blog = new Blog({
       title: req.body.title,
       desc: req.body.desc,
+      author: req.body.author,
+      blogCategory: req.body.blogCategory,
       link: req.body.link,
       image: req.file.filename,
     });
@@ -111,6 +113,8 @@ blogRouter.post("/updateBlog/:id", upload.single("image"), async (req, res) => {
     await Blog.findByIdAndUpdate(id, {
       title: req.body.title,
       desc: req.body.desc,
+      author: req.body.author,
+      blogCategory: req.body.blogCategory,
       link: req.body.link,
       image: new_image,
     });

@@ -70,6 +70,18 @@
       </div>
 
       <div class="form_group">
+        <label class="sub_title" for="name">Author</label>
+        <input
+          placeholder="Enter blog author"
+          class="form_style"
+          type="text"
+          id="author"
+          name="author"
+          required
+        />
+      </div>
+
+      <div class="form_group">
         <label class="sub_title" for="description">Blog Description</label>
         <textarea
           placeholder="Enter blog description"
@@ -81,6 +93,15 @@
           maxlength="200"
           required
         ></textarea>
+      </div>
+
+      <div class="form_group">
+        <label class="sub_title" for="blogCategory">Blog Category:</label>
+        <select class="form_style" id="blogCategory" name="blogCategory">
+          <option value="Healthcare">Healthcare</option>
+          <option value="Experience">Experience</option>
+          <option value="Adoption">Adoption</option>
+        </select>
       </div>
 
       <div class="form_group">
@@ -117,7 +138,6 @@
     </form>
   </div>
 </div>
-
 
 <link rel="stylesheet" href="/style/blogDashboard.css" />
 <link rel="stylesheet" href="/style/dashboard.css" />

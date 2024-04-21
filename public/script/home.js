@@ -11,7 +11,7 @@ async function searchPets() {
   const category = document.getElementById("categorySelect").value;
   const sorting = document.getElementById("sortingSelect").value;
 
-  const url = `/pets?query=${query}&category=${category}&sorting=${sorting}`;
+  const url = `/pet?query=${query}&category=${category}&sorting=${sorting}`;
   const response = await fetch(url);
   const data = await response.json();
 
@@ -24,7 +24,7 @@ function displaySearchResults(pets) {
 
   if (pets.length > 0) {
     if (document.getElementById("sortingSelect").value === "asc") {
-      pets.sort((a, b) => a.name.localeCompare(b.name));
+      pets.sort((a, b) => a.name.localeCompare(b.name)); 
     } else if (document.getElementById("sortingSelect").value === "desc") {
       pets.sort((a, b) => b.name.localeCompare(a.name));
     }
@@ -42,7 +42,7 @@ function displaySearchResults(pets) {
       info.innerHTML = `
         <p>${pet.name}</p>
         <p>${pet.breed}</p>
-        <a href="/details/${pet.name}" class="readmore-btn">Read More</a>
+        <a href="/pets/details/${pet.name}" class="readmore-btn">Read More</a>
       `;
 
       card.appendChild(img);

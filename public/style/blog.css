@@ -106,6 +106,27 @@
   color: #4e4e4e;
 }
 
+.category-container {
+  background-color: #f6faff;
+  margin: 1rem 12rem;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.category {
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.category.active {
+  background-color: #19a7ce;
+  border-radius: 10px;
+  color: #fff;
+}
+
 .editSpan {
   font-size: 0.8rem;
 }
@@ -233,6 +254,7 @@
 }
 
 #load-more-btn {
+  /* display: inline-block; */
   text-align: center;
   border: none;
   font-size: 1rem;
