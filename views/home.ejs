@@ -29,6 +29,21 @@
   <% } %>
 </p>
 
+<p class="error-message">
+  <%= messages.error && messages.error.includes('You have already submitted the adoption form for this pet.') ? '' : '' %>
+  <% if (messages.error && messages.error.includes('You have already submitted the adoption form for this pet.')) { %>
+    <script>
+      // Menampilkan pop-up SweetAlert2 untuk pesan error
+      Swal.fire({
+        icon: 'error',
+        title: 'Adoption form already submitted',
+        text: 'You already submitted this form. Please check your submitted form.',
+        confirmButtonText: 'CLOSE'
+      });
+    </script>
+  <% } %>
+</p>
+
 <!-- List section start -->
 <section class="cardList">
   <h1 class="list-heading">Adoptable Animals Highlight</h1>

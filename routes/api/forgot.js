@@ -11,9 +11,6 @@ const transporter = nodemailer.createTransport({
     user: process.env.EMAIL,
     pass: process.env.PASSWORD,
   },
-  tls: {
-    rejectUnauthorized: false,
-  },
 });
 const sendVerificationEmail = async (email, token) => {
   const mailOptions = {
@@ -37,7 +34,7 @@ const sendVerificationEmail = async (email, token) => {
 forgotRouter.get("/", (req, res) => {
     res.render("forgotPassword", {
       title: "forgotPassword",
-      layout: "SignupLayout.ejs",
+      layout: false,
       messages: req.flash(),
     });
   });
@@ -102,7 +99,7 @@ forgotRouter.get("/resetPassword/:token", async (req, res) => {
     }
     res.render("resetPassword.ejs", {
       title: "Reset Password",
-      layout: "SignupLayout.ejs",
+      layout: false,
       token: token,
       messages: req.flash(),
     });

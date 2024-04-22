@@ -39,6 +39,14 @@ const formDataSchema = new Schema({
     haveChildren: {
         type: String,
         required: false
+    },
+    userId : {
+        type: Schema.Types.ObjectId,
+        required: true
+    },
+    petId : {
+        type: Schema.Types.ObjectId,
+        required: true
     }
 });
 

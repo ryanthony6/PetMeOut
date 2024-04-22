@@ -253,8 +253,24 @@ petRouter.get("/details/:name", isLoggedIn, async (req, res) => {
 });
 
 // Route for handling form submission
-petRouter.post("/adoption-form", async (req, res) => {
+petRouter.post("/adoption-form/:petId", async (req, res) => {
   try {
+
+    const petId = req.params.petId;
+    const userId = req.user.id;
+
+    if (!petId) {
+      throw new Error("petId is required");
+    }
+
+    // Lakukan pemeriksaan apakah pengguna sudah mengisi formulir adopsi untuk hewan ini sebelumnya
+    const existingFormData = await FormData.findOne({ petId: petId, userId: userId });
+    if (existingFormData) {
+      // Jika pengguna sudah mengisi formulir adopsi untuk hewan ini sebelumnya, berikan pesan kesalahan atau arahkan ke halaman lain
+      req.flash("error", "You have already submitted the adoption form for this pet.");
+      return res.redirect("/");
+    }
+
     // Proses penyimpanan data formulir adopsi ke MongoDB
     const formData = new FormData({
       fname: req.body.fname,
@@ -265,6 +281,8 @@ petRouter.post("/adoption-form", async (req, res) => {
       phone: req.body.phone,
       havePets: req.body.havePets,
       haveChildren: req.body.haveChildren,
+      userId: req.user._id,
+      petId: petId,
     });
     await formData.save();
 
