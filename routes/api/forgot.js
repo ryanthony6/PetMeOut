@@ -34,7 +34,7 @@ const sendVerificationEmail = async (email, token) => {
 forgotRouter.get("/", (req, res) => {
     res.render("forgotPassword", {
       title: "forgotPassword",
-      layout: false,
+      layout: "SignupLayout.ejs",
       messages: req.flash(),
     });
   });
@@ -99,7 +99,7 @@ forgotRouter.get("/resetPassword/:token", async (req, res) => {
     }
     res.render("resetPassword.ejs", {
       title: "Reset Password",
-      layout: false,
+      layout: "SignupLayout.ejs",
       token: token,
       messages: req.flash(),
     });
