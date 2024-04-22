@@ -68,7 +68,6 @@
 }
 /* Hero section end */
 
-
 /* list section start */
 .cardList {
   min-height: 100vh;
@@ -156,7 +155,6 @@
   background-color: #333;
 }
 /* list section end */
-
 
 /* Search section start */
 .searchSection {
@@ -330,10 +328,10 @@
 }
 
 #loadMoreBtn {
-  margin-top: 20px;
+  margin: 1rem auto; 
   display: inline-block;
   padding: 10px 30px;
-  border: 1px solid ;
+  border: 1px solid;
   color: #ffffff;
   font-size: 1rem;
   border-radius: 15px;
@@ -343,14 +341,9 @@
 #loadMoreBtn:hover {
   background-color: #ffffff;
   color: #19a7ce;
-  
   transition: 0.3s ease-in-out;
 }
-
-
 /* Search section end */
-
-
 
 /* Responsive */
 @media (max-width: 768px) {

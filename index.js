@@ -66,7 +66,7 @@ var upload = multer({ storage: storage });
 app.get("/",async (req, res) => {
   try {
     let id = req.params.id;
-    const pets = await Pet.find(id);
+    const pets = await Pet.find(id).limit(3);
 
     res.render("home.ejs", {
       pets: pets,
@@ -81,6 +81,41 @@ app.get("/",async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
+
+app.get("/pet", async (req, res) => {
+  try {
+    const { query, category, sorting, skip } = req.query;
+    let filter = {};
+
+    if (query) {
+      filter.$or = [
+        { name: { $regex: query, $options: "i" } },
+        { breed: { $regex: query, $options: "i" } },
+      ];
+    }
+
+    if (category) {
+      filter.category = category;
+    }
+
+    const sortOptions = {};
+    if (sorting === "asc") {
+      sortOptions.name = 1;
+    } else if (sorting === "desc") {
+      sortOptions.name = -1;
+    }
+
+    const pets = await Pet.find(filter)
+      .sort(sortOptions)
+      .skip(parseInt(skip || 0))
+      .limit(3); 
+
+    res.json({ success: true, data: pets });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
 
 // Halaman About
 app.get("/about", async (req, res) => {
@@ -115,7 +150,6 @@ app.get("/blog", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
-
 
 // Handle requests for more blog posts
 // Backend route to handle category filtering
@@ -153,7 +187,6 @@ app.get("/load-more", async (req, res) => {
     res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 });
-
 
 // Halaman FAQ
 app.get("/FAQ", async (req, res) => {
@@ -257,30 +290,6 @@ app.get("/error", (req, res) => {
     layout: false,
     isAuthenticated: true,
   });
-});
-
-app.get("/pet", async (req, res) => {
-  try {
-    const { query, category } = req.query;
-    let filter = {};
-
-    if (query) {
-      filter = {
-        $or: [
-          { name: { $regex: query, $options: "i" } },
-          { breed: { $regex: query, $options: "i" } },
-        ],
-      };
-    }
-
-    if (category) {
-      filter.category = category;
-    }
-    const pets = await Pet.find(filter);
-    res.json({ success: true, data: pets });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
 });
 
 app.listen(port, () => {
