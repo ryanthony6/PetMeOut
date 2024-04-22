@@ -118,51 +118,42 @@ app.get("/blog", async (req, res) => {
 
 
 // Handle requests for more blog posts
-// Handle requests for more blog posts
-app.get("/blog/load-more", async (req, res) => {
+// Backend route to handle category filtering
+app.get("/category", async (req, res) => {
   try {
-    const { skip, category } = req.query; // Ambil parameter skip dan category dari query string
+    const { category } = req.query;
+    let filter = {};
 
-    // Inisialisasi filter untuk kategori blog jika kategori diberikan
+    if (category && category !== 'All') {
+      filter.blogCategory = category;
+    }
+
+    const blogs = await Blog.find(filter).limit(3);
+    res.json({ success: true, blogs: blogs });
+  } catch (err) {
+    console.error("Error fetching blogs by category:", err);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+});
+
+// Backend route to handle fetching more blogs
+app.get("/load-more", async (req, res) => {
+  try {
+    const { skip, category } = req.query;
+
     let filter = {};
     if (category && category !== 'All') {
       filter.blogCategory = category;
     }
 
-    // Fetch blog posts based on the filter and skip value
     const blogs = await Blog.find(filter).skip(parseInt(skip)).limit(3);
-
     res.json(blogs);
   } catch (err) {
-    console.log(err);
-    res.status(500).send("Internal Server Error");
-  }
-});
-
-
-// Handle requests for blogs by category
-app.get("/category", async (req, res) => {
-  try {
-    const { category } = req.query;
-
-    // Initialize filter object
-    let filter = {};
-
-    // If category is provided and not "All", filter by category
-    if (category && category !== 'All') {
-      filter.blogCategory = category; // Assuming the field in the Blog model is named blogCategory
-    }
-
-    // Fetch blogs based on the filter
-    const blogs = await Blog.find(filter);
-
-    // Send the fetched blogs data as JSON response
-    res.json({ success: true, data: blogs });
-  } catch (err) {
-    console.error("Error fetching blogs:", err);
+    console.error("Error fetching more blogs:", err);
     res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 });
+
 
 // Halaman FAQ
 app.get("/FAQ", async (req, res) => {

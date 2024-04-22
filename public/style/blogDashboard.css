@@ -147,28 +147,3 @@
 .blogTable th {
   background-color: #f2f2f2;
 }
-
-.blogTable th:first-child,
-.blogTable td:first-child {
-  width: 5%;
-}
-
-.blogTable th:nth-child(2),
-.blogTable td:nth-child(2) {
-  width: 20%;
-}
-
-.blogTable th:nth-child(3),
-.blogTable td:nth-child(3) {
-  width: 25%;
-}
-
-.blogTable th:nth-child(4),
-.blogTable td:nth-child(4) {
-  width: 25%;
-}
-
-.blogTable th:nth-child(5),
-.blogTable td:nth-child(5) {
-  width: 15%;
-}

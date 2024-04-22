@@ -227,6 +227,7 @@
   font-weight: 600;
   font-style: normal;
   font-size: 0.8rem;
+  color: #000;
   background-color: #dfe5ee;
   border-radius: 0.5rem;
   width: 115px;
@@ -254,7 +255,7 @@
 }
 
 #load-more-btn {
-  /* display: inline-block; */
+  display: none;
   text-align: center;
   border: none;
   font-size: 1rem;
