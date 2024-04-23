@@ -14,6 +14,7 @@ const Pet = require("./models/petData");
 var morgan = require("morgan");
 const port = process.env.PORT || 3000;
 const expressLayouts = require("express-ejs-layouts");
+const mongoose = require('mongoose');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(
@@ -291,6 +292,37 @@ app.get("/error", (req, res) => {
     isAuthenticated: true,
   });
 });
+
+const FormData = require("./models/formData");
+
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    next();
+  } else {
+    res.redirect("/account");
+  }
+}
+
+app.get("/submittedforms", isLoggedIn, async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const formDataList = await FormData.find({ userId: userId }).populate('petId');
+    console.log(formDataList); // Log the entire formDataList to inspect the populated petId
+
+    res.render("submittedForm.ejs", {
+      layout: "submittedFormLayout.ejs",
+      formDataList: formDataList,
+      isAuthenticated: true,
+      isAdmin: req.user.isAdmin,
+      messages: req.flash(),
+    });
+  } catch (error) {
+    console.error("Error fetching adoption form data:", error);
+    req.flash("error", "Error fetching adoption form data");
+    res.redirect("/");
+  }
+});
+
 
 app.listen(port, () => {
   console.log(`Webserver app listening on http://localhost:${port}/`);

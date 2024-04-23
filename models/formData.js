@@ -46,7 +46,8 @@ const formDataSchema = new Schema({
     },
     petId : {
         type: Schema.Types.ObjectId,
-        required: true
+        required: true,
+        ref: "petData"
     }
 });
 
