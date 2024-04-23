@@ -40,7 +40,7 @@
           <div class="profile-img">
             <% if (currentUser.profilePict != null) { %>
             <div class="profile-img">
-              <img src="/<%= currentUser.profilePict %>" />
+              <img src="/<%= currentUser.profilePict %>" loading="lazy" />
               <!-- Render user's profile picture -->
             </div>
             <% } else { %>

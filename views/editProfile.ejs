@@ -1,6 +1,6 @@
 <div class="form_area">
   <% if (profile.profilePict != null) { %>
-  <img src="/<%=profile.profilePict%>" id="current-profile-img" />
+  <img src="/<%=profile.profilePict%>" id="current-profile-img" loading="lazy"/>
   <!-- Render user's profile picture -->
   <% } else { %>
   <img

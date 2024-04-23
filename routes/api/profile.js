@@ -38,7 +38,7 @@ profileRouter.get("/profile/:id", isLoggedIn, async (req, res) => {
   }
 });
 
-profileRouter.post("/editProfile/:id", upload.single("image"),isLoggedIn ,async (req, res) => {
+profileRouter.post("/editProfile/:id",upload.single("image"),async (req, res) => {
   try {
     const id = req.params.id;
     let newProfileImage = req.body.old_profile_image; // Changed variable name to newProfileImage
@@ -71,7 +71,7 @@ profileRouter.post("/editProfile/:id", upload.single("image"),isLoggedIn ,async 
   }
 });
 
-profileRouter.delete("/deleteAccount/:id", isLoggedIn ,async (req, res) => {
+profileRouter.delete("/deleteAccount/:id",async (req, res) => {
   try {
     const profile = await User.findByIdAndDelete(req.params.id);
     if (!profile) {

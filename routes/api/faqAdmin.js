@@ -13,7 +13,7 @@ faqRouter.get("/addFAQ", isAdmin,(req, res) => {
   });
 });
 
-faqRouter.post('/addFaqData', isAdmin,async (req, res) => {
+faqRouter.post('/addFaqData',async (req, res) => {
   const { faqTitle, faqContent, faqCategory } = req.body;
   try {
     const newFAQ = new FAQ({
@@ -30,7 +30,7 @@ faqRouter.post('/addFaqData', isAdmin,async (req, res) => {
 });
 
 // Route untuk menghapus FAQ berdasarkan ID
-faqRouter.delete("/deleteFaq/:id", isAdmin,async (req, res) => {
+faqRouter.delete("/deleteFaq/:id", async (req, res) => {
   try {
     const faq = await FAQ.findByIdAndDelete(req.params.id);
     if (!faq) {
@@ -68,7 +68,7 @@ faqRouter.get('/editFaq/:id', isAdmin,async (req, res) => {
 });
 
 // Route untuk memproses permintaan pengeditan FAQ
-faqRouter.post('/editFaq/:id', isAdmin,async (req, res) => {
+faqRouter.post('/editFaq/:id', async (req, res) => {
   const faqId = req.params.id;
   const { faqTitle, faqContent, faqCategory } = req.body;
   try {

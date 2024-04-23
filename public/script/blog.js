@@ -1,13 +1,13 @@
 // JavaScript code to handle category button clicks
-document.querySelectorAll('.category').forEach(category => {
-  category.addEventListener('click', async () => {
+document.querySelectorAll(".category").forEach((category) => {
+  category.addEventListener("click", async () => {
     const categoryName = category.dataset.category;
     // Remove 'active' class from all categories
-    document.querySelectorAll('.category').forEach(cat => {
-      cat.classList.remove('active');
+    document.querySelectorAll(".category").forEach((cat) => {
+      cat.classList.remove("active");
     });
     // Add 'active' class to the clicked category
-    category.classList.add('active');
+    category.classList.add("active");
     const response = await fetch(`/category?category=${categoryName}`);
     const data = await response.json();
     // Update DOM with blogs for the selected category
@@ -18,7 +18,7 @@ document.querySelectorAll('.category').forEach(category => {
 });
 
 // JavaScript code to handle load more button click
-document.getElementById('load-more-btn').addEventListener('click', async () => {
+document.getElementById("load-more-btn").addEventListener("click", async () => {
   const category = getCurrentCategory(); // Implement this function to get current category
   const skip = getCurrentBlogCount(); // Implement this function to get current blog count
   const response = await fetch(`/load-more?category=${category}&skip=${skip}`);
@@ -34,11 +34,11 @@ function updateBlogCards(blogs) {
   // Clear existing blog cards
   clearBlogCards();
 
-   // If there are no blogs available, show a message
-   if (blogs.length === 0) {
-    const container = document.querySelector('.blog-container');
-    const message = document.createElement('p');
-    message.textContent = 'No blogs available.';
+  // If there are no blogs available, show a message
+  if (blogs.length === 0) {
+    const container = document.querySelector(".blog-container");
+    const message = document.createElement("p");
+    message.textContent = "No blogs available.";
     container.appendChild(message);
     return;
   }
@@ -48,8 +48,8 @@ function updateBlogCards(blogs) {
 
 // Function to append blog cards to DOM
 function appendBlogCards(blogs) {
-  const container = document.querySelector('.blog-container');
-  blogs.forEach(blog => {
+  const container = document.querySelector(".blog-container");
+  blogs.forEach((blog) => {
     // Create and append blog card elements
     const blogCard = createBlogCard(blog);
     container.appendChild(blogCard);
@@ -58,7 +58,6 @@ function appendBlogCards(blogs) {
 
 // Function to create a blog card element
 function createBlogCard(blog) {
-
   const blogLink = document.createElement("a");
   blogLink.href = blog.link;
   blogLink.target = "_blank";
@@ -85,38 +84,38 @@ function createBlogCard(blog) {
 
 // Function to clear existing blog cards from DOM
 function clearBlogCards() {
-  const container = document.querySelector('.blog-container');
-  container.innerHTML = ''; // Clear container
+  const container = document.querySelector(".blog-container");
+  container.innerHTML = ""; // Clear container
 }
 
 // Function to get the current category
 function getCurrentCategory() {
   // Retrieve the active category
-  const activeCategory = document.querySelector('.category.active');
+  const activeCategory = document.querySelector(".category.active");
   if (activeCategory) {
     return activeCategory.dataset.category;
   }
-  return 'All'; // Default to 'All' if no active category is found
+  return "All"; // Default to 'All' if no active category is found
 }
 
 // Function to get the current count of displayed blogs
 function getCurrentBlogCount() {
-  const container = document.querySelector('.blog-container');
+  const container = document.querySelector(".blog-container");
   return container.children.length; // Count of currently displayed blog cards
 }
 
 // Function to show or hide load more button based on whether there are more blogs to load
 function showHideLoadMoreButton(blogs) {
-  const loadMoreButton = document.getElementById('load-more-btn');
+  const loadMoreButton = document.getElementById("load-more-btn");
   if (blogs.length < 3) {
-    loadMoreButton.style.display = 'none';
+    loadMoreButton.style.display = "none";
   } else {
-    loadMoreButton.style.display = 'inline-block';
+    loadMoreButton.style.display = "inline-block";
   }
 }
 
 // Automatically fetch blogs and update DOM when the page loads
-window.addEventListener('DOMContentLoaded', async () => {
+window.addEventListener("DOMContentLoaded", async () => {
   const response = await fetch(`/category?category=All`);
   const data = await response.json();
   updateBlogCards(data.blogs);
@@ -124,14 +123,13 @@ window.addEventListener('DOMContentLoaded', async () => {
   showHideLoadMoreButton(data.blogs);
 });
 
-
 function scrollToArticle() {
   
-  const article = document.querySelector('.blog');
-  
-  article.scrollIntoView({ behavior: 'smooth' });
+  const article = document.querySelector(".blog");
+
+  article.scrollIntoView({ behavior: "smooth" });
 }
 
 // Add click event listener to the hero button
-const exploreBtn = document.querySelector('.exploreButton');
-exploreBtn.addEventListener('click', scrollToArticle);
+const exploreBtn = document.querySelector(".exploreButton");
+exploreBtn.addEventListener("click", scrollToArticle);

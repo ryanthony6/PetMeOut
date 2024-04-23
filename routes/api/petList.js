@@ -51,7 +51,7 @@ petRouter.post(
   upload.fields([
     { name: "image", maxCount: 1 },
     { name: "stockimage", maxCount: 3 },
-  ]),isAdmin,
+  ]),
   async (req, res) => {
     try {
       if (
@@ -122,7 +122,7 @@ petRouter.post(
   upload.fields([
     { name: "image", maxCount: 1 },
     { name: "stockimage", maxCount: 3 },
-  ]),isAdmin,
+  ]),
   async (req, res) => {
     let id = req.params.id;
     let new_image = req.body.old_image;
@@ -181,7 +181,7 @@ petRouter.post(
 );
 
 // Delete pet
-petRouter.delete("/delete/:id", isAdmin, async (req, res) => {
+petRouter.delete("/delete/:id", async (req, res) => {
   try {
     const pet = await Pet.findByIdAndDelete(req.params.id);
     if (!pet) {
@@ -235,7 +235,7 @@ petRouter.get("/details/:name", isLoggedIn, async (req, res) => {
 });
 
 // Route for handling form submission
-petRouter.post("/adoption-form/:petId", isLoggedIn,async (req, res) => {
+petRouter.post("/adoption-form/:petId", async (req, res) => {
   try {
 
     const petId = req.params.petId;

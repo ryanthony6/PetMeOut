@@ -31,7 +31,7 @@ blogRouter.get("/dashboard", isAdmin,async (req, res) => {
   }
 });
 
-blogRouter.post("/addBlog", upload.single("image"), isAdmin ,async (req, res) => {
+blogRouter.post("/addBlog", upload.single("image"),async (req, res) => {
   try {
     if (!req.file) {
       return res
@@ -60,7 +60,7 @@ blogRouter.post("/addBlog", upload.single("image"), isAdmin ,async (req, res) =>
   }
 });
 
-blogRouter.delete("/deleteBlog/:id",isAdmin,async (req, res) => {
+blogRouter.delete("/deleteBlog/:id",async (req, res) => {
   try {
     const blog = await Blog.findByIdAndDelete(req.params.id);
     if (!blog) {
@@ -95,7 +95,7 @@ blogRouter.get("/editBlog/:title", isAdmin, async (req, res) => {
   }
 });
 
-blogRouter.post("/updateBlog/:id", upload.single("image"), isAdmin,async (req, res) => {
+blogRouter.post("/updateBlog/:id", upload.single("image"), async (req, res) => {
   let id = req.params.id;
   let new_image = req.body.old_image;
 
