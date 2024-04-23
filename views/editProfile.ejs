@@ -11,7 +11,7 @@
   />
   <% } %>
   <form
-    action="/editProfile/<%= profile._id %>"
+    action="/userprofile/editProfile/<%= profile._id %>"
     method="post"
     enctype="multipart/form-data"
   >
@@ -61,7 +61,7 @@
 <script>
   function deleteUser(userID) {
     if (confirm("Are you sure you want to delete your account?")) {
-      fetch(`/deleteAccount/${userID}`, {
+      fetch(`/userprofile/deleteAccount/${userID}`, {
         method: "DELETE",
       })
         .then((response) => {
