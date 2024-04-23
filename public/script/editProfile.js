@@ -1,8 +1,20 @@
 function deleteUser(userID) {
-    if (confirm("Are you sure you want to delete your account?")) {
-      fetch(`/userprofile/deleteAccount/${userID}`, {
-        method: "DELETE",
-      })
+    Swal.fire({
+      title: 'Are you sure want to delete this account?',
+      text: 'You will not be able to recover this account!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete this account!',
+      cancelButtonText: 'No, keep this account',
+      reverseButtons: true,
+      confirmButtonColor: '#dc3545', 
+      cancelButtonColor: '#19a7ce' 
+  
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`/userprofile/deleteAccount/${userID}`, {
+          method: "DELETE",
+        })
         .then((response) => {
           if (response.ok) {
             window.location.href = "/";
@@ -11,10 +23,16 @@ function deleteUser(userID) {
           }
         })
         .catch((error) => {
-          alert("Failed to delete account. Please try again.");
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Gagal menghapus akun. Silakan coba lagi.'
+          });
         });
-    }
+      }
+    });
   }
+  
 
   function previewProfilePicture(event) {
     var img = document.getElementById("current-profile-img");

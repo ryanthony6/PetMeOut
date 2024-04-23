@@ -1,10 +1,7 @@
-*{
-  font-family: "Roboto", sans-serif;
-  font-style: normal;
-}
-
 
 .footer {
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
   position: relative;
   width: 100%;
   background: #19a7ce;

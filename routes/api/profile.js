@@ -28,7 +28,7 @@ profileRouter.get("/profile/:id", isLoggedIn, async (req, res) => {
     }
     // Render halaman edit FAQ dan kirim data FAQ ke dalam template
     res.render("editProfile.ejs", {
-      layout: false,
+      layout: "headerlayout.ejs",
       isAuthenticated: true,
       profile: profile,
     });
