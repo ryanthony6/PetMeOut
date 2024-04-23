@@ -1,8 +1,10 @@
 const { Router } = require("express");
 const profileRouter = Router();
 const User = require("../../models/userData");
+const FormData = require("../../models/formData");
 const multer = require("multer");
 const fs = require("fs");
+const { isLoggedIn} = require('../../index.js');
 
 // Image upload Multer configuration
 var storage = multer.diskStorage({
@@ -17,7 +19,7 @@ var storage = multer.diskStorage({
 // Middleware for handling both single and array of files upload
 var upload = multer({ storage: storage });
 
-profileRouter.get("/profile/:id", async (req, res) => {
+profileRouter.get("/profile/:id", isLoggedIn, async (req, res) => {
   const id = req.params.id;
   try {
     const profile = await User.findById(id);
@@ -36,7 +38,7 @@ profileRouter.get("/profile/:id", async (req, res) => {
   }
 });
 
-profileRouter.post("/editProfile/:id", upload.single("image"), async (req, res) => {
+profileRouter.post("/editProfile/:id", upload.single("image"),isLoggedIn ,async (req, res) => {
   try {
     const id = req.params.id;
     let newProfileImage = req.body.old_profile_image; // Changed variable name to newProfileImage
@@ -69,7 +71,7 @@ profileRouter.post("/editProfile/:id", upload.single("image"), async (req, res) 
   }
 });
 
-profileRouter.delete("/deleteAccount/:id", async (req, res) => {
+profileRouter.delete("/deleteAccount/:id", isLoggedIn ,async (req, res) => {
   try {
     const profile = await User.findByIdAndDelete(req.params.id);
     if (!profile) {
@@ -83,6 +85,25 @@ profileRouter.delete("/deleteAccount/:id", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");
+  }
+});
+
+profileRouter.get("/submittedforms", isLoggedIn, async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const formDataList = await FormData.find({ userId: userId }).populate('petId');
+
+    res.render("submittedForm.ejs", {
+      layout: "mainlayout.ejs",
+      formDataList: formDataList,
+      isAuthenticated: true,
+      isAdmin: req.user.isAdmin,
+      messages: req.flash(),
+    });
+  } catch (error) {
+    console.error("Error fetching adoption form data:", error);
+    req.flash("error", "Error fetching adoption form data");
+    res.redirect("/error");
   }
 });
 

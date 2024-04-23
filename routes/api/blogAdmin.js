@@ -3,6 +3,7 @@ const blogRouter = Router();
 const Blog = require("../../models/blogData");
 const fs = require("fs");
 const multer = require("multer");
+const {isAdmin} = require('../../index.js');
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -16,7 +17,7 @@ var storage = multer.diskStorage({
 // Middleware for handling both single and array of files upload
 var upload = multer({ storage: storage });
 
-blogRouter.get("/dashboard", async (req, res) => {
+blogRouter.get("/dashboard", isAdmin,async (req, res) => {
   try {
     const blogs = await Blog.find();
     res.render("blogDashboard.ejs", {
@@ -30,7 +31,7 @@ blogRouter.get("/dashboard", async (req, res) => {
   }
 });
 
-blogRouter.post("/addBlog", upload.single("image"), async (req, res) => {
+blogRouter.post("/addBlog", upload.single("image"), isAdmin ,async (req, res) => {
   try {
     if (!req.file) {
       return res
@@ -59,7 +60,7 @@ blogRouter.post("/addBlog", upload.single("image"), async (req, res) => {
   }
 });
 
-blogRouter.delete("/deleteBlog/:id", async (req, res) => {
+blogRouter.delete("/deleteBlog/:id",isAdmin,async (req, res) => {
   try {
     const blog = await Blog.findByIdAndDelete(req.params.id);
     if (!blog) {
@@ -76,7 +77,7 @@ blogRouter.delete("/deleteBlog/:id", async (req, res) => {
   }
 });
 
-blogRouter.get("/editBlog/:title", async (req, res) => {
+blogRouter.get("/editBlog/:title", isAdmin, async (req, res) => {
   try {
     let blog = await Blog.findOne({ title: req.params.title });
 
@@ -94,7 +95,7 @@ blogRouter.get("/editBlog/:title", async (req, res) => {
   }
 });
 
-blogRouter.post("/updateBlog/:id", upload.single("image"), async (req, res) => {
+blogRouter.post("/updateBlog/:id", upload.single("image"), isAdmin,async (req, res) => {
   let id = req.params.id;
   let new_image = req.body.old_image;
 

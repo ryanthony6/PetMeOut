@@ -2,8 +2,9 @@
 const { Router } = require("express");
 const faqRouter = Router();
 const FAQ = require("../../models/faqData");
+const {isAdmin} = require('../../index.js');
 
-faqRouter.get("/addFAQ", (req, res) => {
+faqRouter.get("/addFAQ", isAdmin,(req, res) => {
   res.render("AddFAQ.ejs", {
     title: "add_faq",
     layout: "detailslayout.ejs",
@@ -12,7 +13,7 @@ faqRouter.get("/addFAQ", (req, res) => {
   });
 });
 
-faqRouter.post('/addFaqData', async (req, res) => {
+faqRouter.post('/addFaqData', isAdmin,async (req, res) => {
   const { faqTitle, faqContent, faqCategory } = req.body;
   try {
     const newFAQ = new FAQ({
@@ -29,7 +30,7 @@ faqRouter.post('/addFaqData', async (req, res) => {
 });
 
 // Route untuk menghapus FAQ berdasarkan ID
-faqRouter.delete("/deleteFaq/:id", async (req, res) => {
+faqRouter.delete("/deleteFaq/:id", isAdmin,async (req, res) => {
   try {
     const faq = await FAQ.findByIdAndDelete(req.params.id);
     if (!faq) {
@@ -44,7 +45,7 @@ faqRouter.delete("/deleteFaq/:id", async (req, res) => {
 });
 
 // Route untuk mengambil halaman edit FAQ berdasarkan ID
-faqRouter.get('/editFaq/:id', async (req, res) => {
+faqRouter.get('/editFaq/:id', isAdmin,async (req, res) => {
   const faqId = req.params.id;
   try {
     // Cari FAQ dari database berdasarkan ID
@@ -67,7 +68,7 @@ faqRouter.get('/editFaq/:id', async (req, res) => {
 });
 
 // Route untuk memproses permintaan pengeditan FAQ
-faqRouter.post('/editFaq/:id', async (req, res) => {
+faqRouter.post('/editFaq/:id', isAdmin,async (req, res) => {
   const faqId = req.params.id;
   const { faqTitle, faqContent, faqCategory } = req.body;
   try {
@@ -88,10 +89,5 @@ faqRouter.post('/editFaq/:id', async (req, res) => {
     res.status(500).send('Failed to edit FAQ');
   }
 });
-
-
-
-
-
 
 module.exports = faqRouter;

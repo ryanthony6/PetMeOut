@@ -38,6 +38,26 @@ app.use((req, res, next) => {
   next();
 });
 
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    next();
+  } else {
+    res.redirect("/account");
+  }
+}
+
+function isAdmin(req, res, next) {
+  // Pastikan pengguna terotentikasi dan merupakan admin
+  if (req.isAuthenticated() && req.user.isAdmin) {
+    // Jika ya, lanjutkan ke rute berikutnya
+    return next();
+  }
+  // Jika tidak, arahkan ke halaman login atau berikan pesan kesalahan
+  res.redirect("/error"); // Atau sesuaikan dengan halaman login Anda
+}
+
+module.exports = { isLoggedIn, isAdmin };
+
 app.use("/account", require("./routes/api/account"));
 app.use("/forgotpass", require("./routes/api/forgot"));
 app.use("/pets", require("./routes/api/petList"));
@@ -197,7 +217,6 @@ app.get("/FAQ", async (req, res) => {
   }
 });
 
-
 // Jika route tidak sesuai akan diarahkan ke halaman error ini
 app.get("/error", (req, res) => {
   res.render("errorPage.ejs", {
@@ -207,37 +226,7 @@ app.get("/error", (req, res) => {
   });
 });
 
-const FormData = require("./models/formData");
-
-function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated()) {
-    next();
-  } else {
-    res.redirect("/account");
-  }
-}
-
-app.get("/submittedforms", isLoggedIn, async (req, res) => {
-  try {
-    const userId = req.user.id;
-    const formDataList = await FormData.find({ userId: userId }).populate('petId');
-    console.log(formDataList); // Log the entire formDataList to inspect the populated petId
-
-    res.render("submittedForm.ejs", {
-      layout: "mainlayout.ejs",
-      formDataList: formDataList,
-      isAuthenticated: true,
-      isAdmin: req.user.isAdmin,
-      messages: req.flash(),
-    });
-  } catch (error) {
-    console.error("Error fetching adoption form data:", error);
-    req.flash("error", "Error fetching adoption form data");
-    res.redirect("/");
-  }
-});
-
-
 app.listen(port, () => {
   console.log(`Webserver app listening on http://localhost:${port}/`);
 });
+
