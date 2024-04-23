@@ -152,8 +152,7 @@ app.get("/blog", async (req, res) => {
   }
 });
 
-// Handle requests for more blog posts
-// Backend route to handle category filtering
+// Handle requests for more blog posts & backend route to handle category filtering
 app.get("/category", async (req, res) => {
   try {
     const { category } = req.query;
@@ -310,7 +309,7 @@ app.get("/submittedforms", isLoggedIn, async (req, res) => {
     console.log(formDataList); // Log the entire formDataList to inspect the populated petId
 
     res.render("submittedForm.ejs", {
-      layout: "submittedFormLayout.ejs",
+      layout: "mainlayout.ejs",
       formDataList: formDataList,
       isAuthenticated: true,
       isAdmin: req.user.isAdmin,

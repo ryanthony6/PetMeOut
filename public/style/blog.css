@@ -61,6 +61,7 @@
 }
 
 .exploreButton {
+  border: none;
   display: flex; /* Change display to flex */
   align-items: center; /* Align items vertically */
   padding: 10px 20px;

@@ -5,24 +5,12 @@
       Explore the latest articles on pets and animals in our blog.
     </p>
     <div class="buttonWrapper">
-      <a href="#articles" class="exploreButton"
+      <button href="#articles" class="exploreButton"
         >Explore Article <img src="/img/mouse.svg" alt="Arrow Icon" />
-      </a>
+      </button>
     </div>
   </div>
 </header>
-
-<% function showLoadMoreButton(blogs) { %>
-  <% if (blogs.length > 3) { %>
-    <script>
-      document.getElementById('load-more-btn').style.display = 'inline-block';
-    </script>
-  <% } else { %>
-    <script>
-      document.getElementById('load-more-btn').style.display = 'none';
-    </script>
-  <% } %>
-<% } %>
 
 <!-- Blog section start -->
 <section class="blog" id="articles">
@@ -78,7 +66,6 @@
   <div class="loadmore">
     <button id="load-more-btn">Load More</button>
   </div>
-  <%= showLoadMoreButton(blogs) %>
 
   <% } else{ %>
   <div class="blog-container"><p>No blogs found.</p></div>

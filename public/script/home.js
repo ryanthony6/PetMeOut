@@ -53,3 +53,16 @@ function displaySearchResults(pets) {
     cardContainer.innerHTML = "<p>No pets found.</p>";
   }
 }
+
+// Function to scroll to the search section
+function scrollToSearchSection() {
+  // Get the search section element
+  const searchSection = document.querySelector('.searchSection');
+  
+  // Scroll to the search section using smooth behavior
+  searchSection.scrollIntoView({ behavior: 'smooth' });
+}
+
+// Add click event listener to the hero button
+const heroBtn = document.querySelector('.hero-btn');
+heroBtn.addEventListener('click', scrollToSearchSection);

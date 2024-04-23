@@ -5,16 +5,30 @@
   box-sizing: border-box;
 }
 
-h1{
+.submittedForm{
+  min-height: 100vh;
+}
+
+h1 {
   font-family: "Quicksand", sans-serif;
   text-align: center;
   font-size: 2.5rem;
-  margin-top: 70px;
+  margin-top: 5rem;
+  color: #4e4e4e;
 }
 
-.sub-header{
+.no-data {
   font-family: "Quicksand", sans-serif;
   font-size: 1.5rem;
+  color: #4e4e4e;
+  text-align: center;
+  font-weight: 500;
+}
+
+.sub-header {
+  font-family: "Quicksand", sans-serif;
+  font-size: 1.5rem;
+  color: #4e4e4e;
   text-align: center;
   margin: 10px 0px;
 }

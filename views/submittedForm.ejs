@@ -1,17 +1,21 @@
-<h1>Submitted Form List</h1>
+<section class="submittedForm">
+  <h1>Submitted Form List</h1>
 
-<div class="sub-header">
-  Your submitted form will appear here
-</div>
+  <div class="sub-header">Your submitted form will appear here</div>
 
-<div class="card-container">
-  <% formDataList.forEach(function(formData) { %>
+  <% if (formDataList != '') { %>
+  <div class="card-container">
+    <% formDataList.forEach(function(formData) { %>
     <div class="card">
       <div class="card-header">
         <h2><%= formData.petId.name %> Adoption</h2>
       </div>
       <div class="card-body">
-        <img src="/<%= formData.petId.image %>" alt="<%= formData.petId.name %>" class="pet-image">
+        <img
+          src="/<%= formData.petId.image %>"
+          alt="<%= formData.petId.name %>"
+          class="pet-image"
+        />
         <p>Age: <%= formData.petId.age %></p>
         <p>Gender: <%= formData.petId.gender %></p>
         <p>Category: <%= formData.petId.category %></p>
@@ -19,9 +23,15 @@
         <p>Size: <%= formData.petId.size %></p>
       </div>
     </div>
-  <% }); %>
-</div>
+    <% }); %>
+  </div>
+  <% } else { %>
+  <div class="card-container">
+    <p class="no-data">No form data found.</p>
+  </div>
+  <% } %>
+</section>
 
-<link rel="stylesheet" href="/style/submittedForm.css">
+<link rel="stylesheet" href="/style/submittedForm.css" />
 <script src="/script/ResponsiveNavbarTes.js"></script>
 <script src="/script/submittedForm.js"></script>

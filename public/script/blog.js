@@ -123,3 +123,15 @@ window.addEventListener('DOMContentLoaded', async () => {
   // Show or hide load more button based on whether there are more blogs to load
   showHideLoadMoreButton(data.blogs);
 });
+
+
+function scrollToArticle() {
+  
+  const article = document.querySelector('.blog');
+  
+  article.scrollIntoView({ behavior: 'smooth' });
+}
+
+// Add click event listener to the hero button
+const exploreBtn = document.querySelector('.exploreButton');
+exploreBtn.addEventListener('click', scrollToArticle);
