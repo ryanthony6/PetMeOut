@@ -56,14 +56,14 @@
 .buttonWrapper {
   padding: 1rem 0;
   display: flex;
-  align-items: center; /* Align items vertically */
-  justify-content: center; /* Align items horizontally */
+  align-items: center; 
+  justify-content: center; 
 }
 
 .exploreButton {
   border: none;
-  display: flex; /* Change display to flex */
-  align-items: center; /* Align items vertically */
+  display: flex; 
+  align-items: center; 
   padding: 10px 20px;
   background-color: #19a7ce;
   font-family: "Quicksand", sans-serif;
@@ -150,16 +150,16 @@
   border-radius: 0.75rem;
   box-shadow: 0 10px 15px -3px #0000001a, 0 4px 6px -4px #0000001a;
   margin: 20px;
-  transition: box-shadow 0.3s ease-in-out; /* Transition for smooth effect */
+  transition: box-shadow 0.3s ease-in-out; 
   overflow: hidden;
   cursor: pointer;
 }
 
 .blog-card:hover {
   box-shadow: 
-  0 0 20px rgba(25, 167, 206, 0.3),  /* Splash effect with light opacity */
-  0 0 40px rgba(25, 167, 206, 0.2),  /* Splash effect with even lighter opacity */
-  0 0 80px rgba(25, 167, 206, 0.1);  /* Splash effect with the lightest opacity */
+  0 0 20px rgba(25, 167, 206, 0.3),  
+  0 0 40px rgba(25, 167, 206, 0.2),  
+  0 0 80px rgba(25, 167, 206, 0.1); 
 
 }
 .blog-img {

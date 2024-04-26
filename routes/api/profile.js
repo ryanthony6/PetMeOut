@@ -114,7 +114,6 @@ profileRouter.get("/deleteForm/:formId", isLoggedIn, async (req, res) => {
     if(!form) {
       res.redirect("/");
     }
-    // Redirect kembali ke halaman submitted forms
     res.redirect("/");
   } catch (error) {
     console.error("Error canceling adoption form:", error);

@@ -76,12 +76,12 @@ img {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  flex-wrap: wrap; /* Tambahkan flex-wrap: wrap untuk mencegah overflow */
+  flex-wrap: wrap; 
 }
 
 .btn {
   padding: 10px;
-  margin: 10px; /* Mengurangi margin agar tidak terlalu besar */
+  margin: 10px; 
   width: 120px;
   font-size: 15px;
   background: #fff;

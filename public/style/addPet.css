@@ -64,7 +64,7 @@
   border-radius: 5px;
   font-size: 15px;
 
-  resize: vertical; /* Allow vertical resizing */
+  resize: vertical; 
 }
 
 .formimg_style {
