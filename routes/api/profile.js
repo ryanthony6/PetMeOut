@@ -107,4 +107,21 @@ profileRouter.get("/submittedforms", isLoggedIn, async (req, res) => {
   }
 });
 
+profileRouter.get("/deleteForm/:formId", isLoggedIn, async (req, res) => {
+  try {
+    const formId = req.params.formId;
+    const form = await FormData.findByIdAndDelete(formId);
+    if(!form) {
+      res.redirect("/");
+    }
+    // Redirect kembali ke halaman submitted forms
+    res.redirect("/");
+  } catch (error) {
+    console.error("Error canceling adoption form:", error);
+    console.log("Error canceling adoption form:", error);
+    req.flash("error", "Error canceling adoption form");
+    res.redirect("/");
+  }
+});
+
 module.exports = profileRouter;
