@@ -254,6 +254,13 @@ petRouter.post("/adoption-form/:petId", async (req, res) => {
       return res.redirect("/");
     }
 
+    const maximumForm = 3;
+    const userFormDataCount = await FormData.countDocuments({ userId: userId });
+    if(userFormDataCount >= maximumForm) {
+      req.flash("error", "You have reached the maximum number of adoption forms.");
+      return res.redirect("/");
+    }
+
     // Proses penyimpanan data formulir adopsi ke MongoDB
     const formData = new FormData({
       fname: req.body.fname,

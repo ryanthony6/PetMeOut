@@ -44,6 +44,21 @@
   <% } %>
 </p>
 
+<p class="error-message">
+  <%= messages.error && messages.error.includes('You have reached the maximum number of adoption forms.') ? '' : '' %>
+  <% if (messages.error && messages.error.includes('You have reached the maximum number of adoption forms.')) { %>
+    <script>
+      // Menampilkan pop-up SweetAlert2 untuk pesan error
+      Swal.fire({
+        icon: 'error',
+        title: 'Maximum number of adoption forms reached',
+        text: 'Please cancel your form, is you want to adopt another pet.',
+        confirmButtonText: 'CLOSE'
+      });
+    </script>
+  <% } %>
+</p>
+
 <!-- List section start -->
 <section class="cardList">
   <h1 class="list-heading">Adoptable Animals Highlight</h1>
