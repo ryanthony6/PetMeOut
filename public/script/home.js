@@ -1,68 +1,67 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const searchForm = document.getElementById("searchForm");
-  searchForm.addEventListener("submit", function (event) {
-    event.preventDefault();
-    searchPets();
-  });
-});
+let currentCategory = ""; // Variabel untuk menyimpan kategori saat ini
 
-async function searchPets() {
-  const query = document.getElementById("searchInput").value;
-  const category = document.getElementById("categorySelect").value;
-  const sorting = document.getElementById("sortingSelect").value;
+// Event listener untuk form pencarian dan filtering
+document.getElementById('searchForm').addEventListener('submit', async (event) => {
+  event.preventDefault(); // Menghindari reload halaman
 
-  const url = `/pet?query=${query}&category=${category}&sorting=${sorting}`;
-  const response = await fetch(url);
+  const query = document.getElementById('searchInput').value;
+  currentCategory = document.getElementById('categorySelect').value; // Simpan nilai kategori saat ini
+  const sorting = document.getElementById('sortingSelect').value;
+
+  // Kirim permintaan AJAX ke endpoint server
+  const response = await fetch(`/pet?query=${query}&category=${currentCategory}&sorting=${sorting}`);
   const data = await response.json();
 
-  displaySearchResults(data.data);
+  // Bersihkan konten sebelum menampilkan hasil pencarian baru
+  clearPets();
+
+  // Tampilkan hasil pencarian di halaman
+  displayPets(data);
+});
+
+// Event listener untuk tombol "Load More"
+document.getElementById('loadMoreBtn').addEventListener('click', async () => {
+  const cardContainer = document.getElementById('cardContainer');
+  const petsCount = cardContainer.querySelectorAll('.cards').length;
+
+  // Kirim permintaan AJAX untuk mendapatkan data tambahan, sertakan nilai kategori saat ini
+  const response = await fetch(`/pet?skip=${petsCount}&category=${currentCategory}`);
+  const data = await response.json();
+
+  // Tampilkan data tambahan di halaman
+  displayPets(data);
+});
+
+// Fungsi untuk membersihkan konten sebelum menampilkan hasil pencarian baru
+function clearPets() {
+  const cardContainer = document.getElementById('cardContainer');
+  cardContainer.innerHTML = ''; // Menghapus semua kartu yang sudah ada
 }
 
-function displaySearchResults(pets) {
-  const cardContainer = document.getElementById("cardContainer");
-  cardContainer.innerHTML = "";
+// Fungsi untuk menampilkan hasil pencarian di halaman
+function displayPets(data) {
+  const cardContainer = document.getElementById('cardContainer');
+  
+  // Cek apakah 'data' adalah objek yang memiliki properti 'data'
+  const pets = Array.isArray(data) ? data : data.data;
 
-  if (pets.length > 0) {
-    if (document.getElementById("sortingSelect").value === "asc") {
-      pets.sort((a, b) => a.name.localeCompare(b.name)); 
-    } else if (document.getElementById("sortingSelect").value === "desc") {
-      pets.sort((a, b) => b.name.localeCompare(a.name));
-    }
-
-    pets.forEach((pet) => {
-      const card = document.createElement("div");
-      card.classList.add("cards");
-
-      const img = document.createElement("img");
-      img.src = pet.image;
-      img.alt = pet.name;
-
-      const info = document.createElement("div");
-      info.classList.add("info");
-      info.innerHTML = `
+  // Tambahkan data baru ke dalam card container
+  pets.forEach((pet) => {
+    const card = document.createElement('div');
+    card.classList.add('cards');
+    card.innerHTML = `
+      <img src="${pet.image}" alt="tes" loading="lazy"/>
+      <div class="info">
         <p>${pet.name}</p>
         <p>${pet.breed}</p>
         <a href="/pets/details/${pet.name}" class="readmore-btn">Read More</a>
-      `;
+      </div>
+    `;
+    cardContainer.appendChild(card);
+  });
 
-      card.appendChild(img);
-      card.appendChild(info);
-      cardContainer.appendChild(card);
-    });
-  } else {
-    cardContainer.innerHTML = "<p>No pets found.</p>";
+  // Jika tidak ada data lagi, sembunyikan tombol "Load More"
+  if (pets.length === 0) {
+    document.getElementById('loadMoreBtn').style.display = 'none';
   }
 }
-
-// Function to scroll to the search section
-function scrollToSearchSection() {
-  // Get the search section element
-  const searchSection = document.querySelector('.searchSection');
-  
-  // Scroll to the search section using smooth behavior
-  searchSection.scrollIntoView({ behavior: 'smooth' });
-}
-
-// Add click event listener to the hero button
-const heroBtn = document.querySelector('.hero-btn');
-heroBtn.addEventListener('click', scrollToSearchSection);
