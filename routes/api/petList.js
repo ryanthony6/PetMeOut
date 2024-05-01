@@ -30,6 +30,7 @@ petRouter.get("/dashboard", isAdmin, async (req, res) => {
       layout: "detailslayout.ejs",
       isAuthenticated: req.isAuthenticated(),
       isAdmin: req.user ? req.user.isAdmin : false,
+      messages: req.flash(),
     });
   } catch (err) {
     console.log(err);
@@ -87,11 +88,15 @@ petRouter.post(
 
       const newPet = await pet.save();
       if (newPet) {
+        
+      req.flash('success', 'Pet added successfully');
         res.redirect("/pets/dashboard");
       } else {
-        res.status(500).send("Error adding pet data");
+        res.redirect("/error");
       }
     } catch (error) {
+      
+    res.redirect("/error");
       console.error("Error adding pet:", error.message);
       res.status(500).send("Error adding pet data");
     }
@@ -113,7 +118,8 @@ petRouter.get("/edit/:name", isAdmin, async (req, res) => {
     }
   } catch (err) {
     console.error(err);
-    res.redirect("/");
+    
+    res.redirect("/error");
   }
 });
 
@@ -202,8 +208,10 @@ petRouter.delete("/delete/:id", async (req, res) => {
 
     res.sendStatus(200);
   } catch (error) {
+    
+    res.redirect("/error");
     console.error(error);
-    res.status(500).send("Internal Server Error");
+    
   }
 });
 
@@ -231,7 +239,8 @@ petRouter.get("/details/:name", isLoggedIn, async (req, res) => {
     });
   } catch (err) {
     console.error(err);
-    res.redirect("/");
+    
+    res.redirect("/error");
   }
 });
 

@@ -61,3 +61,10 @@ function deleteProduct(petID) {
     }
   });
 }
+
+setTimeout(function() {
+  document.querySelectorAll('.alert').forEach(function(alert) {
+    alert.style.display = 'none';
+  });
+}, 2000);
+
