@@ -109,7 +109,7 @@ function showHideLoadMoreButton(blogs) {
   const loadMoreButton = document.getElementById("load-more-btn");
   if (blogs.length < 6) {
     loadMoreButton.style.display = "none";
-  } else {
+  } else{
     loadMoreButton.style.display = "inline-block";
   }
 }

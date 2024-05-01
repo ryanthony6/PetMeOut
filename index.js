@@ -165,7 +165,7 @@ app.get("/category", async (req, res) => {
       filter.blogCategory = category;
     }
 
-    const blogs = await Blog.find(filter).limit(3);
+    const blogs = await Blog.find(filter).limit(6);
     res.json({ success: true, blogs: blogs });
   } catch (err) {
     console.error("Error fetching blogs by category:", err);
