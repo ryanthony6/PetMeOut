@@ -19,19 +19,6 @@ document.getElementById('searchForm').addEventListener('submit', async (event) =
   displayPets(data);
 });
 
-// Event listener untuk tombol "Load More"
-document.getElementById('loadMoreBtn').addEventListener('click', async () => {
-  const cardContainer = document.getElementById('cardContainer');
-  const petsCount = cardContainer.querySelectorAll('.cards').length;
-
-  // Kirim permintaan AJAX untuk mendapatkan data tambahan, sertakan nilai kategori saat ini
-  const response = await fetch(`/pet?skip=${petsCount}&category=${currentCategory}`);
-  const data = await response.json();
-
-  // Tampilkan data tambahan di halaman
-  displayPets(data);
-});
-
 // Fungsi untuk membersihkan konten sebelum menampilkan hasil pencarian baru
 function clearPets() {
   const cardContainer = document.getElementById('cardContainer');
@@ -59,9 +46,4 @@ function displayPets(data) {
     `;
     cardContainer.appendChild(card);
   });
-
-  // Jika tidak ada data lagi, sembunyikan tombol "Load More"
-  if (pets.length === 0) {
-    document.getElementById('loadMoreBtn').style.display = 'none';
-  }
 }

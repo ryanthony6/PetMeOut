@@ -70,7 +70,7 @@ app.use("/userprofile", require("./routes/api/profile"));
 app.get("/",async (req, res) => {
   try {
     let id = req.params.id;
-    const pets = await Pet.find(id).limit(3);
+    const pets = await Pet.find(id);
 
     res.render("home.ejs", {
       pets: pets,
@@ -88,7 +88,7 @@ app.get("/",async (req, res) => {
 
 app.get("/pet", async (req, res) => {
   try {
-    const { query, category, sorting, skip } = req.query;
+    const { query, category, sorting } = req.query;
     let filter = {};
 
     if (query) {
@@ -111,14 +111,14 @@ app.get("/pet", async (req, res) => {
 
     const pets = await Pet.find(filter)
       .sort(sortOptions)
-      .skip(parseInt(skip || 0))
-      .limit(3); 
+      .limit(10); // Ubah batasan jumlah data yang dikembalikan
 
     res.json({ success: true, data: pets });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
 });
+
 
 
 // Halaman About
