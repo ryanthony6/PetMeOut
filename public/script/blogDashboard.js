@@ -87,3 +87,10 @@ window.addEventListener("click", function (event) {
 function closeForm() {
   document.getElementById("formContainer").style.display = "none";
 }
+
+// Set timeout untuk menghilangkan flash message setelah beberapa detik
+setTimeout(function() {
+  document.querySelectorAll('.alert').forEach(function(alert) {
+    alert.style.display = 'none';
+  });
+}, 2000);

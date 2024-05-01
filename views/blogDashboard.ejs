@@ -1,10 +1,18 @@
 <div class="container">
+  <!-- Tambahkan div untuk menampilkan flash message -->
+    <% if (messages.error) { %>
+    <div class="alert alert-danger" role="alert"><%= messages.error %></div>
+    <% } %> <% if (messages.success) { %>
+    <div class="alert alert-success" role="alert"><%= messages.success %></div>
+    <% } %>
+
+
   <div class="addContainer">
     <H1>Add Blog</H1>
     <button class="add" id="btnAddBlog">ADD</button>
   </div>
 
-  <table id ="blogTable" class="blogTable">
+  <table id="blogTable" class="blogTable">
     <% if (blogs.length > 0) { %>
     <thead>
       <tr>

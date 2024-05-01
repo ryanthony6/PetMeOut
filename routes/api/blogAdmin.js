@@ -13,11 +13,9 @@ var storage = multer.diskStorage({
     cb(null, file.fieldname + "-" + Date.now() + "-" + file.originalname);
   },
 });
-
-// Middleware for handling both single and array of files upload
 var upload = multer({ storage: storage });
 
-blogRouter.get("/dashboard", isAdmin,async (req, res) => {
+blogRouter.get("/dashboard", isAdmin, async (req, res) => {
   try {
     const blogs = await Blog.find();
     res.render("blogDashboard.ejs", {
@@ -25,18 +23,18 @@ blogRouter.get("/dashboard", isAdmin,async (req, res) => {
       layout: "detailslayout.ejs",
       isAuthenticated: true,
       isAdmin: req.user.isAdmin,
+      messages: req.flash() // Memberikan flash messages ke tampilan
     });
-  } catch (err) {
+  } catch (err) {// Set flash message
     res.redirect("/error");
   }
 });
 
-blogRouter.post("/addBlog", upload.single("image"),async (req, res) => {
+blogRouter.post("/addBlog", upload.single("image"), async (req, res) => {
   try {
     if (!req.file) {
-      return res
-        .status(400)
-        .json({ message: "No image uploaded", type: "error" });
+      req.flash('error', 'No image uploaded'); // Set flash message
+      return res.status(400).json({ message: "No image uploaded", type: "error" });
     }
 
     const blog = new Blog({
@@ -50,8 +48,10 @@ blogRouter.post("/addBlog", upload.single("image"),async (req, res) => {
 
     const newBlog = await blog.save();
     if (newBlog) {
+      req.flash('success', 'Blog added successfully'); // Set flash message
       res.redirect("/blogs/dashboard"); // Redirect to dashboard after successful addition
     } else {
+      req.flash('error', 'Error adding blog'); // Set flash message
       res.status(500).send("Error adding blog");
     }
   } catch (error) {
@@ -59,6 +59,9 @@ blogRouter.post("/addBlog", upload.single("image"),async (req, res) => {
     res.status(500).send("Error adding blog");
   }
 });
+
+// Sisanya kode router tetap sama
+
 
 blogRouter.delete("/deleteBlog/:id",async (req, res) => {
   try {

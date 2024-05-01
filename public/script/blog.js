@@ -107,7 +107,7 @@ function getCurrentBlogCount() {
 // Function to show or hide load more button based on whether there are more blogs to load
 function showHideLoadMoreButton(blogs) {
   const loadMoreButton = document.getElementById("load-more-btn");
-  if (blogs.length < 3) {
+  if (blogs.length < 6) {
     loadMoreButton.style.display = "none";
   } else {
     loadMoreButton.style.display = "inline-block";
