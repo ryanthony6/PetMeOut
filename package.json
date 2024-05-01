@@ -23,7 +23,8 @@
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.13",
     "passport": "^0.7.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "sweetalert2": "^11.10.8"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"

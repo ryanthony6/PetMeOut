@@ -4,7 +4,7 @@
     <button class="add" id="btnAddBlog">ADD</button>
   </div>
 
-  <table class="blogTable">
+  <table id ="blogTable" class="blogTable">
     <% if (blogs.length > 0) { %>
     <thead>
       <tr>
@@ -143,6 +143,13 @@
   </div>
 </div>
 
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"
+/>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <link rel="stylesheet" href="/style/blogDashboard.css" />
 <link rel="stylesheet" href="/style/dashboard.css" />
 <script src="/script/ResponsiveNavbarTes.js"></script>
