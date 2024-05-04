@@ -24,7 +24,7 @@ petRouter.get("/dashboard", isAdmin, async (req, res) => {
   try {
     const pets = await Pet.find();
 
-    res.render("dashboard.ejs", {
+    res.render("admin/dashboard.ejs", {
       pets: pets,
       title: "Dashboard",
       layout: "detailslayout.ejs",
@@ -39,7 +39,7 @@ petRouter.get("/dashboard", isAdmin, async (req, res) => {
 });
 
 petRouter.get("/add", isAdmin, (req, res) => {
-  res.render("addPet.ejs", {
+  res.render("admin/addPet.ejs", {
     title: "add_pet",
     layout: "detailslayout.ejs",
     isAuthenticated: req.isAuthenticated(),
@@ -111,7 +111,7 @@ petRouter.get("/edit/:name", isAdmin, async (req, res) => {
     if (!pet) {
       return res.redirect("/");
     } else {
-      res.render("editPetData.ejs", {
+      res.render("admin/editPetData.ejs", {
         layout: false,
         pets: pet,
       });

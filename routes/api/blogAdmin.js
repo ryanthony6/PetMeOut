@@ -18,7 +18,7 @@ var upload = multer({ storage: storage });
 blogRouter.get("/dashboard", isAdmin, async (req, res) => {
   try {
     const blogs = await Blog.find();
-    res.render("blogDashboard.ejs", {
+    res.render("admin/blogDashboard.ejs", {
       blogs: blogs,
       layout: "detailslayout.ejs",
       isAuthenticated: true,
@@ -87,7 +87,7 @@ blogRouter.get("/editBlog/:title", isAdmin, async (req, res) => {
     if (!blog) {
       return res.redirect("/");
     } else {
-      res.render("editBlogData.ejs", {
+      res.render("admin/editBlogData.ejs", {
         layout: false,
         blogs: blog,
       });

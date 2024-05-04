@@ -5,7 +5,7 @@ const FAQ = require("../../models/faqData");
 const {isAdmin} = require('../../index.js');
 
 faqRouter.get("/addFAQ", isAdmin,(req, res) => {
-  res.render("AddFAQ.ejs", {
+  res.render("admin/AddFAQ.ejs", {
     title: "add_faq",
     layout: "detailslayout.ejs",
     isAuthenticated: true,
@@ -54,7 +54,7 @@ faqRouter.get('/editFaq/:id', isAdmin,async (req, res) => {
       return res.status(404).send('FAQ not found');
     }
     // Render halaman edit FAQ dan kirim data FAQ ke dalam template
-    res.render('editFAQ.ejs', {
+    res.render('admin/editFAQ.ejs', {
       title: 'editFAQ',
       layout: false,
       isAuthenticated: true,
