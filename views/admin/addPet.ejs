@@ -168,21 +168,4 @@
 
 <link rel="stylesheet" href="/style/addPet.css" />
 <script src="/script/ResponsiveNavbarTes.js"></script>
-<script>
-  function maxLengthCheck(object) {
-    if (object.value.length > object.maxLength)
-      object.value = object.value.slice(0, object.maxLength);
-    document.getElementById("charCount").innerHTML =
-      object.value.length + "/" + object.maxLength;
-  }
-
-  document
-    .getElementById("stock-image")
-    .addEventListener("change", function () {
-      var files = this.files;
-      if (files.length > 3) {
-        alert("Please select up to 3 files.");
-        this.value = ""; // Clear the selected files
-      }
-    });
-</script>
+<script src="/script/adminPet.js"></script>

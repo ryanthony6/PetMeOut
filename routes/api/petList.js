@@ -113,7 +113,7 @@ petRouter.get("/edit/:id", isAdmin, async (req, res) => {
       return res.redirect("/");
     } else {
       res.render("admin/editPetData.ejs", {
-        layout: false,
+        layout: "headerlayout.ejs",
         pets: pet,
       });
     }
