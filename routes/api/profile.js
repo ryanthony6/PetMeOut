@@ -71,15 +71,34 @@ profileRouter.post("/editProfile/:id",upload.single("image"),async (req, res) =>
   }
 });
 
-profileRouter.delete("/deleteAccount/:id",async (req, res) => {
+profileRouter.delete("/deleteAccount/:id", async (req, res) => {
   try {
-    const profile = await User.findByIdAndDelete(req.params.id);
+    const userId = req.params.id;
+
+    // Temukan pengguna
+    const profile = await User.findById(userId);
     if (!profile) {
-      return res.status(404).send("Pet not found");
+      return res.status(404).send("Profile not found");
     }
 
-    // Delete main image
-    fs.unlinkSync("./uploads/" + profile.profilePict);
+    // Hapus formulir terkait dengan pengguna yang dihapus
+    await FormData.deleteMany({ userId: userId });
+
+    // Jika gambar profil menggunakan template bawaan, jangan hapus
+    if (profile.profilePict === "/img/profile-user.png") {
+      await User.findByIdAndDelete(userId);
+    } else {
+      // Periksa apakah file gambar profil ada sebelum menghapusnya
+      const profileImagePath = "./uploads/" + profile.profilePict;
+      if (fs.existsSync(profileImagePath)) {
+        // Hapus gambar profil
+        fs.unlinkSync(profileImagePath);
+      } else {
+        console.error("Profile image file not found:", profileImagePath);
+      }
+      // Hapus pengguna
+      await User.findByIdAndDelete(userId);
+    }
 
     res.sendStatus(200);
   } catch (error) {
@@ -87,6 +106,7 @@ profileRouter.delete("/deleteAccount/:id",async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
+
 
 profileRouter.get("/submittedforms", isLoggedIn, async (req, res) => {
   try {

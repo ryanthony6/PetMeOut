@@ -22,7 +22,7 @@
         <p>Breed: <%= formData.petId.breed %></p>
         <p>Size: <%= formData.petId.size %></p>
         <div class="card-footer">
-        <button class="view-button" onclick="viewPetDetails('<%= formData.petId.name %>')">View pet details</button>
+        <button class="view-button" onclick="viewPetDetails('<%= formData.petId._id %>')">View pet details</button>
         <button class="delete-button" onclick="deleteForm('<%= formData._id %>')">Cancel</button>
         </div>
       </div>
