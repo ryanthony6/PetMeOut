@@ -3,7 +3,7 @@ const petRouter = Router();
 const Pet = require("../../models/petData");
 const fs = require("fs");
 const multer = require("multer");
-const { isLoggedIn, isAdmin} = require('../../index.js');
+const { isLoggedIn, isAdmin} = require("./middleware");
 const FormData = require("../../models/formData");
 
 var storage = multer.diskStorage({

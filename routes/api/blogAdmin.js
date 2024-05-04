@@ -3,7 +3,7 @@ const blogRouter = Router();
 const Blog = require("../../models/blogData");
 const fs = require("fs");
 const multer = require("multer");
-const {isAdmin} = require('../../index.js');
+const {isAdmin} = require("./middleware");
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {

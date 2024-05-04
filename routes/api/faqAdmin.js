@@ -2,7 +2,7 @@
 const { Router } = require("express");
 const faqRouter = Router();
 const FAQ = require("../../models/faqData");
-const {isAdmin} = require('../../index.js');
+const {isAdmin} = require("./middleware");
 
 faqRouter.get("/addFAQ", isAdmin,(req, res) => {
   res.render("admin/AddFAQ.ejs", {

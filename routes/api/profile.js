@@ -4,7 +4,7 @@ const User = require("../../models/userData");
 const FormData = require("../../models/formData");
 const multer = require("multer");
 const fs = require("fs");
-const { isLoggedIn} = require('../../index.js');
+const { isLoggedIn} = require("./middleware");
 
 // Image upload Multer configuration
 var storage = multer.diskStorage({
