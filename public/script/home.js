@@ -16,7 +16,15 @@ async function searchPets() {
   const data = await response.json();
 
   displaySearchResults(data.data);
+
+  // Mengatur ulang URL di browser tanpa memuat ulang halaman
+  const newUrl = new URL(window.location.href);
+  newUrl.searchParams.set("query", query);
+  newUrl.searchParams.set("category", category);
+  newUrl.searchParams.set("sorting", sorting);
+  window.history.pushState({}, '', newUrl);
 }
+
 
 function displaySearchResults(pets) {
   const cardContainer = document.getElementById("cardContainer");
