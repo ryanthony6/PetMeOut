@@ -6,7 +6,7 @@
       Countless of stray and unwanted animals are suffering everyday, and they
       are waiting for people like YOU.
     </p>
-    <button class="hero-btn">Find ur Pet now!</button>
+    <button onclick="scrollToSearch()" class="hero-btn">Find ur Pet now!</button>
   </div>
   <div class="hero-image">
     <img src="/img/haiya.png" alt="Hero Image" loading="lazy"/>
@@ -183,9 +183,12 @@
           <select id="categorySelect" name="category">
             <!-- Dropdown select untuk filtering berdasarkan kategori -->
             <option value="">All</option>
-            <option value="cat">Cats</option>
-            <option value="dog">Dogs</option>
-            <option value="other">Others</option>
+            <option value="Cat">Cats</option>
+            <option value="Dog">Dogs</option>
+            <option value="Rabbit">Rabbits</option>
+            <option value="Reptile">Reptiles</option>
+            <option value="Bird">Birds</option>
+            <option value="Fish">Fish</option>
           </select>
 
           <select id="sortingSelect" name="sorting">
@@ -216,7 +219,7 @@
     </div>
   
     <% } else{ %>
-  <div class="card-container"> <p>No pets found.</p></div>
+ <p>No pets found.</p>
     <% } %>
   
 </section>

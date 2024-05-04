@@ -1,49 +1,62 @@
-let currentCategory = ""; // Variabel untuk menyimpan kategori saat ini
-
-// Event listener untuk form pencarian dan filtering
-document.getElementById('searchForm').addEventListener('submit', async (event) => {
-  event.preventDefault(); // Menghindari reload halaman
-
-  const query = document.getElementById('searchInput').value;
-  currentCategory = document.getElementById('categorySelect').value; // Simpan nilai kategori saat ini
-  const sorting = document.getElementById('sortingSelect').value;
-
-  // Kirim permintaan AJAX ke endpoint server
-  const response = await fetch(`/pet?query=${query}&category=${currentCategory}&sorting=${sorting}`);
-  const data = await response.json();
-
-  // Bersihkan konten sebelum menampilkan hasil pencarian baru
-  clearPets();
-
-  // Tampilkan hasil pencarian di halaman
-  displayPets(data);
+document.addEventListener("DOMContentLoaded", function () {
+  const searchForm = document.getElementById("searchForm");
+  searchForm.addEventListener("submit", function (event) {
+    event.preventDefault(); 
+    searchPets();
+  });
 });
 
-// Fungsi untuk membersihkan konten sebelum menampilkan hasil pencarian baru
-function clearPets() {
-  const cardContainer = document.getElementById('cardContainer');
-  cardContainer.innerHTML = ''; // Menghapus semua kartu yang sudah ada
+async function searchPets() {
+  const query = document.getElementById("searchInput").value;
+  const category = document.getElementById("categorySelect").value;
+  const sorting = document.getElementById("sortingSelect").value;
+
+  const url = `/pet?query=${query}&category=${category}&sorting=${sorting}`;
+  const response = await fetch(url);
+  const data = await response.json();
+
+  displaySearchResults(data.data);
 }
 
-// Fungsi untuk menampilkan hasil pencarian di halaman
-function displayPets(data) {
-  const cardContainer = document.getElementById('cardContainer');
-  
-  // Cek apakah 'data' adalah objek yang memiliki properti 'data'
-  const pets = Array.isArray(data) ? data : data.data;
+function displaySearchResults(pets) {
+  const cardContainer = document.getElementById("cardContainer");
+  cardContainer.innerHTML = "";
 
-  // Tambahkan data baru ke dalam card container
-  pets.forEach((pet) => {
-    const card = document.createElement('div');
-    card.classList.add('cards');
-    card.innerHTML = `
-      <img src="${pet.image}" alt="tes" loading="lazy"/>
-      <div class="info">
+  if (pets.length > 0) {
+    if (document.getElementById("sortingSelect").value === "asc") {
+      pets.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (document.getElementById("sortingSelect").value === "desc") {
+      pets.sort((a, b) => b.name.localeCompare(a.name));
+    }
+
+    pets.forEach((pet) => {
+      const card = document.createElement("div");
+      card.classList.add("cards");
+
+      const img = document.createElement("img");
+      img.src = pet.image;
+      img.alt = pet.name;
+
+      const info = document.createElement("div");
+      info.classList.add("info");
+      info.innerHTML = `
         <p>${pet.name}</p>
         <p>${pet.breed}</p>
-        <a href="/pets/details/${pet.name}" class="readmore-btn">Read More</a>
-      </div>
-    `;
-    cardContainer.appendChild(card);
-  });
+        <a href="/details/${pet._id}" class="readmore-btn">Read More</a>
+      `;
+
+      card.appendChild(img);
+      card.appendChild(info);
+      cardContainer.appendChild(card);
+    });
+  } else {
+    cardContainer.innerHTML = "<p>No pets found.</p>";
+  }
+}
+
+function scrollToSearch() {
+  
+  const search = document.querySelector(".searchSection");
+
+  search.scrollIntoView({ behavior: "smooth" });
 }
