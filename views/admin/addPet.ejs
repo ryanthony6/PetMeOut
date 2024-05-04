@@ -121,38 +121,15 @@
       </div>
 
       <div class="form_group">
-        <label class="sub_title">Category</label>
-        <div class="container_radio">
-          <div class="gender_radio">
-            <input
-              id="dog"
-              class="radio_input"
-              type="radio"
-              name="category"
-              value="dog"
-              required
-            />
-            <label class="radio_label" for="male">Dog</label>
-            <input
-              id="cat"
-              class="radio_input"
-              type="radio"
-              name="category"
-              value="cat"
-              required
-            />
-            <label class="radio_label" for="female">Cat</label>
-            <input
-              id="other"
-              class="radio_input"
-              type="radio"
-              name="category"
-              value="other"
-              required
-            />
-            <label class="radio_label" for="female">Other</label>
-          </div>
-        </div>
+      <label for="category">Pet Category:</label>
+      <select id="category" name="category">
+        <option value="Dog">Dog</option>
+        <option value="Cat">Cat</option>
+        <option value="Rabbit">Rabbit</option>
+        <option value="Reptile">Reptile</option>
+        <option value="Bird">Bird</option>
+        <option value="Fish">Fish</option>
+      </select>
       </div>
 
       <div class="form_group">

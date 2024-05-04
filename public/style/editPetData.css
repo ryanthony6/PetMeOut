@@ -82,6 +82,16 @@
   resize: vertical; 
 }
 
+.form_group select {
+  outline: none;
+  border: 2px solid #264143;
+  box-shadow: 3px 4px 0px 1px #1dbfec;
+  width: 500px;
+  padding: 12px 10px;
+  border-radius: 5px;
+  font-size: 15px;
+}
+
 .container_radio {
   display: flex;
   width: 500px;

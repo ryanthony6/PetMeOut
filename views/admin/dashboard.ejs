@@ -41,7 +41,7 @@
         <td><%= row.category %></td>
         <td><%= row.description %></td>
         <td class="actions">
-          <a href="/pets/edit/<%= row.name %>" class="edit">Edit</a>
+          <a href="/pets/edit/<%= row._id %>" class="edit">Edit</a>
           <!-- Menggunakan row._id untuk link edit -->
           <a onclick="deleteProduct('<%= row._id %>')" class="delete">Delete</a>
           <!-- Menambahkan onclick event untuk menghapus -->

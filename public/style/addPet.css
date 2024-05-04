@@ -100,6 +100,16 @@ input[type="radio"]:checked + .radio_label {
   box-shadow: 1px 2px 0px 0px #1dbfec;
 }
 
+.form_group select {
+  outline: none;
+  border: 2px solid #264143;
+  box-shadow: 3px 4px 0px 1px #1dbfec;
+  width: 500px;
+  padding: 12px 10px;
+  border-radius: 5px;
+  font-size: 15px;
+}
+
 .btn {
   padding: 15px;
   margin: 25px 0px;

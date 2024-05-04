@@ -104,9 +104,10 @@ petRouter.post(
 );
 
 // Render halaman edit untuk mengedit data oleh admin
-petRouter.get("/edit/:name", isAdmin, async (req, res) => {
+petRouter.get("/edit/:id", isAdmin, async (req, res) => {
+  const petId = req.params.id;
   try {
-    let pet = await Pet.findOne({ name: req.params.name });
+    const pet = await Pet.findById(petId);
 
     if (!pet) {
       return res.redirect("/");
@@ -216,10 +217,10 @@ petRouter.delete("/delete/:id", async (req, res) => {
 });
 
 // Render halaman details jika sudah terdaftar maka akan ditampilkan, jika tidak register atau login dlu
-petRouter.get("/details/:name", isLoggedIn, async (req, res) => {
+petRouter.get("/details/:id", isLoggedIn, async (req, res) => {
   try {
-    let petName = req.session.petName || req.params.name;
-    let pet = await Pet.findOne({ name: petName });
+    let petId = req.params.id;
+    let pet = await Pet.findById(petId);
 
     if (!pet) {
       return res.render("errorPage.ejs", {
@@ -232,7 +233,7 @@ petRouter.get("/details/:name", isLoggedIn, async (req, res) => {
 
     res.render("details.ejs", {
       layout: "detailslayout.ejs",
-      pets: pet,
+      pets: pet, // Menggunakan pet tunggal, bukan array
       isAuthenticated: true,
       isAdmin: req.user.isAdmin,
       messages: req.flash(),
