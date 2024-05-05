@@ -38,7 +38,6 @@ app.use((req, res, next) => {
   next();
 });
 
-
 app.use("/account", require("./routes/api/account"));
 app.use("/forgotpass", require("./routes/api/forgot"));
 app.use("/pets", require("./routes/api/petList"));
@@ -204,6 +203,26 @@ app.get("/error", (req, res) => {
     title: "error",
     layout: false,
     isAuthenticated: true,
+  });
+});
+
+
+// Middleware untuk menangkap rute yang tidak cocok
+app.use((req, res, next) => {
+  res.status(404).render("errorPage.ejs", {
+    title: "404 Not Found",
+    layout: false,
+    isAuthenticated: req.isAuthenticated(),
+  });
+});
+
+// Middleware error handling
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).render("errorPage.ejs", {
+    title: "500 Internal Server Error",
+    layout: false,
+    isAuthenticated: req.isAuthenticated(),
   });
 });
 
