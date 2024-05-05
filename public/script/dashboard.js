@@ -1,7 +1,7 @@
 $(document).ready(function () {
   $("#petTable").DataTable({
     responsive: true,
-    pageLength: 6,
+    pageLength: 10,
     pagingType: "full_numbers",
     order: [[0, "asc"]],
     searching: true,
