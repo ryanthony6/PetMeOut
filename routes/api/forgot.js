@@ -143,12 +143,8 @@ forgotRouter.post("/resetPassword/:token", async (req, res) => {
     user.resetPasswordExpires = undefined;
     await user.save();
 
-    req.flash(
-      "success",
-      "Password reset successfully. Please login with your new password."
-    );
-    console.log("Success message:", req.flash("success"));
-    res.redirect("/account");
+    req.flash("success", "Password reset successfully");
+    res.redirect("/forgotpass");
   } catch (error) {
     console.error("Error resetting password:", error.message);
     req.flash("error", "Error resetting password");
