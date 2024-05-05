@@ -34,6 +34,6 @@ async function deleteForm(formId) {
   }
 }
 
-function viewPetDetails(petName) {
-  window.location.href = `/pets/details/${encodeURIComponent(petName)}`;
+function viewPetDetails(petId) {
+  window.location.href = `/pets/details/${encodeURIComponent(petId)}`;
 }
