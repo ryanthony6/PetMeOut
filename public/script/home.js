@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+// Fungsi untuk melakukan pencarian hewan
 async function searchPets() {
   const query = document.getElementById("searchInput").value;
   const category = document.getElementById("categorySelect").value;
@@ -26,6 +27,7 @@ async function searchPets() {
 }
 
 
+// Fungsi untuk menampilkan data hewan
 function displaySearchResults(pets) {
   const cardContainer = document.getElementById("cardContainer");
   cardContainer.innerHTML = "";
@@ -62,6 +64,7 @@ function displaySearchResults(pets) {
   }
 }
 
+// Fungsi untuk menavigasi ke halaman pencarian
 function scrollToSearch() {
   
   const search = document.querySelector(".searchSection");

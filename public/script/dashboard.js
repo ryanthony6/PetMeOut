@@ -1,3 +1,4 @@
+// Menggunakan library data table untuk menampilkan table pet
 $(document).ready(function () {
   $("#petTable").DataTable({
     responsive: true,
@@ -24,6 +25,7 @@ function redirectToAddPage() {
   window.location.href = "/pets/add";
 }
 
+// Menghapus data
 function deleteProduct(petID) {
   Swal.fire({
     title: "Are you sure?",
@@ -62,6 +64,7 @@ function deleteProduct(petID) {
   });
 }
 
+// Timeout untuk alert
 setTimeout(function() {
   document.querySelectorAll('.alert').forEach(function(alert) {
     alert.style.display = 'none';

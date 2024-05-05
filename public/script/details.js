@@ -3,6 +3,7 @@ function closeForm() {
   document.getElementById("popup-form-container").style.display = "none";
 }
 
+// Membuka form
 document.addEventListener("DOMContentLoaded", function () {
   function openForm() {
     document.getElementById("popup-form-container").style.display = "block";
@@ -35,6 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+// Mengganti gambar sesuai dengan apa yang ditekan
 function img(anything) {
   document.querySelector('.slide').src = anything;
 }

@@ -66,6 +66,7 @@ app.get("/",async (req, res) => {
   }
 });
 
+// Routing untuk melakukan search,sort, filter
 app.get("/pet", async (req, res) => {
   try {
     const { query, category, sorting } = req.query;
@@ -98,7 +99,6 @@ app.get("/pet", async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 });
-
 
 
 // Halaman About
@@ -135,7 +135,7 @@ app.get("/blog", async (req, res) => {
   }
 });
 
-// Handle requests for more blog posts & backend route to handle category filtering
+// Menghandle kategori yang ada pada blog 
 app.get("/category", async (req, res) => {
   try {
     const { category } = req.query;
@@ -153,7 +153,7 @@ app.get("/category", async (req, res) => {
   }
 });
 
-// Backend route to handle fetching more blogs
+// Route untuk load more button
 app.get("/load-more", async (req, res) => {
   try {
     const { skip, category } = req.query;

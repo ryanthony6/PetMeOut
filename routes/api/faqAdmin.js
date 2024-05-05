@@ -4,6 +4,7 @@ const faqRouter = Router();
 const FAQ = require("../../models/faqData");
 const {isAdmin} = require("./middleware");
 
+// router untuk menampilkan halaman add data faq
 faqRouter.get("/addFAQ", isAdmin,(req, res) => {
   res.render("admin/AddFAQ.ejs", {
     title: "add_faq",
@@ -13,6 +14,7 @@ faqRouter.get("/addFAQ", isAdmin,(req, res) => {
   });
 });
 
+// Route untuk menambahkan data FAQ
 faqRouter.post('/addFaqData',async (req, res) => {
   const { faqTitle, faqContent, faqCategory } = req.body;
   try {

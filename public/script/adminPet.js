@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
   maxLengthCheck(textarea);
 });
 
+// Fungsi untuk cek panjang karakter pada text area
 function maxLengthCheck(object) {
   var charCount = object.value.length;
   if (charCount > object.maxLength)
@@ -11,6 +12,7 @@ function maxLengthCheck(object) {
     charCount + "/" + object.maxLength;
 }
 
+// Fungsi untuk mengupload gambar
 document.getElementById("stock-image").addEventListener("change", function () {
     var files = this.files;
     if (files.length > 3) {
@@ -23,7 +25,6 @@ document.getElementById("stock-image").addEventListener("change", function () {
         
       }).then((value) => {
         if (value) {
-          // Clear the selected files if user clicks OK
           this.value = "";
         }
       });

@@ -38,6 +38,7 @@ profileRouter.get("/profile/:id", isLoggedIn, async (req, res) => {
   }
 });
 
+// Route untuk memproses permintaan pengeditan profil
 profileRouter.post("/editProfile/:id",upload.single("image"),async (req, res) => {
   try {
     const id = req.params.id;
@@ -71,6 +72,7 @@ profileRouter.post("/editProfile/:id",upload.single("image"),async (req, res) =>
   }
 });
 
+// Delete account
 profileRouter.delete("/deleteAccount/:id", async (req, res) => {
   try {
     const userId = req.params.id;
@@ -107,7 +109,7 @@ profileRouter.delete("/deleteAccount/:id", async (req, res) => {
   }
 });
 
-
+// menampilkan semua data form yang telah diajukan oleh user
 profileRouter.get("/submittedforms", isLoggedIn, async (req, res) => {
   try {
     const userId = req.user.id;
@@ -127,6 +129,7 @@ profileRouter.get("/submittedforms", isLoggedIn, async (req, res) => {
   }
 });
 
+// menghapus form
 profileRouter.get("/deleteForm/:formId", isLoggedIn, async (req, res) => {
   try {
     const formId = req.params.formId;

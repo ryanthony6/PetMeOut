@@ -1,3 +1,4 @@
+// Fungsi accordion
 document.addEventListener("DOMContentLoaded", function() {
   const accordionContent = document.querySelectorAll(".accordion-content");
   accordionContent.forEach((item, index) => {
@@ -24,6 +25,7 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 });
 
+// Fungsi untuk menampilkan kategori
 const navLinkFAQs = document.querySelectorAll(".nav_link");
 navLinkFAQs.forEach((navLinkFAQ) => {
   navLinkFAQ.addEventListener("click", () => {
@@ -50,6 +52,7 @@ function editFaq(id) {
   window.location.href = `/faqs/editFaq/${id}`;
 }
 
+// Fungsi untuk menghapus FAQ
 async function deleteFaq(faqID) {
   try {
     if (!faqID) {

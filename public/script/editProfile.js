@@ -1,3 +1,4 @@
+// Menghapus user dan menampilkan pesan dengan sweet alert
 function deleteUser(userID) {
     Swal.fire({
       title: 'Are you sure want to delete this account?',
@@ -33,7 +34,7 @@ function deleteUser(userID) {
     });
   }
   
-
+// Fungsi mengganti profile picture sesuai dengan gambar yang dipilih
   function previewProfilePicture(event) {
     var img = document.getElementById("current-profile-img");
     if (event.target.files && event.target.files[0]) {

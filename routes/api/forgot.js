@@ -5,6 +5,7 @@ const User = require("../../models/userData");
 const nodemailer = require("nodemailer");
 const { generateToken } = require("../../utils/token");
 
+// Konfigurasi node mailer
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
@@ -15,6 +16,7 @@ const transporter = nodemailer.createTransport({
     rejectUnauthorized: false
   }
 });
+// mengirim pesan verifikasi
 const sendVerificationEmail = async (email, token) => {
   const mailOptions = {
     from: process.env.EMAIL,
@@ -33,7 +35,7 @@ const sendVerificationEmail = async (email, token) => {
   }
 };
 
-
+// menampilkan halaman forgot password
 forgotRouter.get("/", (req, res) => {
     res.render("forgotPassword", {
       title: "forgotPassword",
@@ -42,7 +44,7 @@ forgotRouter.get("/", (req, res) => {
     });
   });
   
-
+// router untuk mengirim email verifikasi
 forgotRouter.post("/forgotPassword", async (req, res) => {
   try {
     const { email } = req.body;
@@ -86,6 +88,7 @@ forgotRouter.post("/forgotPassword", async (req, res) => {
   }
 });
 
+// router untuk mereset password
 forgotRouter.get("/resetPassword/:token", async (req, res) => {
   try {
     const token = req.params.token;
@@ -113,6 +116,7 @@ forgotRouter.get("/resetPassword/:token", async (req, res) => {
   }
 });
 
+// router untuk mereset password
 forgotRouter.post("/resetPassword/:token", async (req, res) => {
   try {
     const token = req.params.token;

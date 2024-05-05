@@ -5,6 +5,7 @@ const fs = require("fs");
 const multer = require("multer");
 const {isAdmin} = require("./middleware");
 
+// Menggunakan multer untuk menyimpan gambar
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./uploads");
@@ -15,6 +16,7 @@ var storage = multer.diskStorage({
 });
 var upload = multer({ storage: storage });
 
+// router untuk dashboard
 blogRouter.get("/dashboard", isAdmin, async (req, res) => {
   try {
     const blogs = await Blog.find();
@@ -30,6 +32,7 @@ blogRouter.get("/dashboard", isAdmin, async (req, res) => {
   }
 });
 
+// router untuk menambahkan blog
 blogRouter.post("/addBlog", upload.single("image"), async (req, res) => {
   try {
     if (!req.file) {
@@ -60,9 +63,7 @@ blogRouter.post("/addBlog", upload.single("image"), async (req, res) => {
   }
 });
 
-// Sisanya kode router tetap sama
-
-
+// router untuk menghapus blog
 blogRouter.delete("/deleteBlog/:id",async (req, res) => {
   try {
     const blog = await Blog.findByIdAndDelete(req.params.id);
@@ -80,6 +81,7 @@ blogRouter.delete("/deleteBlog/:id",async (req, res) => {
   }
 });
 
+// router untuk mengedit blog
 blogRouter.get("/editBlog/:title", isAdmin, async (req, res) => {
   try {
     let blog = await Blog.findOne({ title: req.params.title });
@@ -98,6 +100,7 @@ blogRouter.get("/editBlog/:title", isAdmin, async (req, res) => {
   }
 });
 
+// router untuk update blog
 blogRouter.post("/updateBlog/:id", upload.single("image"), async (req, res) => {
   let id = req.params.id;
   let new_image = req.body.old_image;

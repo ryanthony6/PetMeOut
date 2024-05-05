@@ -6,6 +6,7 @@ const multer = require("multer");
 const { isLoggedIn, isAdmin} = require("./middleware");
 const FormData = require("../../models/formData");
 
+// Image upload Multer configuration
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./uploads");
@@ -15,7 +16,6 @@ var storage = multer.diskStorage({
   },
 });
 
-// Middleware for handling both single and array of files upload
 var upload = multer({ storage: storage });
 
 

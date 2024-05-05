@@ -15,6 +15,7 @@ function redirectToSignInUp() {
   window.location.href = "/account";
 }
 
+// Fungsi menampilkan pesan sukses
 function showSuccessMessage(message) {
   Swal.fire({
     icon: 'success',

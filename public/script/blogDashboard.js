@@ -1,3 +1,4 @@
+// Menggunakan library data table
 $(document).ready(function () {
   $("#blogTable").DataTable({
     responsive: true,
