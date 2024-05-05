@@ -1,5 +1,3 @@
-const loader = document.getElementById("loader");
-
 const errorMessages = document.querySelectorAll(".error-message");
 const successMessage = document.querySelector(".success-message");
 
@@ -10,14 +8,8 @@ if (message.innerText !== "") {
 });
 
 if (successMessage.innerText !== "") {
-  successMessage.style.display = "block";
-}
-
-if (successMessage.innerText !== "") {
   showSuccessMessage(successMessage.innerText);
 }
-
-
 
 function redirectToSignInUp() {
   window.location.href = "/account";
