@@ -56,17 +56,35 @@ async function deleteFaq(faqID) {
       throw new Error("FAQ ID is null");
     }
 
-    const response = await fetch(`/faqs/deleteFaq/${faqID}`, {
-      method: "DELETE",
+    // Tampilkan konfirmasi menggunakan SweetAlert
+    const confirmation = await Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will not be able to recover this FAQ!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel'
     });
 
-    if (response.ok) {
-      window.location.reload();
-    } else {
-      throw new Error("Failed to delete FAQ");
+    // Jika pengguna menekan tombol "Yes, delete it!"
+    if (confirmation.isConfirmed) {
+      const response = await fetch(`/faqs/deleteFaq/${faqID}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        // Refresh halaman setelah FAQ dihapus
+        window.location.reload();
+      } else {
+        throw new Error("Failed to delete FAQ");
+      }
     }
   } catch (error) {
+    // Tangani kesalahan
     if (error instanceof TypeError || error instanceof SyntaxError) {
+      // Tampilkan pesan kesalahan jika terjadi kesalahan
       alert("Failed to delete FAQ. Please try again.");
     } else {
       console.error(error);
