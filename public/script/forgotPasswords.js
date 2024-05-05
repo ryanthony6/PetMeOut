@@ -4,7 +4,7 @@ const errorMessages = document.querySelectorAll(".error-message");
 const successMessage = document.querySelector(".success-message");
 
 errorMessages.forEach(message => {
-  if (message.innerText !== "") {
+if (message.innerText !== "") {
     message.style.display = "block";
   }
 });
@@ -12,6 +12,11 @@ errorMessages.forEach(message => {
 if (successMessage.innerText !== "") {
   successMessage.style.display = "block";
 }
+
+if (successMessage.innerText !== "") {
+  showSuccessMessage(successMessage.innerText);
+}
+
 
 
 function redirectToSignInUp() {
