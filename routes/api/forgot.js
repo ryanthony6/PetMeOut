@@ -49,7 +49,7 @@ forgotRouter.post("/forgotPassword", async (req, res) => {
 
     if (!email) {
       req.flash("error", "Email is required");
-      return res.redirect("/");
+      return res.redirect("/forgotpass");
     }
 
     const existingUser = await User.findOne({ email: email });

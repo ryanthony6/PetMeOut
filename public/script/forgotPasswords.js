@@ -1,9 +1,18 @@
-const successMessage = document.querySelector(".success-message");
 const loader = document.getElementById("loader");
 
+const errorMessages = document.querySelectorAll(".error-message");
+const successMessage = document.querySelector(".success-message");
+
+errorMessages.forEach(message => {
+  if (message.innerText !== "") {
+    message.style.display = "block";
+  }
+});
+
 if (successMessage.innerText !== "") {
-  showSuccessMessage(successMessage.innerText);
+  successMessage.style.display = "block";
 }
+
 
 function redirectToSignInUp() {
   window.location.href = "/account";
@@ -21,3 +30,4 @@ function showSuccessMessage(message) {
     }
   });
 }
+

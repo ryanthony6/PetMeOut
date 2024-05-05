@@ -31,6 +31,12 @@ accountRouter.post("/signup", async (req, res) => {
       return res.redirect("/account");
     }
 
+    const existingUsername = await UserData.findOne({ username });
+    if (existingUsername) {
+      req.flash("error", "Username already exists");
+      return res.redirect("/account");
+    }
+
     if (password.length < 8) {
       req.flash("error", "Password must be at least 8 characters long");
       return res.redirect("/account");
